@@ -7,12 +7,12 @@ from typing import NoReturn, Union
 
 import packaging.version
 import pvporcupine
-import requests
 from playsound import playsound
 from pyaudio import PyAudio, paInt16
 from speech_recognition import Microphone, Recognizer, UnknownValueError
 
 from modules import speaker
+from modules.api_handler import make_request
 from modules.logger import logger
 from modules.models import env, indicators
 from modules.speech_synthesis import SpeechSynthesizer
@@ -38,29 +38,6 @@ def listen(timeout: Union[int, float], phrase_limit: Union[int, float]) -> Union
         return recognizer.recognize_google(audio_data=listened)
     except UnknownValueError:
         return
-
-
-def on_demand_offline_process(task: str) -> Union[str, None]:
-    """Makes a ``POST`` call to offline-communicator running on ``localhost`` to execute a said task.
-
-    Args:
-        task: Takes the command to be executed as an argument.
-
-    Returns:
-        str:
-        Returns the response if request was successful.
-    """
-    headers = {
-        'accept': 'application/json',
-        'Authorization': f'Bearer {env.offline_pass}',
-    }
-    try:
-        response = requests.post(url=env.request_url, headers=headers, json={'command': task},
-                                 timeout=env.request_timeout)
-    except requests.RequestException as error:
-        logger.error(error)
-        return
-    return response.json()['detail'].split('\n')[-1]
 
 
 class Activator:
@@ -121,12 +98,14 @@ class Activator:
                 playsound(sound=indicators.acknowledgement, block=False)
                 if phrase := listen(timeout=env.timeout, phrase_limit=env.phrase_limit):
                     logger.info(f"Request: {phrase}")
+                    sys.stdout.write(f"Request: {phrase}")
                     if "stop running" in phrase.lower():
                         logger.info("User requested to stop.")
                         speaker.speak(text="Shutting down now!.", run=True)
                         return
-                    if response := on_demand_offline_process(task=phrase):
+                    if response := make_request(task=phrase):
                         logger.info(f"Response: {response}")
+                        sys.stdout.write(f"Response: {response}")
                         speaker.speak(text=response, run=True)
                     else:
                         speaker.speak(text="I wasn't able to process your request.", run=True)
@@ -162,12 +141,14 @@ def sentry_mode() -> NoReturn:
                 playsound(sound=indicators.acknowledgement, block=False)
                 if phrase := listen(timeout=env.timeout, phrase_limit=env.phrase_limit):
                     logger.info(f"Request: {phrase}")
+                    sys.stdout.write(f"Request: {phrase}")
                     if "stop running" in phrase.lower():
                         logger.info("User requested to stop.")
                         speaker.speak(text="Shutting down now!.", run=True)
                         return
-                    if response := on_demand_offline_process(task=phrase):
+                    if response := make_request(task=phrase):
                         logger.info(f"Response: {response}")
+                        sys.stdout.write(f"Response: {response}")
                         speaker.speak(text=response, run=True)
                     else:
                         speaker.speak(text="I wasn't able to process your request.", run=True)
