@@ -23,6 +23,8 @@ if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
     )
 if detail := keywords.get("detail"):
     exit(detail)
+delay_keywords = filter(None, keywords.get('car') + keywords.get('speed_test'))
+# delay_keywords = filter(lambda v: v is not None, delay_keywords)  # If 0 is to be included
 
 
 def listen(timeout: Union[int, float], phrase_limit: Union[int, float]) -> Union[str, None]:
@@ -62,8 +64,13 @@ def processor() -> bool:
             logger.info("User requested to stop.")
             speaker.speak(text="Shutting down now!.", run=True)
             return True
-        if any(word in phrase.lower() for word in keywords.get('car')):
-            timeout = 15
+        if any(word in phrase.lower() for word in delay_keywords):
+            logger.info(f"Increasing timeout for: {phrase}")
+            timeout = 30
+            tmp = env.speech_timeout
+            env.speech_timeout = 2
+            speaker.speak(text="Processing now.", block=False)
+            env.speech_timeout = tmp
         else:
             timeout = env.request_timeout
         if response := make_request(data={'command': phrase}, timeout=timeout, path='offline-communicator'):

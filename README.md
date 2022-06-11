@@ -11,6 +11,7 @@ Connects to `Jarvis` running in the backend to process request and response via 
 #### Optional:
 Click [here](https://github.com/thevickypedia/Jarvis#env-variables), for more information.
 - `REQUEST_TIMEOUT`: Defaults to `5`
+- `SPEECH_TIMEOUT`: Defaults to `5`
 - `SENSITIVITY`: Defaults to `0.5`
 - `VOICE_TIMEOUT`: Defaults to `3`
 - `VOICE_PHRASE_LIMIT`: Defaults to `3`

@@ -27,6 +27,7 @@ class EnvConfig(BaseSettings):
     token: str = Field(default=None, env="TOKEN")
 
     request_timeout: Union[float, PositiveInt] = Field(default=5, env="REQUEST_TIMEOUT")
+    speech_timeout: Union[float, PositiveInt] = Field(default=5, env="SPEECH_TIMEOUT")
     sensitivity: Union[float, PositiveInt] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=3, env="VOICE_PHRASE_LIMIT")
