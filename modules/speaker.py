@@ -9,11 +9,11 @@ import os
 from typing import NoReturn
 
 import pyttsx3
-import requests
 from playsound import playsound
 
+from modules.api_handler import make_request
 from modules.logger import logger
-from modules.models import env
+from modules.models import env, fileio
 
 audio_driver = pyttsx3.init()
 voices = audio_driver.getProperty("voices")  # gets the list of voices available
@@ -26,34 +26,6 @@ else:
     logger.info("Using default voice model.")
 
 
-def speech_synthesizer(text: str, timeout: int = env.speech_synthesis_timeout) -> bool:
-    """Makes a post call to docker container running on localhost for speech synthesis.
-
-    Args:
-        text: Takes the text that has to be spoken as an argument.
-        timeout: Time to wait for the docker image to process text-to-speech request.
-
-    Returns:
-        bool:
-        A boolean flag to indicate whether speech synthesis has worked.
-    """
-    try:
-        response = requests.post(url=f"http://localhost:{env.speech_synthesis_port}/api/tts",
-                                 headers={"Content-Type": "text/plain"},
-                                 params={"voice": "en-us_northern_english_male-glow_tts", "quality": "low"},
-                                 data=text, verify=False, timeout=timeout)
-        if not response.ok:
-            return False
-        with open(file="speech_synthesis.wav", mode="wb") as file:
-            file.write(response.content)
-        return True
-    except requests.exceptions.ConnectionError as error:
-        logger.error(error)
-        env.speech_synthesis_timeout = 0
-    except requests.exceptions.Timeout as error:
-        logger.error(error)
-
-
 def speak(text: str = None, run: bool = False) -> NoReturn:
     """Calls ``audio_driver.say`` to speak a statement from the received text.
 
@@ -63,9 +35,9 @@ def speak(text: str = None, run: bool = False) -> NoReturn:
     """
     if text:
         text = text.replace('\n', '\t').strip()
-        if env.speech_synthesis_timeout and speech_synthesizer(text=text) and os.path.isfile("speech_synthesis.wav"):
-            playsound(sound="speech_synthesis.wav", block=True)
-            os.remove("speech_synthesis.wav")
+        if make_request(path=f"speech-synthesis?text={text}", timeout=env.request_timeout + 3):
+            playsound(sound=fileio.speech_wav_file, block=True)
+            os.remove(fileio.speech_wav_file)
         else:
             audio_driver.say(text=text)
     if run:

@@ -22,15 +22,15 @@ class EnvConfig(BaseSettings):
     """
 
     home: DirectoryPath = Field(default=os.path.expanduser("~"), env="HOME")
+
     request_url: HttpUrl = Field(default=None, env="REQUEST_URL")
-    request_timeout: int = Field(default=5, env="REQUEST_TIMEOUT")
-    offline_pass: str = Field(default="OfflineComm", env="OFFLINE_PASS")
+    token: str = Field(default=None, env="TOKEN")
+
+    request_timeout: Union[float, PositiveInt] = Field(default=5, env="REQUEST_TIMEOUT")
     sensitivity: Union[float, PositiveInt] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=3, env="VOICE_PHRASE_LIMIT")
-    legacy_keywords: list = Field(default=["jarvis"], env="LEGACY_KEYWORDS")
-    speech_synthesis_port: int = Field(default=5002, env="SPEECH_SYNTHESIS_PORT")
-    speech_synthesis_timeout: int = Field(default=3, env="SPEECH_SYNTHESIS_TIMEOUT")
+    legacy_wake_words: list = Field(default=["jarvis"], env="LEGACY_WAKE_WORDS")
 
     class Config:
         """Environment variables configuration."""
@@ -55,8 +55,13 @@ class FileIO(BaseModel):
     end: FilePath = os.path.join('indicators', 'end.mp3')
     start: FilePath = os.path.join('indicators', 'start.mp3')
     base_log_file: FilePath = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))
-    speech_log_file: FilePath = datetime.now().strftime(os.path.join('logs', 'speech_synthesis_%d-%m-%Y.log'))
+    speech_wav_file: FilePath = os.path.join('indicators', 'speech-synthesis.wav')
 
 
 env = EnvConfig()
 fileio = FileIO()
+
+if not env.request_url or not env.token:
+    raise PermissionError(
+        "'REQUEST_URL' or 'TOKEN' not found in environment variables."
+    )

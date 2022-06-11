@@ -2,7 +2,6 @@ import pathlib
 import platform
 import struct
 import sys
-from multiprocessing import Process
 from typing import NoReturn, Union
 
 import packaging.version
@@ -16,7 +15,6 @@ from modules import speaker
 from modules.api_handler import make_request
 from modules.logger import logger
 from modules.models import env, fileio
-from modules.speech_synthesis import SpeechSynthesizer
 
 recognizer = Recognizer()  # initiates recognizer that uses google's translation
 if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
@@ -49,7 +47,7 @@ def listen(timeout: Union[int, float], phrase_limit: Union[int, float]) -> Union
         logger.error(error)
 
 
-def process_request() -> bool:
+def processor() -> bool:
     """Processes the request after wake word is detected.
 
     Returns:
@@ -68,9 +66,8 @@ def process_request() -> bool:
             timeout = 15
         else:
             timeout = env.request_timeout
-        if response := make_request(task=phrase, timeout=timeout, path='offline-communicator'):
-            response = response.get('detail', '').split('\n')[-1]
-            response = response.replace("\N{DEGREE SIGN}F", " degrees fahrenheit")
+        if response := make_request(data={'command': phrase}, timeout=timeout, path='offline-communicator'):
+            response = response.get('detail', '').replace("\N{DEGREE SIGN}F", " degrees fahrenheit").replace("\n", ". ")
             logger.info(f"Response: {response}")
             sys.stdout.write(f"\rResponse: {response}")
             speaker.speak(text=response, run=True)
@@ -133,7 +130,7 @@ class Activator:
                                                             exception_on_overflow=False))
             self.recorded_frames.append(pcm)
             if self.detector.process(pcm=pcm) >= 0:
-                if process_request():
+                if processor():
                     return
 
     def stop(self) -> NoReturn:
@@ -163,8 +160,8 @@ def sentry_mode() -> NoReturn:
     while True:
         sys.stdout.write("\rSentry Mode")
         if wake_word := listen(timeout=10, phrase_limit=2.5):
-            if any(word in wake_word.lower() for word in env.legacy_keywords):
-                if process_request():
+            if any(word in wake_word.lower() for word in env.legacy_wake_words):
+                if processor():
                     return
 
 
@@ -177,14 +174,8 @@ def begin():
             Activator().start()
     except KeyboardInterrupt as error:
         logger.warning(error)
-    speech_process.join(timeout=3)
-    if speech_process.is_alive():
-        speech_process.kill()
-        speech_process.join(timeout=1)
 
 
 if __name__ == '__main__':
-    speech_process = Process(target=SpeechSynthesizer().synthesizer)
-    speech_process.start()
     with Microphone() as source:
         begin()
