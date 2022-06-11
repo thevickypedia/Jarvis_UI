@@ -11,8 +11,8 @@ from typing import NoReturn
 import pyttsx3
 import requests
 from playsound import playsound
-from modules.logger import logger
 
+from modules.logger import logger
 from modules.models import env
 
 audio_driver = pyttsx3.init()
@@ -40,14 +40,17 @@ def speech_synthesizer(text: str, timeout: int = env.speech_synthesis_timeout) -
     try:
         response = requests.post(url=f"http://localhost:{env.speech_synthesis_port}/api/tts",
                                  headers={"Content-Type": "text/plain"},
-                                 params={"voice": "en-us_northern_english_male-glow_tts", "quality": "medium"},
+                                 params={"voice": "en-us_northern_english_male-glow_tts", "quality": "low"},
                                  data=text, verify=False, timeout=timeout)
         if not response.ok:
             return False
         with open(file="speech_synthesis.wav", mode="wb") as file:
             file.write(response.content)
         return True
-    except (requests.exceptions.ConnectionError, requests.exceptions.Timeout) as error:
+    except requests.exceptions.ConnectionError as error:
+        logger.error(error)
+        env.speech_synthesis_timeout = 0
+    except requests.exceptions.Timeout as error:
         logger.error(error)
 
 
@@ -60,7 +63,7 @@ def speak(text: str = None, run: bool = False) -> NoReturn:
     """
     if text:
         text = text.replace('\n', '\t').strip()
-        if speech_synthesizer(text=text) and os.path.isfile("speech_synthesis.wav"):
+        if env.speech_synthesis_timeout and speech_synthesizer(text=text) and os.path.isfile("speech_synthesis.wav"):
             playsound(sound="speech_synthesis.wav", block=True)
             os.remove("speech_synthesis.wav")
         else:

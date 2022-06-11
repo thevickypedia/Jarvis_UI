@@ -10,10 +10,9 @@ Disables loggers from imported modules, while using the root logger without havi
 import importlib
 import logging
 import os
-from datetime import datetime
 from logging.config import dictConfig
 
-log_file = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))
+from modules.models import fileio
 
 if not os.path.isdir('logs'):
     os.makedirs('logs')
@@ -25,7 +24,7 @@ dictConfig({
 })
 logging.getLogger("_code_cache").propagate = False
 logging.basicConfig(
-    filename=log_file, filemode='a', level=logging.INFO,
+    filename=fileio.base_log_file, filemode='a', level=logging.INFO,
     format='%(asctime)s - %(levelname)s - [%(module)s:%(lineno)d] - %(funcName)s - %(message)s',
     datefmt='%b-%d-%Y %I:%M:%S %p'
 )

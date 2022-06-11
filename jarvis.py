@@ -7,6 +7,7 @@ from typing import NoReturn, Union
 
 import packaging.version
 import pvporcupine
+import requests
 from playsound import playsound
 from pyaudio import PyAudio, paInt16
 from speech_recognition import Microphone, Recognizer, UnknownValueError
@@ -14,10 +15,16 @@ from speech_recognition import Microphone, Recognizer, UnknownValueError
 from modules import speaker
 from modules.api_handler import make_request
 from modules.logger import logger
-from modules.models import env, indicators
+from modules.models import env, fileio
 from modules.speech_synthesis import SpeechSynthesizer
 
 recognizer = Recognizer()  # initiates recognizer that uses google's translation
+if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
+    raise ConnectionError(
+        "Unable to connect to the API."
+    )
+if detail := keywords.get("detail"):
+    exit(detail)
 
 
 def listen(timeout: Union[int, float], phrase_limit: Union[int, float]) -> Union[str, None]:
@@ -31,13 +38,44 @@ def listen(timeout: Union[int, float], phrase_limit: Union[int, float]) -> Union
         str:
          - Returns recognized statement from the microphone.
     """
-    (sys.stdout.flush(), sys.stdout.write("\rListener Activated"))
+    (sys.stdout.flush(), sys.stdout.write("\rListener activated.."))
     listened = recognizer.listen(source=source, timeout=timeout, phrase_time_limit=phrase_limit)
     (sys.stdout.flush(), sys.stdout.write("\r"))
     try:
         return recognizer.recognize_google(audio_data=listened)
     except UnknownValueError:
         return
+    except requests.exceptions.RequestException as error:
+        logger.error(error)
+
+
+def process_request() -> bool:
+    """Processes the request after wake word is detected.
+
+    Returns:
+        bool:
+        Returns a ``True`` flag if a manual stop is requested.
+    """
+    playsound(sound=fileio.acknowledgement, block=False)
+    if phrase := listen(timeout=env.voice_timeout, phrase_limit=env.voice_phrase_limit):
+        logger.info(f"Request: {phrase}")
+        sys.stdout.write(f"\rRequest: {phrase}")
+        if "stop running" in phrase.lower():
+            logger.info("User requested to stop.")
+            speaker.speak(text="Shutting down now!.", run=True)
+            return True
+        if any(word in phrase.lower() for word in keywords.get('car')):
+            timeout = 15
+        else:
+            timeout = env.request_timeout
+        if response := make_request(task=phrase, timeout=timeout, path='offline-communicator'):
+            response = response.get('detail', '').split('\n')[-1]
+            response = response.replace("\N{DEGREE SIGN}F", " degrees fahrenheit")
+            logger.info(f"Response: {response}")
+            sys.stdout.write(f"\rResponse: {response}")
+            speaker.speak(text=response, run=True)
+        else:
+            speaker.speak(text="I wasn't able to process your request.", run=True)
 
 
 class Activator:
@@ -95,20 +133,8 @@ class Activator:
                                                             exception_on_overflow=False))
             self.recorded_frames.append(pcm)
             if self.detector.process(pcm=pcm) >= 0:
-                playsound(sound=indicators.acknowledgement, block=False)
-                if phrase := listen(timeout=env.timeout, phrase_limit=env.phrase_limit):
-                    logger.info(f"Request: {phrase}")
-                    sys.stdout.write(f"Request: {phrase}")
-                    if "stop running" in phrase.lower():
-                        logger.info("User requested to stop.")
-                        speaker.speak(text="Shutting down now!.", run=True)
-                        return
-                    if response := make_request(task=phrase):
-                        logger.info(f"Response: {response}")
-                        sys.stdout.write(f"Response: {response}")
-                        speaker.speak(text=response, run=True)
-                    else:
-                        speaker.speak(text="I wasn't able to process your request.", run=True)
+                if process_request():
+                    return
 
     def stop(self) -> NoReturn:
         """Invoked when the run loop is exited or manual interrupt.
@@ -138,20 +164,8 @@ def sentry_mode() -> NoReturn:
         sys.stdout.write("\rSentry Mode")
         if wake_word := listen(timeout=10, phrase_limit=2.5):
             if any(word in wake_word.lower() for word in env.legacy_keywords):
-                playsound(sound=indicators.acknowledgement, block=False)
-                if phrase := listen(timeout=env.timeout, phrase_limit=env.phrase_limit):
-                    logger.info(f"Request: {phrase}")
-                    sys.stdout.write(f"Request: {phrase}")
-                    if "stop running" in phrase.lower():
-                        logger.info("User requested to stop.")
-                        speaker.speak(text="Shutting down now!.", run=True)
-                        return
-                    if response := make_request(task=phrase):
-                        logger.info(f"Response: {response}")
-                        sys.stdout.write(f"Response: {response}")
-                        speaker.speak(text=response, run=True)
-                    else:
-                        speaker.speak(text="I wasn't able to process your request.", run=True)
+                if process_request():
+                    return
 
 
 def begin():

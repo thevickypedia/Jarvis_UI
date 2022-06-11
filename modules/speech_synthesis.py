@@ -13,7 +13,7 @@ from typing import NoReturn
 import requests
 
 from modules.logger import logger
-from modules.models import env
+from modules.models import env, fileio
 
 
 def is_port_in_use(port: int) -> bool:
@@ -41,7 +41,7 @@ def check_existing() -> bool:
         try:
             res = requests.get(url=f"http://localhost:{env.speech_synthesis_port}", timeout=1)
             if res.ok:
-                logger.info(f"Speech synthesizer is running on {env.speech_synthesis_port}")
+                logger.info(f"An existing instance of speech synthesizer is running on {env.speech_synthesis_port}")
                 return True
             logger.warning(f"{res.url}::{res.status_code}::{res.reason}")
             return False
@@ -59,14 +59,14 @@ class SpeechSynthesizer:
 
     def __init__(self):
         """Creates log file and initiates port number and docker command to run."""
-        self.docker = f"""docker run \n
-            -p {env.speech_synthesis_port}:{env.speech_synthesis_port} \n
-            -e "HOME={env.home}" \n
-            -v "$HOME:{env.home}" \n
-            -v /usr/share/ca-certificates:/usr/share/ca-certificates \n
-            -v /etc/ssl/certs:/etc/ssl/certs \n
-            -w "{os.getcwd()}" \n
-            --user "$(id -u):$(id -g)" \n
+        self.docker = f"""docker run \
+            -p {env.speech_synthesis_port}:{env.speech_synthesis_port} \
+            -e "HOME={env.home}" \
+            -v "$HOME:{env.home}" \
+            -v /usr/share/ca-certificates:/usr/share/ca-certificates \
+            -v /etc/ssl/certs:/etc/ssl/certs \
+            -w "{os.getcwd()}" \
+            --user "$(id -u):$(id -g)" \
             rhasspy/larynx"""
         if env.speech_synthesis_port != 5002:
             self.docker += f" --port {env.speech_synthesis_port}"
@@ -75,9 +75,9 @@ class SpeechSynthesizer:
         """Initiates speech synthesizer using docker."""
         if check_existing():
             return
-        if not os.path.isfile(os.path.join("logs", "speech_synthesis.log")):
-            pathlib.Path(os.path.join("logs", "speech_synthesis.log")).touch()
-        with open(os.path.join("logs", "speech_synthesis.log"), "a") as output:
+        if not os.path.isfile(fileio.speech_log_file):
+            pathlib.Path(fileio.speech_log_file).touch()
+        with open(os.path.join(fileio.speech_log_file), "a") as output:
             try:
                 subprocess.call(self.docker, shell=True, stdout=output, stderr=output)
             except (subprocess.CalledProcessError, subprocess.SubprocessError, Exception):
