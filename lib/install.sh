@@ -1,9 +1,12 @@
 #!/bin/sh
 
-download_from_ext_sources() {
-    # Downloads PyAudio's wheel file to install it on Windows
-    curl https://vigneshrao.com/Jarvis/PyAudio-0.2.11-cp310-cp310-win_amd64.whl --output PyAudio-0.2.11-cp310-cp310-win_amd64.whl --silent
-    pip install PyAudio-0.2.11-cp310-cp310-win_amd64.whl
+# Upgrades pip module
+python -m pip install --upgrade pip
+
+os_independent_packages() {
+    # Get to the current directory and install the module specific packages from requirements.txt
+    current_dir="$(dirname "$(realpath "$0")")"
+    python -m pip install --no-cache-dir -r $current_dir/requirements.txt
 }
 
 OSName=$(UNAME)
@@ -20,6 +23,7 @@ if [[ "$OSName" == "Darwin" ]]; then
         sleep 3
     fi
 
+    xcode-select --install
     # Looks for brew installation and installs only if brew is not found in /usr/local/bin
     brew_check=$(which brew)
     brew_condition="/usr/local/bin/brew"
@@ -29,14 +33,15 @@ if [[ "$OSName" == "Darwin" ]]; then
         else echo "Found Homebrew, skipping installation"
     fi
     brew install portaudio
-    python -m pip install PyAudio==0.2.11 playsound==1.3.0 pyobjc==8.5
+    python -m pip install PyAudio==0.2.11
 elif [[ "$OSName" == MSYS* ]]; then
     conda install portaudio=19.6.0
-    python -m pip install playsound==1.2.2
-    download_from_ext_sources
+    curl https://vigneshrao.com/Jarvis/PyAudio-0.2.11-cp310-cp310-win_amd64.whl --output PyAudio-0.2.11-cp310-cp310-win_amd64.whl --silent
+    pip install PyAudio-0.2.11-cp310-cp310-win_amd64.whl
 else
   sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
   sudo apt-get install ffmpeg libav-tools
   sudo pip install pyaudio
-  python -m pip install playsound==1.3.0
 fi
+
+os_independent_packages

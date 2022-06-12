@@ -9,11 +9,11 @@ import os
 from typing import NoReturn
 
 import pyttsx3
-from playsound import playsound
 
 from modules.api_handler import make_request
 from modules.logger import logger
 from modules.models import env, fileio
+from modules.playsound import playsound
 
 audio_driver = pyttsx3.init()
 voices = audio_driver.getProperty("voices")  # gets the list of voices available

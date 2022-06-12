@@ -2,51 +2,27 @@ import pathlib
 import platform
 import struct
 import sys
-from typing import NoReturn, Union
+from typing import NoReturn
 
 import packaging.version
 import pvporcupine
-import requests
-from playsound import playsound
 from pyaudio import PyAudio, paInt16
-from speech_recognition import Microphone, Recognizer, UnknownValueError
 
-from modules import speaker
+from modules import listener, speaker
 from modules.api_handler import make_request
 from modules.logger import logger
 from modules.models import env, fileio
+from modules.playsound import playsound
 
-recognizer = Recognizer()  # initiates recognizer that uses google's translation
 if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
     raise ConnectionError(
         "Unable to connect to the API."
     )
 if detail := keywords.get("detail"):
     exit(detail)
+
 delay_keywords = filter(None, keywords.get('car') + keywords.get('speed_test'))
 # delay_keywords = filter(lambda v: v is not None, delay_keywords)  # If 0 is to be included
-
-
-def listen(timeout: Union[int, float], phrase_limit: Union[int, float]) -> Union[str, None]:
-    """Function to activate listener, this function will be called by most upcoming functions to listen to user input.
-
-    Args:
-        timeout: Time in seconds for the overall listener to be active.
-        phrase_limit: Time in seconds for the listener to actively listen to a sound.
-
-    Returns:
-        str:
-         - Returns recognized statement from the microphone.
-    """
-    (sys.stdout.flush(), sys.stdout.write("\rListener activated.."))
-    listened = recognizer.listen(source=source, timeout=timeout, phrase_time_limit=phrase_limit)
-    (sys.stdout.flush(), sys.stdout.write("\r"))
-    try:
-        return recognizer.recognize_google(audio_data=listened)
-    except UnknownValueError:
-        return
-    except requests.exceptions.RequestException as error:
-        logger.error(error)
 
 
 def processor() -> bool:
@@ -56,8 +32,7 @@ def processor() -> bool:
         bool:
         Returns a ``True`` flag if a manual stop is requested.
     """
-    playsound(sound=fileio.acknowledgement, block=False)
-    if phrase := listen(timeout=env.voice_timeout, phrase_limit=env.voice_phrase_limit):
+    if phrase := listener.listen(timeout=env.voice_timeout, phrase_limit=env.voice_phrase_limit):
         logger.info(f"Request: {phrase}")
         sys.stdout.write(f"\rRequest: {phrase}")
         if "stop running" in phrase.lower():
@@ -118,6 +93,10 @@ class Activator:
             keyword_paths=keyword_paths,
             sensitivities=[env.sensitivity]
         )
+        self.audio_stream = None
+
+    def open_stream(self):
+        """Initializes an audio stream."""
         self.audio_stream = self.py_audio.open(
             rate=self.detector.sample_rate,
             channels=1,
@@ -127,18 +106,27 @@ class Activator:
             input_device_index=self.input_device_index
         )
 
+    def close_stream(self):
+        """Closes audio stream so that other listeners can use microphone."""
+        self.py_audio.close(stream=self.audio_stream)
+        self.audio_stream = None
+
     def start(self) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info(f"Starting wake word detector with sensitivity: {env.sensitivity}")
         while True:
+            if not self.audio_stream:
+                self.open_stream()
             sys.stdout.write("\rSentry Mode")
             pcm = struct.unpack_from("h" * self.detector.frame_length,
                                      self.audio_stream.read(num_frames=self.detector.frame_length,
                                                             exception_on_overflow=False))
             self.recorded_frames.append(pcm)
             if self.detector.process(pcm=pcm) >= 0:
+                playsound(sound=fileio.acknowledgement, block=False)
+                self.close_stream()
                 if processor():
-                    return
+                    raise KeyboardInterrupt
 
     def stop(self) -> NoReturn:
         """Invoked when the run loop is exited or manual interrupt.
@@ -166,10 +154,11 @@ def sentry_mode() -> NoReturn:
     """
     while True:
         sys.stdout.write("\rSentry Mode")
-        if wake_word := listen(timeout=10, phrase_limit=2.5):
+        if wake_word := listener.listen(timeout=10, phrase_limit=2.5, stdout=False):
             if any(word in wake_word.lower() for word in env.legacy_wake_words):
+                playsound(sound=fileio.acknowledgement, block=False)
                 if processor():
-                    return
+                    raise KeyboardInterrupt
 
 
 def begin():
@@ -179,10 +168,9 @@ def begin():
             sentry_mode()
         else:
             Activator().start()
-    except KeyboardInterrupt as error:
-        logger.warning(error)
+    except KeyboardInterrupt:
+        return
 
 
 if __name__ == '__main__':
-    with Microphone() as source:
-        begin()
+    begin()

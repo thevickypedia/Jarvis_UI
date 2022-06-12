@@ -10,8 +10,8 @@ import platform
 from datetime import datetime
 from typing import Union
 
-from pydantic import (BaseModel, BaseSettings, DirectoryPath, Field, FilePath,
-                      HttpUrl, PositiveInt)
+from pydantic import (BaseSettings, DirectoryPath, Field, FilePath, HttpUrl,
+                      PositiveInt)
 
 
 class EnvConfig(BaseSettings):
@@ -45,18 +45,18 @@ class EnvConfig(BaseSettings):
         macos = 1
 
 
-class FileIO(BaseModel):
+class FileIO(BaseSettings):
     """Loads all the mp3 files' path and log file path required by Jarvis.
 
     >>> FileIO
 
     """
 
-    acknowledgement: FilePath = os.path.join('indicators', 'acknowledgement.mp3')
-    end: FilePath = os.path.join('indicators', 'end.mp3')
-    start: FilePath = os.path.join('indicators', 'start.mp3')
+    acknowledgement: FilePath = os.path.join('indicators', 'acknowledgement.wav')
+    end: FilePath = os.path.join('indicators', 'end.wav')
+    start: FilePath = os.path.join('indicators', 'start.wav')
     base_log_file: FilePath = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))
-    speech_wav_file: FilePath = os.path.join('indicators', 'speech-synthesis.wav')
+    speech_wav_file: str = os.path.join('indicators', 'speech-synthesis.wav')
 
 
 env = EnvConfig()
@@ -66,3 +66,5 @@ if not env.request_url or not env.token:
     raise PermissionError(
         "'REQUEST_URL' or 'TOKEN' not found in environment variables."
     )
+if not env.request_url.endswith("/"):
+    env.request_url += "/"
