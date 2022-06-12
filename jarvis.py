@@ -21,7 +21,7 @@ if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
 if detail := keywords.get("detail"):
     exit(detail)
 
-delay_keywords = filter(None, keywords.get('car') + keywords.get('speed_test'))
+delay_keywords = filter(None, keywords.get('car') + keywords.get('speed_test') + keywords.get('television'))
 # delay_keywords = filter(lambda v: v is not None, delay_keywords)  # If 0 is to be included
 
 

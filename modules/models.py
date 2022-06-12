@@ -53,9 +53,7 @@ class FileIO(BaseSettings):
     """
 
     acknowledgement: FilePath = os.path.join('indicators', 'acknowledgement.wav')
-    end: FilePath = os.path.join('indicators', 'end.wav')
-    start: FilePath = os.path.join('indicators', 'start.wav')
-    base_log_file: FilePath = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))
+    base_log_file: str = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))
     speech_wav_file: str = os.path.join('indicators', 'speech-synthesis.wav')
 
 
