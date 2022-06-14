@@ -36,7 +36,12 @@ def speak(text: str = None, run: bool = False, block: bool = True) -> NoReturn:
     """
     if text:
         text = text.replace('\n', '\t').strip()
-        if make_request(path=f"speech-synthesis?text={text}", timeout=env.speech_timeout):
+        if not text.endswith('.') and not text.endswith('!'):
+            text = text + '!'
+        if make_request(path='speech-synthesis',
+                        timeout=env.speech_timeout,  # Timeout for request to Jarvis running on fast api
+                        data={'text': text, 'quality': 'low',
+                              'timeout': env.speech_timeout}):  # Timeout for request to Docker running on localhost
             playsound(sound=fileio.speech_wav_file, block=block)
             os.remove(fileio.speech_wav_file)
         else:

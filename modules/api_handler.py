@@ -33,12 +33,13 @@ def make_request(path: str, timeout: Union[int, float], data: dict = None) -> Un
     except requests.RequestException as error:
         logger.error(error)
         return False
-    if path.startswith("speech-synthesis"):
-        if response.ok:
-            with open(file=fileio.speech_wav_file, mode="wb") as file:
-                file.write(response.content)
-            return True
+    if not response.ok:
+        logger.error(f"{response.status_code} - {response.reason}")
         return False
+    if path == "speech-synthesis":
+        with open(file=fileio.speech_wav_file, mode="wb") as file:
+            file.write(response.content)
+        return True
     try:
         return response.json()
     except json.JSONDecodeError as error:

@@ -21,8 +21,10 @@ if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
 if detail := keywords.get("detail"):
     exit(detail)
 
-delay_keywords = filter(None, keywords.get('car') + keywords.get('speed_test') + keywords.get('television'))
-# delay_keywords = filter(lambda v: v is not None, delay_keywords)  # If 0 is to be included
+# delay_keywords = list(filter(lambda v: v is not None, delay_keywords))  # If 0 is to be included
+delay_with_ack = list(filter(None, keywords.get('car') + keywords.get('speed_test')))
+delay_without_ack = list(filter(None, keywords.get('television')))
+delay_keywords = delay_with_ack + delay_without_ack
 
 
 def processor() -> bool:
@@ -37,18 +39,16 @@ def processor() -> bool:
         sys.stdout.write(f"\rRequest: {phrase}")
         if "stop running" in phrase.lower():
             logger.info("User requested to stop.")
-            speaker.speak(text="Shutting down now!.", run=True)
+            speaker.speak(text="Shutting down now!", run=True)
             return True
         if any(word in phrase.lower() for word in delay_keywords):
             logger.info(f"Increasing timeout for: {phrase}")
             timeout = 30
-            tmp = env.speech_timeout
-            env.speech_timeout = 2
-            speaker.speak(text="Processing now.", block=False)
-            env.speech_timeout = tmp
+            if any(word in phrase.lower() for word in delay_with_ack):
+                speaker.speak(text="Processing now.", block=False)
         else:
             timeout = env.request_timeout
-        if response := make_request(data={'command': phrase}, timeout=timeout, path='offline-communicator'):
+        if response := make_request(path='offline-communicator', data={'command': phrase}, timeout=timeout):
             response = response.get('detail', '').replace("\N{DEGREE SIGN}F", " degrees fahrenheit").replace("\n", ". ")
             logger.info(f"Response: {response}")
             sys.stdout.write(f"\rResponse: {response}")
