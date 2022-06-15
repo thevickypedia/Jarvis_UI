@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+0.1.9 (06/15/2022)
+------------------
+- Bump version to trigger deployment
+
+0.1.8 (06/15/2022)
+------------------
+- Bump version to trigger deployment
+
 0.1.7 (06/15/2022)
 ------------------
 - Change path when doc generation is run
