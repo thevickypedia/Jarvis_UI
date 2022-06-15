@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+0.1.2 (06/15/2022)
+------------------
+- Fix branch name in python-publish.yml
+- Update setup.py, README.md, version.py
+- Have an env var DOCS_GENERATION to filter default actions
+
 0.1.1 (06/15/2022)
 ------------------
 - Make Jarvis_UI as a pypi package

@@ -44,11 +44,11 @@
             
   <section id="jarvis-ui">
 <h1>Jarvis UI<a class="headerlink" href="#jarvis-ui" title="Permalink to this heading">¶</a></h1>
-<p>Connects to <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> running in the backend to process request and response via API calls.</p>
+<p>Connects to <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/api/fast.py"><code class="docutils literal notranslate"><span class="pre">Jarvis</span></code></a> running in the backend to process request and response via API calls.</p>
 <section id="mandatory-env-vars">
 <h2>Mandatory Env Vars:<a class="headerlink" href="#mandatory-env-vars" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">REQUEST_URL</span></code>: URL to which the API call has to be made.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">REQUEST_URL</span></code>: URL to which the API call has to be made. Can be <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or a <code class="docutils literal notranslate"><span class="pre">tunneled</span></code> URL.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">TOKEN</span></code>: Authentication token.</p></li>
 </ul>
 </section>
@@ -63,6 +63,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">LEGACY_WAKE_WORDS</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">jarvis</span></code></p></li>
 </ul>
+<p>Refer Jarvis’ <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/README.md">README</a> for more information on setting up the backend server.</p>
 </section>
 </section>
 

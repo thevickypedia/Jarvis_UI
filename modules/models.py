@@ -60,9 +60,10 @@ class FileIO(BaseModel):
 env = EnvConfig()
 fileio = FileIO()
 
-# if not env.request_url or not env.token:
-#     raise PermissionError(
-#         "'REQUEST_URL' or 'TOKEN' not found in environment variables."
-#     )
-# if not env.request_url.endswith("/"):
-#     env.request_url += "/"
+if not os.environ.get('DOCS_GENERATION'):
+    if not env.request_url or not env.token:
+        raise PermissionError(
+            "'REQUEST_URL' or 'TOKEN' not found in environment variables."
+        )
+    if not env.request_url.endswith("/"):
+        env.request_url += "/"

@@ -73,11 +73,10 @@ setup(
     classifiers=classifiers,
     keywords='python, natural-language-processing, text-to-speech, speech-recognition, jarvis, hotword-detection,'
              'virtual-assistant, multiprocessing, threadpool',
-    download_url=f'{base_url}/archive/master.zip',
+    download_url=f'{base_url}/archive/main.zip',
     project_urls={
         'Source': base_url,
-        'Docs': 'https://thevickypedia.github.io/Jarvis',
-        'Demo': 'https://vigneshrao.com/Jarvis/Jarvis_Demo.mp4',
+        'Docs': 'https://thevickypedia.github.io/Jarvis_UI',
         'Bug Tracker': f'{base_url}/issues'
     },
     zip_safe=True
