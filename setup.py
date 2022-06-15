@@ -10,7 +10,7 @@ base_url = 'https://github.com/thevickypedia/Jarvis_UI'
 classifiers = [
     'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Information Technology',
-    'Operating System :: OS Independent'
+    'Operating System :: OS Independent',
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
