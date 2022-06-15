@@ -11,6 +11,7 @@ classifiers = [
     'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Information Technology',
     'Operating System :: OS Independent',
+    'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',

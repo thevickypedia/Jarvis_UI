@@ -1,6 +1,20 @@
 Change Log
 ==========
 
+0.1.7 (06/15/2022)
+------------------
+- Change path when doc generation is run
+- Update README.md
+- Add LICENSE and update setup.py
+
+0.1.6 (06/15/2022)
+------------------
+- Add template for feature request
+
+0.1.5 (06/15/2022)
+------------------
+- Add template for bug report
+
 0.1.4 (06/15/2022)
 ------------------
 - Store exceptions in a dictionary

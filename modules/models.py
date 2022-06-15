@@ -13,6 +13,9 @@ from typing import Union
 from pydantic import (BaseModel, BaseSettings, DirectoryPath, Field, FilePath,
                       HttpUrl, PositiveInt)
 
+if os.getcwd().endswith("doc_generator"):
+    os.chdir(os.path.dirname(os.getcwd()))
+
 
 class EnvConfig(BaseSettings):
     """Configure all env vars and validate using ``pydantic`` to share across modules.
