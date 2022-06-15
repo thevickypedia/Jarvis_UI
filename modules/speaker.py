@@ -26,25 +26,22 @@ else:
     logger.info("Using default voice model.")
 
 
-def speak(text: str = None, run: bool = False, block: bool = True) -> NoReturn:
+def speak(text: str, block: bool = True) -> NoReturn:
     """Calls ``audio_driver.say`` to speak a statement from the received text.
 
     Args:
         text: Takes the text that has to be spoken as an argument.
-        run: Takes a boolean flag to choose whether to run the ``audio_driver.say`` loop.
         block: Flag to block the process while running the speaker task.
     """
-    if text:
-        text = text.replace('\n', '\t').strip()
-        if not text.endswith('.') and not text.endswith('!'):
-            text = text + '!'
-        if make_request(path='speech-synthesis',
-                        timeout=env.speech_timeout,  # Timeout for request to Jarvis running on fast api
-                        data={'text': text, 'quality': 'low',
-                              'timeout': env.speech_timeout}):  # Timeout for request to Docker running on localhost
-            playsound(sound=fileio.speech_wav_file, block=block)
-            os.remove(fileio.speech_wav_file)
-        else:
-            audio_driver.say(text=text)
-    if run:
+    text = text.replace('\n', '\t').strip()
+    if not text.endswith('.') and not text.endswith('!'):
+        text = text + '!'
+    if make_request(path='speech-synthesis',
+                    timeout=env.speech_timeout,  # Timeout for request to Jarvis running on fast api
+                    data={'text': text, 'quality': 'low',
+                          'timeout': env.speech_timeout}):  # Timeout for request to Docker running on localhost
+        playsound(sound=fileio.speech_wav_file, block=block)
+        os.remove(fileio.speech_wav_file)
+    else:
+        audio_driver.say(text=text)
         audio_driver.runAndWait()

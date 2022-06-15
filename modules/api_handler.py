@@ -14,7 +14,7 @@ from modules.models import env, fileio
 
 
 def make_request(path: str, timeout: Union[int, float], data: dict = None) -> Union[dict, bool]:
-    """Makes a ``POST`` call to offline-communicator running on ``localhost`` to execute a said task.
+    """Makes a ``POST`` call to the API running on the backend to execute a said task.
 
     Args:
         data: Takes the command to be executed as an argument.

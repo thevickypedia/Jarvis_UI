@@ -10,21 +10,10 @@ from pyaudio import PyAudio, paInt16
 
 from modules import listener, speaker
 from modules.api_handler import make_request
+from modules.config import config
 from modules.logger import logger
 from modules.models import env, fileio
 from modules.playsound import playsound
-
-if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
-    raise ConnectionError(
-        "Unable to connect to the API."
-    )
-if detail := keywords.get("detail"):
-    exit(detail)
-
-# delay_keywords = list(filter(lambda v: v is not None, delay_keywords))  # If 0 is to be included
-delay_with_ack = list(filter(None, keywords.get('car') + keywords.get('speed_test')))
-delay_without_ack = list(filter(None, keywords.get('television')))
-delay_keywords = delay_with_ack + delay_without_ack
 
 
 def processor() -> bool:
@@ -39,12 +28,19 @@ def processor() -> bool:
         sys.stdout.write(f"\rRequest: {phrase}")
         if "stop running" in phrase.lower():
             logger.info("User requested to stop.")
-            speaker.speak(text="Shutting down now!", run=True)
+            speaker.speak(text="Shutting down now!")
             return True
-        if any(word in phrase.lower() for word in delay_keywords):
+        if not any(word in phrase.lower() for word in config.keywords + config.conversation):
+            logger.warning(f"'{phrase}' is not a part of recognized keywords or conversation.")
+            return False
+        if not any(word in phrase.lower() for word in config.api_compatible['compatible']):
+            logger.warning(f"'{phrase}' is not a part of API compatible request.")
+            speaker.speak(text="I am unable to process this request via API calls!")
+            return False
+        if any(word in phrase.lower() for word in config.delay_keywords):
             logger.info(f"Increasing timeout for: {phrase}")
             timeout = 30
-            if any(word in phrase.lower() for word in delay_with_ack):
+            if any(word in phrase.lower() for word in config.delay_with_ack):
                 speaker.speak(text="Processing now.", block=False)
         else:
             timeout = env.request_timeout
@@ -52,9 +48,9 @@ def processor() -> bool:
             response = response.get('detail', '').replace("\N{DEGREE SIGN}F", " degrees fahrenheit").replace("\n", ". ")
             logger.info(f"Response: {response}")
             sys.stdout.write(f"\rResponse: {response}")
-            speaker.speak(text=response, run=True)
+            speaker.speak(text=response)
         else:
-            speaker.speak(text="I wasn't able to process your request.", run=True)
+            speaker.speak(text="I wasn't able to process your request.")
 
 
 class Activator:
