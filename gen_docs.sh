@@ -15,6 +15,5 @@ fi
 rm -rf docs
 mkdir docs
 mkdir -p doc_generator/_static  # creates a _static folder if unavailable
-export DOCS_GENERATION=1
 cp README.md doc_generator && cd doc_generator && make clean html && mv _build/html/* ../docs && rm -rf README.md fileio logs
 touch ../docs/.nojekyll
