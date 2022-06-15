@@ -43,7 +43,7 @@ class PlayAudio:
             channels=self.wave_file.getnchannels(), rate=self.wave_file.getframerate(), output=True
         )
 
-    def play(self):
+    def play(self) -> NoReturn:
         """Reads the data based on chunk size and plays the stream while writing to the stream."""
         # read data (based on the chunk size)
         data = self.wave_file.readframes(nframes=self.chunk)
@@ -55,7 +55,7 @@ class PlayAudio:
             data = self.wave_file.readframes(nframes=self.chunk)
         self.close()
 
-    def close(self):
+    def close(self) -> NoReturn:
         """Closes the wav file and resources blocked by pyaudio."""
         self.wave_file.close()
         self.py_audio.close(stream=self.stream)

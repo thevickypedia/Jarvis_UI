@@ -91,7 +91,7 @@ class Activator:
         )
         self.audio_stream = None
 
-    def open_stream(self):
+    def open_stream(self) -> NoReturn:
         """Initializes an audio stream."""
         self.audio_stream = self.py_audio.open(
             rate=self.detector.sample_rate,
@@ -102,7 +102,7 @@ class Activator:
             input_device_index=self.input_device_index
         )
 
-    def close_stream(self):
+    def close_stream(self) -> NoReturn:
         """Closes audio stream so that other listeners can use microphone."""
         self.py_audio.close(stream=self.audio_stream)
         self.audio_stream = None
@@ -157,7 +157,7 @@ def sentry_mode() -> NoReturn:
                     raise KeyboardInterrupt
 
 
-def begin():
+def begin() -> None:
     """Starts main process to activate Jarvis and process requests via API calls."""
     try:
         if env.macos and packaging.version.parse(platform.mac_ver()[0]) < packaging.version.parse('10.14'):
