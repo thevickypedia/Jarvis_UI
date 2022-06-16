@@ -1,3 +1,10 @@
+![Python](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue)
+
+**Deployments**
+
+[![pages-build-deployment](https://github.com/thevickypedia/Jarvis_UI/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/thevickypedia/Jarvis_UI/actions/workflows/pages/pages-build-deployment)
+[![pypi](https://github.com/thevickypedia/Jarvis_UI/actions/workflows/python-publish.yml/badge.svg)](https://github.com/thevickypedia/Jarvis_UI/actions/workflows/python-publish.yml)
+
 # Jarvis UI
 
 Connects to [`Jarvis`](https://github.com/thevickypedia/Jarvis/blob/master/api/fast.py) running in the backend to process request and response via API calls.
@@ -16,3 +23,36 @@ Click [here](https://github.com/thevickypedia/Jarvis#env-variables), for more in
 - `LEGACY_WAKE_WORDS`: Defaults to `jarvis`
 
 Refer Jarvis' [README](https://github.com/thevickypedia/Jarvis/blob/master/README.md) for more information on setting up the backend server.
+
+### Coding Standards
+Docstring format: [`Google`](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) <br>
+Styling conventions: [`PEP 8`](https://www.python.org/dev/peps/pep-0008/) <br>
+Clean code with pre-commit hooks: [`flake8`](https://flake8.pycqa.org/en/latest/) and 
+[`isort`](https://pycqa.github.io/isort/)
+
+### Linting
+`PreCommit` will ensure linting, and the doc creation are run on every commit.
+
+**Requirement**
+<br>
+`pip install --no-cache --upgrade sphinx pre-commit recommonmark`
+
+**Usage**
+<br>
+`pre-commit run --all-files`
+
+### Pypi Package
+[![pypi-module](https://img.shields.io/badge/Software%20Repository-pypi-1f425f.svg)](https://packaging.python.org/tutorials/packaging-projects/)
+
+[https://pypi.org/project/jarvis-ui/](https://pypi.org/project/jarvis-ui/)
+
+### Runbook
+[![made-with-sphinx-doc](https://img.shields.io/badge/Code%20Docs-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/en/master/man/sphinx-autogen.html)
+
+[https://thevickypedia.github.io/Jarvis_UI/](https://thevickypedia.github.io/Jarvis_UI/)
+
+## License & copyright
+
+&copy; Vignesh Sivanandha Rao
+
+Licensed under the [MIT License](https://github.com/thevickypedia/Jarvis_UI/blob/main/LICENSE)

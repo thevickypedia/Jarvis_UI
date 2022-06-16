@@ -12,6 +12,12 @@ import requests
 from modules.logger import logger
 from modules.models import env, fileio
 
+session = requests.Session()
+session.headers = {
+    'accept': 'application/json',
+    'Authorization': f'Bearer {env.token}'
+}
+
 
 def make_request(path: str, timeout: Union[int, float], data: dict = None) -> Union[dict, bool]:
     """Makes a ``POST`` call to the API running on the backend to execute a said task.
@@ -21,15 +27,15 @@ def make_request(path: str, timeout: Union[int, float], data: dict = None) -> Un
         path: Path to make the api call.
         timeout: Timeout for a specific call.
 
+    See Also:
+        - Makes session calls using a fixed connect timeout for ``3 seconds`` and variable read timeout.
+
     Returns:
         dict:
         Returns the JSON response if request was successful.
     """
     try:
-        response = requests.post(url=env.request_url + path,
-                                 headers={'accept': 'application/json',
-                                          'Authorization': f'Bearer {env.token}'},
-                                 json=data, timeout=timeout)
+        response = session.post(url=env.request_url + path, json=data, timeout=(3, timeout))
     except requests.RequestException as error:
         logger.error(error)
         return False

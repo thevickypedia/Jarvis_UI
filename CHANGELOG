@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+0.2.0 (06/15/2022)
+------------------
+- Use `Session` to reuse headers
+- Set a fixed connect timeout for 3 seconds to the API
+- Update docs
+
 0.1.9 (06/15/2022)
 ------------------
 - Bump version to trigger deployment
