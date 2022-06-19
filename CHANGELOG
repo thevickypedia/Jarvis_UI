@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.2.3 (06/19/2022)
+------------------
+- Disable API calls to speech synthesis by default
+- Parse request url
+
 0.2.2 (06/15/2022)
 ------------------
 - Add `CSS` for docstrings

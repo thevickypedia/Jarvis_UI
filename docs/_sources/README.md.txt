@@ -16,7 +16,7 @@ Connects to [`Jarvis`](https://github.com/thevickypedia/Jarvis/blob/master/api/f
 #### Optional Env Vars:
 Click [here](https://github.com/thevickypedia/Jarvis#env-variables), for more information.
 - `REQUEST_TIMEOUT`: Defaults to `5`
-- `SPEECH_TIMEOUT`: Defaults to `5`
+- `SPEECH_TIMEOUT`: Defaults to `0` which disables call to speech synthesis.
 - `SENSITIVITY`: Defaults to `0.5`
 - `VOICE_TIMEOUT`: Defaults to `3`
 - `VOICE_PHRASE_LIMIT`: Defaults to `3`
