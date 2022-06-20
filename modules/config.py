@@ -19,14 +19,14 @@ class Config(BaseConfig):
 
     """
 
-    EXCEPTION = {"connection": ConnectionError("Unable to connect to the API."),
-                 "permission": PermissionError("'REQUEST_URL' or 'TOKEN' not found in environment variables.")}
+    EXCEPTION = {"permission": PermissionError("'REQUEST_URL' or 'TOKEN' not found in environment variables.")}
     if not env.request_url or not env.token:
         raise EXCEPTION['permission']
     parsed = urlparse(url=env.request_url)
     env.request_url = parsed.geturl()
     if env.request_url[-1] != parsed.path:
         env.request_url += parsed.path
+    EXCEPTION["connection"] = ConnectionError(f"Unable to connect to the API via {env.request_url}")
     if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
         raise EXCEPTION['connection']
     if not (conversation := make_request(path='conversation', timeout=env.request_timeout)):

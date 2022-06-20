@@ -41,7 +41,7 @@ def speak(text: str, block: bool = True) -> NoReturn:
                                            data={'text': text, 'quality': 'low',
                                                  'timeout': env.speech_timeout}):  # Timeout for request to Docker
         playsound(sound=fileio.speech_wav_file, block=block)
-        os.remove(fileio.speech_wav_file)
+        os.remove(fileio.speech_wav_file) if env.macos or block else None  # because, windows
     else:
         audio_driver.say(text=text)
         audio_driver.runAndWait()
