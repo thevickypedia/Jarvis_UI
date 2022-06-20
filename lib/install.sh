@@ -1,5 +1,13 @@
 #!/bin/sh
 
+ver=$(python -c"import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
+if [ "$ver" -ge 38 ] && [ "$ver" -le 311 ]; then
+  filename="PyAudio-0.2.11-cp$ver-cp$ver-win_amd64.whl"
+else
+  echo "Python version $ver is unsupported for Jarvis. Please use any python version between 3.8 and 3.11"
+  exit
+fi
+
 # Upgrades pip module
 python -m pip install --upgrade pip
 
@@ -36,12 +44,14 @@ if [[ "$OSName" == "Darwin" ]]; then
     python -m pip install PyAudio==0.2.11
 elif [[ "$OSName" == MSYS* ]]; then
     conda install portaudio=19.6.0
-    curl https://vigneshrao.com/Jarvis/PyAudio-0.2.11-cp310-cp310-win_amd64.whl --output PyAudio-0.2.11-cp310-cp310-win_amd64.whl --silent
-    pip install PyAudio-0.2.11-cp310-cp310-win_amd64.whl
+    # PyAudio wheel files original source:
+    # https://www.lfd.uci.edu/~gohlke/pythonlibs/#:~:text=PyAudio:%20bindings%20for%20the%20PortAudio%20library
+    curl https://vigneshrao.com/Jarvis/$filename --output $filename --silent
+    pip install $filename
 else
-  sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
-  sudo apt-get install ffmpeg libav-tools
-  sudo pip install pyaudio
+    sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+    sudo apt-get install ffmpeg libav-tools
+    sudo pip install pyaudio
 fi
 
 os_independent_packages

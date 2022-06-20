@@ -50,34 +50,36 @@
 <h1>Jarvis UI<a class="headerlink" href="#jarvis-ui" title="Permalink to this heading">¶</a></h1>
 <p>Connects to <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/api/fast.py"><code class="docutils literal notranslate"><span class="pre">Jarvis</span></code></a> running in the backend to process request and response via API calls.</p>
 <section id="mandatory-env-vars">
-<h2>Mandatory Env Vars:<a class="headerlink" href="#mandatory-env-vars" title="Permalink to this heading">¶</a></h2>
+<h2>Mandatory Env Vars<a class="headerlink" href="#mandatory-env-vars" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">REQUEST_URL</span></code>: URL to which the API call has to be made. Can be <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or a <code class="docutils literal notranslate"><span class="pre">tunneled</span></code> URL.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">TOKEN</span></code>: Authentication token.</p></li>
 </ul>
 </section>
 <section id="optional-env-vars">
-<h2>Optional Env Vars:<a class="headerlink" href="#optional-env-vars" title="Permalink to this heading">¶</a></h2>
+<h2>Optional Env Vars<a class="headerlink" href="#optional-env-vars" title="Permalink to this heading">¶</a></h2>
 <p>Click <a class="reference external" href="https://github.com/thevickypedia/Jarvis#env-variables">here</a>, for more information.</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">REQUEST_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">5</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SPEECH_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code> which disables call to speech synthesis.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SENSITIVITY</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">VOICE_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">LEGACY_WAKE_WORDS</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">jarvis</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">REQUEST_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">5</span></code> - <em>Timeout for API calls</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SPEECH_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code> for MacOS, <code class="docutils literal notranslate"><span class="pre">5</span></code> for Windows - <em>Timeout for speech synthesis</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SENSITIVITY</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code> - <em>Sensitivity of wake word detection</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VOICE_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code> - <em>Timeout for listener once wake word is detected</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code> - <em>Timeout for phrase once listener is activated</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LEGACY_WAKE_WORDS</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">jarvis</span></code> - <em>Wake words for <code class="docutils literal notranslate"><span class="pre">MacOS</span></code> older than 10.14</em></p></li>
 </ul>
+<blockquote>
+<div><p>ONLY for <code class="docutils literal notranslate"><span class="pre">MacOS</span></code>: <code class="docutils literal notranslate"><span class="pre">SPEECH_TIMEOUT</span></code> is set to <code class="docutils literal notranslate"><span class="pre">0</span></code> by default which deactivates API calls to <code class="docutils literal notranslate"><span class="pre">/speech-synthesis</span></code></p>
+</div></blockquote>
 <p>Refer Jarvis’ <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/README.md">README</a> for more information on setting up the backend server.</p>
-</section>
 <section id="coding-standards">
-<h2>Coding Standards<a class="headerlink" href="#coding-standards" title="Permalink to this heading">¶</a></h2>
+<h3>Coding Standards<a class="headerlink" href="#coding-standards" title="Permalink to this heading">¶</a></h3>
 <p>Docstring format: <a class="reference external" href="https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings"><code class="docutils literal notranslate"><span class="pre">Google</span></code></a> <br>
 Styling conventions: <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/"><code class="docutils literal notranslate"><span class="pre">PEP</span> <span class="pre">8</span></code></a> <br>
 Clean code with pre-commit hooks: <a class="reference external" href="https://flake8.pycqa.org/en/latest/"><code class="docutils literal notranslate"><span class="pre">flake8</span></code></a> and
 <a class="reference external" href="https://pycqa.github.io/isort/"><code class="docutils literal notranslate"><span class="pre">isort</span></code></a></p>
 </section>
 <section id="linting">
-<h2>Linting<a class="headerlink" href="#linting" title="Permalink to this heading">¶</a></h2>
+<h3>Linting<a class="headerlink" href="#linting" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">PreCommit</span></code> will ensure linting, and the doc creation are run on every commit.</p>
 <p><strong>Requirement</strong>
 <br>
@@ -87,14 +89,15 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
 <code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span> <span class="pre">--all-files</span></code></p>
 </section>
 <section id="pypi-package">
-<h2>Pypi Package<a class="headerlink" href="#pypi-package" title="Permalink to this heading">¶</a></h2>
+<h3>Pypi Package<a class="headerlink" href="#pypi-package" title="Permalink to this heading">¶</a></h3>
 <p><a class="reference external" href="https://packaging.python.org/tutorials/packaging-projects/"><img alt="pypi-module" src="https://img.shields.io/badge/Software%20Repository-pypi-1f425f.svg" /></a></p>
 <p><a class="reference external" href="https://pypi.org/project/jarvis-ui/">https://pypi.org/project/jarvis-ui/</a></p>
 </section>
 <section id="runbook">
-<h2>Runbook<a class="headerlink" href="#runbook" title="Permalink to this heading">¶</a></h2>
+<h3>Runbook<a class="headerlink" href="#runbook" title="Permalink to this heading">¶</a></h3>
 <p><a class="reference external" href="https://www.sphinx-doc.org/en/master/man/sphinx-autogen.html"><img alt="made-with-sphinx-doc" src="https://img.shields.io/badge/Code%20Docs-Sphinx-1f425f.svg" /></a></p>
 <p><a class="reference external" href="https://thevickypedia.github.io/Jarvis_UI/">https://thevickypedia.github.io/Jarvis_UI/</a></p>
+</section>
 </section>
 <section id="license-copyright">
 <h2>License &amp; copyright<a class="headerlink" href="#license-copyright" title="Permalink to this heading">¶</a></h2>
@@ -114,12 +117,14 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Jarvis UI</a><ul>
-<li><a class="reference internal" href="#mandatory-env-vars">Mandatory Env Vars:</a></li>
-<li><a class="reference internal" href="#optional-env-vars">Optional Env Vars:</a></li>
+<li><a class="reference internal" href="#mandatory-env-vars">Mandatory Env Vars</a></li>
+<li><a class="reference internal" href="#optional-env-vars">Optional Env Vars</a><ul>
 <li><a class="reference internal" href="#coding-standards">Coding Standards</a></li>
 <li><a class="reference internal" href="#linting">Linting</a></li>
 <li><a class="reference internal" href="#pypi-package">Pypi Package</a></li>
 <li><a class="reference internal" href="#runbook">Runbook</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#license-copyright">License &amp; copyright</a></li>
 </ul>
 </li>

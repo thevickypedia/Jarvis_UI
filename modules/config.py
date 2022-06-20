@@ -13,7 +13,7 @@ from modules.models import env
 
 
 class Config(BaseConfig):
-    """Make calls to get keywords, conversation and api-compatibles during start up.
+    """Gets keywords, conversation and api-compatibles during start up. Mandates ``speech-synthesis`` for WindowsOS.
 
     >>> Config
 
@@ -35,6 +35,8 @@ class Config(BaseConfig):
         raise EXCEPTION['connection']
     if detail := keywords.get("detail", conversation.get("detail", api_compatible.get("detail"))):
         exit(detail)
+    if not env.macos and not env.speech_timeout or env.speech_timeout < env.request_timeout:
+        env.speech_timeout = env.request_timeout
 
     # delay_keywords = list(filter(lambda v: v is not None, delay_keywords))  # If 0 is to be included
     delay_with_ack = list(filter(None, keywords.get('car', []) + keywords.get('speed_test', []) +
