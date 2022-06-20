@@ -122,6 +122,7 @@ class Activator:
                 playsound(sound=fileio.acknowledgement, block=False)
                 self.close_stream()
                 if processor():
+                    self.stop()
                     raise KeyboardInterrupt
 
     def stop(self) -> NoReturn:

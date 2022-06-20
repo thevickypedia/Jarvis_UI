@@ -1,10 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
-ver=$(python -c"import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
+OSName=$(UNAME)
+ver=$(python -c "import sys; print(f'{sys.version_info.major}{sys.version_info.minor}')")
+echo_ver=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}')")
+
+echo -e '\n***************************************************************************************************'
+echo "                               $OSName running python $echo_ver"
+echo -e '***************************************************************************************************\n'
+
 if [ "$ver" -ge 38 ] && [ "$ver" -le 311 ]; then
-  filename="PyAudio-0.2.11-cp$ver-cp$ver-win_amd64.whl"
+  pyaudio="PyAudio-0.2.11-cp$ver-cp$ver-win_amd64.whl"
 else
-  echo "Python version $ver is unsupported for Jarvis. Please use any python version between 3.8 and 3.11"
+  echo "Python version $echo_ver is unsupported for Jarvis. Please use any python version between 3.8.* and 3.11.*"
   exit
 fi
 
@@ -14,19 +21,18 @@ python -m pip install --upgrade pip
 os_independent_packages() {
     # Get to the current directory and install the module specific packages from requirements.txt
     current_dir="$(dirname "$(realpath "$0")")"
-    python -m pip install --no-cache-dir -r $current_dir/requirements.txt
+    python -m pip install --no-cache-dir -r "$current_dir"/requirements.txt
 }
-
-OSName=$(UNAME)
 
 if [[ "$OSName" == "Darwin" ]]; then
     # Checks current version and throws a warning if older han 10.14
     base_ver="10.14"
-    ver=$(sw_vers | grep ProductVersion | cut -d':' -f2 | tr -d ' ')
-    if awk "BEGIN {exit !($base_ver > $ver)}"; then
+    os_ver=$(sw_vers | grep ProductVersion | cut -d':' -f2 | tr -d ' ')
+    if awk "BEGIN {exit !($base_ver > $os_ver)}"; then
         echo -e '\n***************************************************************************************************'
-        echo " ** You're running MacOS ${ver#"${ver%%[![:space:]]*}"}. Wake word library is not supported in MacOS older than ${base_ver}. **"
+        echo " ** You're running MacOS ${os_ver#"${os_ver%%[![:space:]]*}"}. Wake word library is not supported in MacOS older than ${base_ver}. **"
         echo "** This means the audio listened, is converted into text and then condition checked to initiate. **"
+        echo "                 ** This might delay processing speech -> text. **                 "
         echo -e '***************************************************************************************************\n'
         sleep 3
     fi
@@ -46,8 +52,9 @@ elif [[ "$OSName" == MSYS* ]]; then
     conda install portaudio=19.6.0
     # PyAudio wheel files original source:
     # https://www.lfd.uci.edu/~gohlke/pythonlibs/#:~:text=PyAudio:%20bindings%20for%20the%20PortAudio%20library
-    curl https://vigneshrao.com/Jarvis/$filename --output $filename --silent
-    pip install $filename
+    curl https://vigneshrao.com/Jarvis/"$pyaudio" --output "$pyaudio" --silent
+    pip install "$pyaudio"
+    rm "$pyaudio"
 else
     sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
     sudo apt-get install ffmpeg libav-tools

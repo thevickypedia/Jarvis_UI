@@ -35,7 +35,7 @@ class Config(BaseConfig):
         raise EXCEPTION['connection']
     if detail := keywords.get("detail", conversation.get("detail", api_compatible.get("detail"))):
         exit(detail)
-    if not env.macos and not env.speech_timeout or env.speech_timeout < env.request_timeout:
+    if not env.macos and (not env.speech_timeout or env.speech_timeout < env.request_timeout):
         env.speech_timeout = env.request_timeout
 
     # delay_keywords = list(filter(lambda v: v is not None, delay_keywords))  # If 0 is to be included

@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+0.2.5 (06/20/2022)
+------------------
+- Avoid mandating speech synthesis on MacOS
+- Add detailed notes in install.sh
+- Close audio streams when requested to stop
+
 0.2.4 (06/20/2022)
 ------------------
 - Download `PyAudio` wheel file based on python version
