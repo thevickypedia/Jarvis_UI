@@ -35,6 +35,7 @@ class EnvConfig(BaseSettings):
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=3, env="VOICE_PHRASE_LIMIT")
     legacy_wake_words: list = Field(default=["jarvis"], env="LEGACY_WAKE_WORDS")
+    native_audio: bool = Field(default=False, env="NATIVE_AUDIO")
 
     class Config:
         """Environment variables configuration."""

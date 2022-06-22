@@ -42,7 +42,7 @@ def make_request(path: str, timeout: Union[int, float], data: dict = None) -> Un
     if not response.ok:
         logger.error(f"{response.status_code} - {response.reason}")
         return False
-    if path == "speech-synthesis":
+    if path == "speech-synthesis" or (data and data.get('native_audio')):
         with open(file=fileio.speech_wav_file, mode="wb") as file:
             file.write(response.content)
         return True

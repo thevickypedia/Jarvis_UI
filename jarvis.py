@@ -1,3 +1,4 @@
+import os
 import pathlib
 import platform
 import struct
@@ -44,7 +45,14 @@ def processor() -> bool:
                 speaker.speak(text="Processing now.", block=False)
         else:
             timeout = env.request_timeout
-        if response := make_request(path='offline-communicator', data={'command': phrase}, timeout=timeout):
+        if response := make_request(path='offline-communicator', timeout=timeout,
+                                    data={'command': phrase, 'native_audio': env.native_audio}):
+            if env.native_audio:
+                logger.info("Response received as audio.")
+                sys.stdout.write("\rResponse received as audio.")
+                playsound(sound=fileio.speech_wav_file)
+                os.remove(fileio.speech_wav_file)
+                return False
             response = response.get('detail', '').replace("\N{DEGREE SIGN}F", " degrees fahrenheit").replace("\n", ". ")
             logger.info(f"Response: {response}")
             sys.stdout.write(f"\rResponse: {response}")
