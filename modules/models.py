@@ -5,8 +5,11 @@
 
 """
 
+import base64
+import binascii
 import os
 import platform
+import string
 from datetime import datetime
 from typing import Union
 
@@ -15,6 +18,8 @@ from pydantic import (BaseModel, BaseSettings, DirectoryPath, Field, FilePath,
 
 if os.getcwd().endswith("doc_generator"):
     os.chdir(os.path.dirname(os.getcwd()))
+
+UNICODE_PREFIX = base64.b64decode(b'XA==').decode(encoding="ascii") + string.ascii_letters[20] + string.digits[:1] * 2
 
 
 class EnvConfig(BaseSettings):
@@ -63,3 +68,7 @@ class FileIO(BaseModel):
 
 env = EnvConfig()
 fileio = FileIO()
+raw_token = env.token
+env.token = UNICODE_PREFIX + UNICODE_PREFIX.join(binascii.hexlify(data=env.token.encode(encoding="utf-8"),
+                                                                  sep="-").decode(encoding="utf-8").split(sep="-"))
+assert raw_token == bytes(env.token, "utf-8").decode(encoding="unicode_escape")  # Check decoded value before startup

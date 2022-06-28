@@ -4,8 +4,6 @@
 
 """
 
-from urllib.parse import urlparse
-
 from pydantic import BaseConfig
 
 from modules.api_handler import make_request
@@ -22,10 +20,8 @@ class Config(BaseConfig):
     EXCEPTION = {"permission": PermissionError("'REQUEST_URL' or 'TOKEN' not found in environment variables.")}
     if not env.request_url or not env.token:
         raise EXCEPTION['permission']
-    parsed = urlparse(url=env.request_url)
-    env.request_url = parsed.geturl()
-    if env.request_url[-1] != parsed.path:
-        env.request_url += parsed.path
+    if env.request_url[-1] != "/":
+        env.request_url += "/"
     EXCEPTION["connection"] = ConnectionError(f"Unable to connect to the API via {env.request_url}")
     if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
         raise EXCEPTION['connection']

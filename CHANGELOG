@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+0.2.8 (06/28/2022)
+------------------
+- Hexlify token to secure it over internet
+- Assert secured token during startup
+- Remove parsing URL during startup
+
 0.2.7 (06/21/2022)
 ------------------
 - Have an option to process audio at source machine
