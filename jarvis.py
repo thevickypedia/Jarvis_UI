@@ -88,7 +88,6 @@ class Activator:
         """
         keyword_paths = [pvporcupine.KEYWORD_PATHS[x] for x in [pathlib.PurePath(__file__).stem]]
         self.input_device_index = input_device_index
-        self.recorded_frames = []
 
         self.py_audio = PyAudio()
         self.detector = pvporcupine.create(
@@ -125,7 +124,6 @@ class Activator:
             pcm = struct.unpack_from("h" * self.detector.frame_length,
                                      self.audio_stream.read(num_frames=self.detector.frame_length,
                                                             exception_on_overflow=False))
-            self.recorded_frames.append(pcm)
             if self.detector.process(pcm=pcm) >= 0:
                 playsound(sound=fileio.acknowledgement, block=False)
                 self.close_stream()

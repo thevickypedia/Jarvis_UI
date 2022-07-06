@@ -31,8 +31,8 @@ class EnvConfig(BaseSettings):
 
     home: DirectoryPath = Field(default=os.path.expanduser("~"), env="HOME")
 
-    request_url: HttpUrl = Field(default=None, env="REQUEST_URL")
-    token: str = Field(default=None, env="TOKEN")
+    request_url: HttpUrl = Field(default=..., env="REQUEST_URL")
+    token: str = Field(default=..., env="TOKEN")
 
     request_timeout: Union[float, PositiveInt] = Field(default=5, env="REQUEST_TIMEOUT")
     speech_timeout: Union[float, PositiveInt] = Field(default=0, env="SPEECH_TIMEOUT")

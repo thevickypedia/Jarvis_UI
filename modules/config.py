@@ -17,18 +17,15 @@ class Config(BaseConfig):
 
     """
 
-    EXCEPTION = {"permission": PermissionError("'REQUEST_URL' or 'TOKEN' not found in environment variables.")}
-    if not env.request_url or not env.token:
-        raise EXCEPTION['permission']
     if env.request_url[-1] != "/":
         env.request_url += "/"
-    EXCEPTION["connection"] = ConnectionError(f"Unable to connect to the API via {env.request_url}")
+    EXCEPTION = ConnectionError(f"Unable to connect to the API via {env.request_url}")
     if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
-        raise EXCEPTION['connection']
+        raise EXCEPTION
     if not (conversation := make_request(path='conversation', timeout=env.request_timeout)):
-        raise EXCEPTION['connection']
+        raise EXCEPTION
     if not (api_compatible := make_request(path='api-compatible', timeout=env.request_timeout)):
-        raise EXCEPTION['connection']
+        raise EXCEPTION
     if detail := keywords.get("detail", conversation.get("detail", api_compatible.get("detail"))):
         exit(detail)
     if not env.macos and (not env.speech_timeout or env.speech_timeout < env.request_timeout):

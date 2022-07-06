@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+0.2.9 (07/06/2022)
+------------------
+- Let pydantic validate env vars
+- Remove unused recorded frames
+
 0.2.8 (06/28/2022)
 ------------------
 - Hexlify token to secure it over internet
