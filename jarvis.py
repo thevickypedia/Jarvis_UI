@@ -29,20 +29,20 @@ def processor() -> bool:
         sys.stdout.write(f"\rRequest: {phrase}")
         if "stop running" in phrase.lower():
             logger.info("User requested to stop.")
-            speaker.speak(text="Shutting down now!")
+            playsound(sound=fileio.shutdown)
             return True
         if not any(word in phrase.lower() for word in config.keywords + config.conversation):
             logger.warning(f"'{phrase}' is not a part of recognized keywords or conversation.")
             return False
         if not any(word in phrase.lower() for word in config.api_compatible['compatible']):
             logger.warning(f"'{phrase}' is not a part of API compatible request.")
-            speaker.speak(text="I am unable to process this request via API calls!")
+            playsound(sound=fileio.unprocessable)
             return False
-        if any(word in phrase.lower() for word in config.delay_keywords):
+        if any(word in phrase.lower() for word in config.delay_with_ack + config.delay_without_ack):
             logger.info(f"Increasing timeout for: {phrase}")
             timeout = 30
             if any(word in phrase.lower() for word in config.delay_with_ack):
-                speaker.speak(text="Processing now.", block=False)
+                playsound(sound=fileio.processing, block=False)
         else:
             timeout = env.request_timeout
         if response := make_request(path='offline-communicator', timeout=timeout,
@@ -58,7 +58,7 @@ def processor() -> bool:
             sys.stdout.write(f"\rResponse: {response}")
             speaker.speak(text=response)
         else:
-            speaker.speak(text="I wasn't able to process your request.")
+            playsound(sound=fileio.failed)
 
 
 class Activator:

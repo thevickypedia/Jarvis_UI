@@ -10,15 +10,17 @@ import binascii
 import os
 import platform
 import string
+import warnings
 from datetime import datetime
 from typing import Union
 
-from pydantic import (BaseModel, BaseSettings, DirectoryPath, Field, FilePath,
-                      HttpUrl, PositiveInt)
+from pydantic import (BaseSettings, DirectoryPath, Field, FilePath, HttpUrl,
+                      PositiveInt)
 
 if os.getcwd().endswith("doc_generator"):
     os.chdir(os.path.dirname(os.getcwd()))
 
+OS = platform.system()
 UNICODE_PREFIX = base64.b64decode(b'XA==').decode(encoding="ascii") + string.ascii_letters[20] + string.digits[:1] * 2
 
 
@@ -47,23 +49,31 @@ class EnvConfig(BaseSettings):
 
         env_prefix = ""
         env_file = ".env"
-
-    if platform.system() == "Windows":
-        macos = 0
-    else:
+    if OS == "Darwin":
         macos = 1
+    else:
+        macos = 0
+        if OS != "Windows":
+            warnings.warn(
+                f"Running on un-tested operating system: {platform.system()}.\n"
+                "Please raise an issue at https://github.com/thevickypedia/Jarvis_UI/issues/new/choose if found."
+            )
 
 
-class FileIO(BaseModel):
+class FileIO(BaseSettings):
     """Loads all the mp3 files' path and log file path required by Jarvis.
 
     >>> FileIO
 
     """
 
+    failed: FilePath = os.path.join('indicators', 'failed.wav')
+    shutdown: FilePath = os.path.join('indicators', 'shutdown.wav')
+    processing: FilePath = os.path.join('indicators', 'processing.wav')
+    unprocessable: FilePath = os.path.join('indicators', 'unprocessable.wav')
     acknowledgement: FilePath = os.path.join('indicators', 'acknowledgement.wav')
+    speech_wav_file: Union[FilePath, str] = os.path.join('indicators', 'speech-synthesis.wav')
     base_log_file: FilePath = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))
-    speech_wav_file: FilePath = os.path.join('indicators', 'speech-synthesis.wav')
 
 
 env = EnvConfig()

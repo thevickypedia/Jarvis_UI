@@ -3,11 +3,15 @@
 >>> Config
 
 """
+import os
+import warnings
 
 from pydantic import BaseConfig
 
 from modules.api_handler import make_request
-from modules.models import env
+from modules.models import env, fileio
+
+add_ss_extn = lambda filepath: os.path.splitext(filepath)[0] + "_ss" + os.path.splitext(filepath)[1]
 
 
 class Config(BaseConfig):
@@ -34,10 +38,22 @@ class Config(BaseConfig):
     # delay_keywords = list(filter(lambda v: v is not None, delay_keywords))  # If 0 is to be included
     delay_with_ack = list(filter(None, keywords.get('car', []) + keywords.get('speed_test', []) +
                                  keywords.get('google_home', [])))
-    delay_without_ack = list(filter(None, keywords.get('television', [])))
-    delay_keywords = delay_with_ack + delay_without_ack
+    delay_without_ack = list(filter(None, keywords.get('television', [])))  # Since only the initial turn on
     keywords = sum([v for _, v in keywords.items()], [])
     conversation = sum([v for _, v in conversation.items()], [])
+
+    if env.speech_timeout and env.native_audio:
+        warnings.warn(
+            "Both `speech-synthesis` and `native-audio` cannot be enabled simultaneously.\n"
+            "Speech synthesis uses third-party tts service where as `native_audio` preserves the audio from server.\n"
+            "Disabling speech synthesis!!"
+        )
+        env.speech_timeout = 0
+    elif env.speech_timeout and not env.native_audio:
+        fileio.failed = add_ss_extn(fileio.failed)
+        fileio.shutdown = add_ss_extn(fileio.shutdown)
+        fileio.processing = add_ss_extn(fileio.processing)
+        fileio.unprocessable = add_ss_extn(fileio.unprocessable)
 
 
 config = Config()
