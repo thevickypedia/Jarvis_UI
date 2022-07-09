@@ -98,6 +98,20 @@ class Activator:
         )
         self.audio_stream = None
 
+    def __del__(self) -> NoReturn:
+        """Invoked when the run loop is exited or manual interrupt.
+
+        See Also:
+            - Releases resources held by porcupine.
+            - Closes audio stream.
+            - Releases port audio resources.
+        """
+        self.detector.delete()
+        if self.audio_stream and self.audio_stream.is_active():
+            self.py_audio.close(stream=self.audio_stream)
+            self.audio_stream.close()
+        self.py_audio.terminate()
+
     def open_stream(self) -> NoReturn:
         """Initializes an audio stream."""
         self.audio_stream = self.py_audio.open(
@@ -128,22 +142,7 @@ class Activator:
                 playsound(sound=fileio.acknowledgement, block=False)
                 self.close_stream()
                 if processor():
-                    self.stop()
-                    raise KeyboardInterrupt
-
-    def stop(self) -> NoReturn:
-        """Invoked when the run loop is exited or manual interrupt.
-
-        See Also:
-            - Releases resources held by porcupine.
-            - Closes audio stream.
-            - Releases port audio resources.
-        """
-        self.detector.delete()
-        if self.audio_stream and self.audio_stream.is_active():
-            self.py_audio.close(stream=self.audio_stream)
-            self.audio_stream.close()
-        self.py_audio.terminate()
+                    break
 
 
 def sentry_mode() -> NoReturn:
@@ -161,7 +160,7 @@ def sentry_mode() -> NoReturn:
             if any(word in wake_word.lower() for word in env.legacy_wake_words):
                 playsound(sound=fileio.acknowledgement, block=False)
                 if processor():
-                    raise KeyboardInterrupt
+                    break
 
 
 def begin() -> None:

@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+0.3.1 (07/09/2022)
+------------------
+- Convert stop method to destructor
+- Break loop instead of raising exception
+- Fix pydantic validation
+
 0.3.0 (07/08/2022)
 ------------------
 - Add preconfigured wav files to process tts in background

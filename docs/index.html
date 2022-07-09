@@ -56,110 +56,8 @@
 </ul>
 </div>
 </section>
-<section id="module-jarvis">
-<span id="jarvis"></span><h1>Jarvis<a class="headerlink" href="#module-jarvis" title="Permalink to this heading">¶</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="jarvis.Activator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">Activator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_device_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis.Activator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Awaits for the keyword <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> and triggers <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when heard.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Activator</span>
-</pre></div>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Creates an input audio stream from a microphone, monitors it, and detects the specified wake word.</p></li>
-<li><p>Once detected, Jarvis triggers the <code class="docutils literal notranslate"><span class="pre">listener.listen()</span></code> function with an <code class="docutils literal notranslate"><span class="pre">acknowledgement</span></code> sound played.</p></li>
-<li><p>After processing the phrase, the converted text is sent as response to the API.</p></li>
-</ul>
-</div>
-<p>Initiates Porcupine object for hot word detection.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input_device_index</strong> – Index of Input Device to use.</p>
-</dd>
-</dl>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Instantiates an instance of Porcupine object and monitors audio stream for occurrences of keywords.</p></li>
-<li><p>A higher sensitivity results in fewer misses at the cost of increasing the false alarm rate.</p></li>
-<li><p>sensitivity: Tolerance/Sensitivity level. Takes argument or env var <code class="docutils literal notranslate"><span class="pre">sensitivity</span></code> or defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></li>
-</ul>
-</div>
-<p class="rubric">References</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://people.csail.mit.edu/hubert/pyaudio/docs/#pyaudio.Stream.read">Audio Overflow</a> handling.</p></li>
-</ul>
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis.Activator.close_stream">
-<span class="sig-name descname"><span class="pre">close_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis.Activator.close_stream" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes audio stream so that other listeners can use microphone.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis.Activator.open_stream">
-<span class="sig-name descname"><span class="pre">open_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis.Activator.open_stream" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initializes an audio stream.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis.Activator.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis.Activator.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs <code class="docutils literal notranslate"><span class="pre">audio_stream</span></code> in a forever loop and calls <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when the phrase <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> is heard.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis.Activator.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis.Activator.stop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Invoked when the run loop is exited or manual interrupt.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Releases resources held by porcupine.</p></li>
-<li><p>Closes audio stream.</p></li>
-<li><p>Releases port audio resources.</p></li>
-</ul>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis.begin">
-<span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">begin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#jarvis.begin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Starts main process to activate Jarvis and process requests via API calls.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis.processor">
-<span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">processor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#jarvis.processor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Processes the request after wake word is detected.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Returns a <code class="docutils literal notranslate"><span class="pre">True</span></code> flag if a manual stop is requested.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis.sentry_mode">
-<span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">sentry_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis.sentry_mode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Listens forever and invokes <code class="docutils literal notranslate"><span class="pre">initiator()</span></code> when recognized. Stops when <code class="docutils literal notranslate"><span class="pre">restart</span></code> table has an entry.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Gets invoked only when run from Mac-OS older than 10.14.</p></li>
-<li><p>A regular listener is used to convert audio to text.</p></li>
-<li><p>The text is then condition matched for wake-up words.</p></li>
-<li><p>Additional wake words can be passed in a list as an env var <code class="docutils literal notranslate"><span class="pre">LEGACY_KEYWORDS</span></code>.</p></li>
-</ul>
-</div>
-</dd></dl>
-
+<section id="jarvis">
+<h1>Jarvis<a class="headerlink" href="#jarvis" title="Permalink to this heading">¶</a></h1>
 </section>
 <section id="module-modules.api_handler">
 <span id="api-handler"></span><h1>API Handler<a class="headerlink" href="#module-modules.api_handler" title="Permalink to this heading">¶</a></h1>
@@ -338,7 +236,7 @@
     <h3><a href="#">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Welcome to Jarvis UI’s documentation!</a></li>
-<li><a class="reference internal" href="#module-jarvis">Jarvis</a></li>
+<li><a class="reference internal" href="#jarvis">Jarvis</a></li>
 <li><a class="reference internal" href="#module-modules.api_handler">API Handler</a></li>
 <li><a class="reference internal" href="#module-modules.config.Config">Config</a></li>
 <li><a class="reference internal" href="#module-modules.listener">Listener</a></li>

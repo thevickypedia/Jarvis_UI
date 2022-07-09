@@ -18,6 +18,7 @@ Jarvis
 .. automodule:: jarvis
    :members:
    :undoc-members:
+   :members: __init__, __del__
 
 API Handler
 ===========

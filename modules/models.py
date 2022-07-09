@@ -14,8 +14,7 @@ import warnings
 from datetime import datetime
 from typing import Union
 
-from pydantic import (BaseSettings, DirectoryPath, Field, FilePath, HttpUrl,
-                      PositiveInt)
+from pydantic import BaseSettings, Field, FilePath, HttpUrl, PositiveInt
 
 if os.getcwd().endswith("doc_generator"):
     os.chdir(os.path.dirname(os.getcwd()))
@@ -30,8 +29,6 @@ class EnvConfig(BaseSettings):
     >>> EnvConfig
 
     """
-
-    home: DirectoryPath = Field(default=os.path.expanduser("~"), env="HOME")
 
     request_url: HttpUrl = Field(default=..., env="REQUEST_URL")
     token: str = Field(default=..., env="TOKEN")
@@ -49,6 +46,7 @@ class EnvConfig(BaseSettings):
 
         env_prefix = ""
         env_file = ".env"
+
     if OS == "Darwin":
         macos = 1
     else:
@@ -72,8 +70,9 @@ class FileIO(BaseSettings):
     processing: FilePath = os.path.join('indicators', 'processing.wav')
     unprocessable: FilePath = os.path.join('indicators', 'unprocessable.wav')
     acknowledgement: FilePath = os.path.join('indicators', 'acknowledgement.wav')
+
     speech_wav_file: Union[FilePath, str] = os.path.join('indicators', 'speech-synthesis.wav')
-    base_log_file: FilePath = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))
+    base_log_file: Union[FilePath, str] = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))
 
 
 env = EnvConfig()
