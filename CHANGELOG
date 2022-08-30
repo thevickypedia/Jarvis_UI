@@ -1,7 +1,11 @@
 Change Log
 ==========
 
-0.3.2 (08/10/2022)
+0.3.3 (08/30/2022)
+------------------
+- Update install.sh, README.md and requirements.txt
+
+0.3.2 (08/29/2022)
 ------------------
 - Support wake words detection for legacy macOS
 - Add more start up checks for wake words

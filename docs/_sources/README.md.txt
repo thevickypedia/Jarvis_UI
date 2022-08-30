@@ -1,4 +1,4 @@
-![Python](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue)
+![Python](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)
 
 **Deployments**
 
@@ -20,7 +20,7 @@ Click [here](https://github.com/thevickypedia/Jarvis#env-variables), for more in
 - `SENSITIVITY`: Defaults to `0.5` - _Sensitivity of wake word detection_
 - `VOICE_TIMEOUT`: Defaults to `3` - _Timeout for listener once wake word is detected_
 - `VOICE_PHRASE_LIMIT`: Defaults to `3` - _Timeout for phrase once listener is activated_
-- `LEGACY_WAKE_WORDS`: Defaults to `jarvis` - _Wake words for `MacOS` older than 10.14_
+- `WAKE_WORDS`: Defaults to `jarvis` - _Wake words to initiate Jarvis_
 - `NATIVE_AUDIO`: Defaults to `False` - If set to `True`, the response is generated as audio in the source machine.
 
 > ONLY for `MacOS`: `SPEECH_TIMEOUT` is set to `0` by default which deactivates API calls to `/speech-synthesis`

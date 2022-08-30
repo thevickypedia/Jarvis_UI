@@ -25,18 +25,6 @@ os_independent_packages() {
 }
 
 if [[ "$OSName" == "Darwin" ]]; then
-    # Checks current version and throws a warning if older han 10.14
-    base_ver="10.14"
-    os_ver=$(sw_vers | grep ProductVersion | cut -d':' -f2 | tr -d ' ')
-    if awk "BEGIN {exit !($base_ver > $os_ver)}"; then
-        echo -e '\n***************************************************************************************************'
-        echo " ** You're running MacOS ${os_ver#"${os_ver%%[![:space:]]*}"}. Wake word library is not supported in MacOS older than ${base_ver}. **"
-        echo "** This means the audio listened, is converted into text and then condition checked to initiate. **"
-        echo "                 ** This might delay processing speech -> text. **                 "
-        echo -e '***************************************************************************************************\n'
-        sleep 3
-    fi
-
     xcode-select --install
     # Looks for brew installation and installs only if brew is not found in /usr/local/bin
     brew_check=$(which brew)
@@ -48,6 +36,15 @@ if [[ "$OSName" == "Darwin" ]]; then
     fi
     brew install portaudio
     python -m pip install PyAudio==0.2.11
+
+    # Checks current version and installs legacy pvporcupine version if macOS is older han 10.14
+    base_ver="10.14"
+    os_ver=$(sw_vers | grep ProductVersion | cut -d':' -f2 | tr -d ' ')
+    if awk "BEGIN {exit !($base_ver > $os_ver)}"; then
+      pip install 'pvporcupine==1.6.0'
+    else
+      pip install 'pvporcupine==1.9.5'
+    fi
 elif [[ "$OSName" == MSYS* ]]; then
     conda install portaudio=19.6.0
     # PyAudio wheel files original source:
@@ -55,10 +52,12 @@ elif [[ "$OSName" == MSYS* ]]; then
     curl https://vigneshrao.com/Jarvis/"$pyaudio" --output "$pyaudio" --silent
     pip install "$pyaudio"
     rm "$pyaudio"
+    pip install 'pvporcupine==1.9.5'
 else
     sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
     sudo apt-get install ffmpeg libav-tools
     sudo pip install pyaudio
+    sudo pip install 'pvporcupine==1.9.5'
 fi
 
 os_independent_packages
