@@ -8,19 +8,44 @@
 import base64
 import binascii
 import os
+import pathlib
 import platform
 import string
+import sys
 import warnings
 from datetime import datetime
 from typing import Union
 
+from packaging.version import parse as parser
 from pydantic import BaseSettings, Field, FilePath, HttpUrl, PositiveInt
 
 if os.getcwd().endswith("doc_generator"):
     os.chdir(os.path.dirname(os.getcwd()))
 
-OS = platform.system()
 UNICODE_PREFIX = base64.b64decode(b'XA==').decode(encoding="ascii") + string.ascii_letters[20] + string.digits[:1] * 2
+
+
+class Settings(BaseSettings):
+    """Loads most common system values.
+
+    >>> Settings
+
+    """
+
+    if platform.system() == "Darwin":
+        macos = 1
+    else:
+        macos = 0
+        if platform.system() != "Windows":
+            warnings.warn(
+                f"Running on un-tested operating system: {platform.system()}.\n"
+                "Please raise an issue at https://github.com/thevickypedia/Jarvis_UI/issues/new/choose if found."
+            )
+    legacy: bool = True if macos and parser(platform.mac_ver()[0]) < parser('10.14') else False
+    bot: str = pathlib.PurePath(sys.argv[0]).stem
+
+
+settings = Settings()
 
 
 class EnvConfig(BaseSettings):
@@ -38,7 +63,7 @@ class EnvConfig(BaseSettings):
     sensitivity: Union[float, PositiveInt] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=3, env="VOICE_PHRASE_LIMIT")
-    legacy_wake_words: list = Field(default=["jarvis"], env="LEGACY_WAKE_WORDS")
+    wake_words: list = Field(default=[settings.bot], env="WAKE_WORDS")
     native_audio: bool = Field(default=False, env="NATIVE_AUDIO")
 
     class Config:
@@ -46,16 +71,6 @@ class EnvConfig(BaseSettings):
 
         env_prefix = ""
         env_file = ".env"
-
-    if OS == "Darwin":
-        macos = 1
-    else:
-        macos = 0
-        if OS != "Windows":
-            warnings.warn(
-                f"Running on un-tested operating system: {platform.system()}.\n"
-                "Please raise an issue at https://github.com/thevickypedia/Jarvis_UI/issues/new/choose if found."
-            )
 
 
 class FileIO(BaseSettings):

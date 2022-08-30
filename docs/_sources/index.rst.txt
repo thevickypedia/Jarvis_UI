@@ -18,7 +18,6 @@ Jarvis
 .. automodule:: jarvis
    :members:
    :undoc-members:
-   :members: __init__, __del__
 
 API Handler
 ===========
@@ -51,11 +50,15 @@ Logger
 Models
 ======
 
-.. automodule:: modules.models.EnvConfig
+.. autoclass:: modules.models.EnvConfig(BaseSettings)
    :members:
    :undoc-members:
 
-.. automodule:: modules.models.FileIO
+.. autoclass:: modules.models.FileIO(BaseSettings)
+   :members:
+   :undoc-members:
+
+.. autoclass:: modules.models.Settings(BaseSettings)
    :members:
    :undoc-members:
 

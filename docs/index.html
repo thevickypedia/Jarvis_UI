@@ -56,8 +56,87 @@
 </ul>
 </div>
 </section>
-<section id="jarvis">
-<h1>Jarvis<a class="headerlink" href="#jarvis" title="Permalink to this heading">¶</a></h1>
+<section id="module-jarvis">
+<span id="jarvis"></span><h1>Jarvis<a class="headerlink" href="#module-jarvis" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jarvis.Activator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">Activator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_device_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis.Activator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Awaits for the keyword <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> and triggers <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when heard.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Activator</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Creates an input audio stream from a microphone, monitors it, and detects the specified wake word.</p></li>
+<li><p>Once detected, Jarvis triggers the <code class="docutils literal notranslate"><span class="pre">listener.listen()</span></code> function with an <code class="docutils literal notranslate"><span class="pre">acknowledgement</span></code> sound played.</p></li>
+<li><p>After processing the phrase, the converted text is sent as response to the API.</p></li>
+</ul>
+</div>
+<p>Initiates Porcupine object for hot word detection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_device_index</strong> – Index of Input Device to use.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Instantiates an instance of Porcupine object and monitors audio stream for occurrences of keywords.</p></li>
+<li><p>A higher sensitivity results in fewer misses at the cost of increasing the false alarm rate.</p></li>
+<li><p>sensitivity: Tolerance/Sensitivity level. Takes argument or env var <code class="docutils literal notranslate"><span class="pre">sensitivity</span></code> or defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></li>
+</ul>
+</div>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://people.csail.mit.edu/hubert/pyaudio/docs/#pyaudio.Stream.read">Audio Overflow</a> handling.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis.Activator.close_stream">
+<span class="sig-name descname"><span class="pre">close_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis.Activator.close_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes audio stream so that other listeners can use microphone.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis.Activator.executor">
+<span class="sig-name descname"><span class="pre">executor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis.Activator.executor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the audio stream and calls the processor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis.Activator.open_stream">
+<span class="sig-name descname"><span class="pre">open_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis.Activator.open_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes an audio stream.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis.Activator.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis.Activator.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs <code class="docutils literal notranslate"><span class="pre">audio_stream</span></code> in a forever loop and calls <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when the phrase <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> is heard.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis.begin">
+<span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">begin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#jarvis.begin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts main process to activate Jarvis and process requests via API calls.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis.processor">
+<span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">processor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#jarvis.processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes the request after wake word is detected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns a <code class="docutils literal notranslate"><span class="pre">True</span></code> flag if a manual stop is requested.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-modules.api_handler">
 <span id="api-handler"></span><h1>API Handler<a class="headerlink" href="#module-modules.api_handler" title="Permalink to this heading">¶</a></h1>
@@ -137,16 +216,147 @@
 </div>
 <p>Disables loggers from imported modules, while using the root logger without having to load an external file.</p>
 </section>
-<section id="module-modules.models.EnvConfig">
-<span id="models"></span><h1>Models<a class="headerlink" href="#module-modules.models.EnvConfig" title="Permalink to this heading">¶</a></h1>
-<p>Configure all env vars and validate using <code class="docutils literal notranslate"><span class="pre">pydantic</span></code> to share across modules.</p>
+<section id="models">
+<h1>Models<a class="headerlink" href="#models" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.models.EnvConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.models.</span></span><span class="sig-name descname"><span class="pre">EnvConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">BaseSettings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.models.EnvConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configure all env vars and validate using <code class="docutils literal notranslate"><span class="pre">pydantic</span></code> to share across modules.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">EnvConfig</span>
 </pre></div>
 </div>
-<span class="target" id="module-modules.models.FileIO"></span><p>Loads all the mp3 files’ path and log file path required by Jarvis.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#modules.models.EnvConfig.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Environment variables configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.Config.env_file">
+<span class="sig-name descname"><span class="pre">env_file</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'.env'</span></em><a class="headerlink" href="#modules.models.EnvConfig.Config.env_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.Config.env_prefix">
+<span class="sig-name descname"><span class="pre">env_prefix</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#modules.models.EnvConfig.Config.env_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.native_audio">
+<span class="sig-name descname"><span class="pre">native_audio</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#modules.models.EnvConfig.native_audio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.request_timeout">
+<span class="sig-name descname"><span class="pre">request_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#modules.models.EnvConfig.request_timeout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.request_url">
+<span class="sig-name descname"><span class="pre">request_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">HttpUrl</span></em><a class="headerlink" href="#modules.models.EnvConfig.request_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.sensitivity">
+<span class="sig-name descname"><span class="pre">sensitivity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#modules.models.EnvConfig.sensitivity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.speech_timeout">
+<span class="sig-name descname"><span class="pre">speech_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#modules.models.EnvConfig.speech_timeout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.token">
+<span class="sig-name descname"><span class="pre">token</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#modules.models.EnvConfig.token" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.voice_phrase_limit">
+<span class="sig-name descname"><span class="pre">voice_phrase_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#modules.models.EnvConfig.voice_phrase_limit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.voice_timeout">
+<span class="sig-name descname"><span class="pre">voice_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#modules.models.EnvConfig.voice_timeout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.wake_words">
+<span class="sig-name descname"><span class="pre">wake_words</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#modules.models.EnvConfig.wake_words" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.models.FileIO">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.models.</span></span><span class="sig-name descname"><span class="pre">FileIO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">BaseSettings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.models.FileIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads all the mp3 files’ path and log file path required by Jarvis.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">FileIO</span>
 </pre></div>
 </div>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.FileIO.acknowledgement">
+<span class="sig-name descname"><span class="pre">acknowledgement</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#modules.models.FileIO.acknowledgement" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.FileIO.base_log_file">
+<span class="sig-name descname"><span class="pre">base_log_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">FilePath</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#modules.models.FileIO.base_log_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.FileIO.failed">
+<span class="sig-name descname"><span class="pre">failed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#modules.models.FileIO.failed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.FileIO.processing">
+<span class="sig-name descname"><span class="pre">processing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#modules.models.FileIO.processing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.FileIO.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#modules.models.FileIO.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.FileIO.speech_wav_file">
+<span class="sig-name descname"><span class="pre">speech_wav_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">FilePath</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#modules.models.FileIO.speech_wav_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.FileIO.unprocessable">
+<span class="sig-name descname"><span class="pre">unprocessable</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#modules.models.FileIO.unprocessable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.models.Settings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.models.</span></span><span class="sig-name descname"><span class="pre">Settings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">BaseSettings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.models.Settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads most common system values.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Settings</span>
+</pre></div>
+</div>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.Settings.bot">
+<span class="sig-name descname"><span class="pre">bot</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#modules.models.Settings.bot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.Settings.legacy">
+<span class="sig-name descname"><span class="pre">legacy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#modules.models.Settings.legacy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-modules.playsound">
 <span id="playsound"></span><h1>PlaySound<a class="headerlink" href="#module-modules.playsound" title="Permalink to this heading">¶</a></h1>
@@ -236,12 +446,12 @@
     <h3><a href="#">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Welcome to Jarvis UI’s documentation!</a></li>
-<li><a class="reference internal" href="#jarvis">Jarvis</a></li>
+<li><a class="reference internal" href="#module-jarvis">Jarvis</a></li>
 <li><a class="reference internal" href="#module-modules.api_handler">API Handler</a></li>
 <li><a class="reference internal" href="#module-modules.config.Config">Config</a></li>
 <li><a class="reference internal" href="#module-modules.listener">Listener</a></li>
 <li><a class="reference internal" href="#module-modules.logger">Logger</a></li>
-<li><a class="reference internal" href="#module-modules.models.EnvConfig">Models</a></li>
+<li><a class="reference internal" href="#models">Models</a></li>
 <li><a class="reference internal" href="#module-modules.playsound">PlaySound</a></li>
 <li><a class="reference internal" href="#module-modules.speaker">Speaker</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>

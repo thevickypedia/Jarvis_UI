@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+0.3.2 (08/10/2022)
+------------------
+- Support wake words detection for legacy macOS
+- Add more start up checks for wake words
+- Log wake word used
+
 0.3.1 (07/09/2022)
 ------------------
 - Convert stop method to destructor

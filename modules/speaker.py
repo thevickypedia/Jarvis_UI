@@ -12,12 +12,12 @@ import pyttsx3
 
 from modules.api_handler import make_request
 from modules.logger import logger
-from modules.models import env, fileio
+from modules.models import env, fileio, settings
 from modules.playsound import playsound
 
 audio_driver = pyttsx3.init()
 voices = audio_driver.getProperty("voices")  # gets the list of voices available
-voice_model = "Daniel" if env.macos else "David"
+voice_model = "Daniel" if settings.macos else "David"
 for ind_d, voice_id in enumerate(voices):  # noqa
     if voice_id.name == voice_model or voice_model in voice_id.name:
         audio_driver.setProperty("voice", voices[ind_d].id)  # noqa

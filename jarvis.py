@@ -1,11 +1,9 @@
 import os
-import pathlib
-import platform
 import struct
 import sys
+from datetime import datetime
 from typing import NoReturn
 
-import packaging.version
 import pvporcupine
 from pyaudio import PyAudio, paInt16
 
@@ -13,7 +11,7 @@ from modules import listener, speaker
 from modules.api_handler import make_request
 from modules.config import config
 from modules.logger import logger
-from modules.models import env, fileio
+from modules.models import env, fileio, settings
 from modules.playsound import playsound
 
 
@@ -86,16 +84,23 @@ class Activator:
         References:
             - `Audio Overflow <https://people.csail.mit.edu/hubert/pyaudio/docs/#pyaudio.Stream.read>`__ handling.
         """
-        keyword_paths = [pvporcupine.KEYWORD_PATHS[x] for x in [pathlib.PurePath(__file__).stem]]
+        keyword_paths = [pvporcupine.KEYWORD_PATHS[x] for x in env.wake_words]
         self.input_device_index = input_device_index
 
         self.py_audio = PyAudio()
-        self.detector = pvporcupine.create(
-            library_path=pvporcupine.LIBRARY_PATH,
-            model_path=pvporcupine.MODEL_PATH,
-            keyword_paths=keyword_paths,
-            sensitivities=[env.sensitivity]
-        )
+        arguments = {
+            "library_path": pvporcupine.LIBRARY_PATH,
+            "sensitivities": [env.sensitivity]
+        }
+        if settings.legacy:
+            arguments["keywords"] = env.wake_words
+            arguments["model_file_path"] = pvporcupine.MODEL_PATH
+            arguments["keyword_file_paths"] = keyword_paths
+        else:
+            arguments["model_path"] = pvporcupine.MODEL_PATH
+            arguments["keyword_paths"] = keyword_paths
+
+        self.detector = pvporcupine.create(**arguments)
         self.audio_stream = None
 
     def __del__(self) -> NoReturn:
@@ -128,6 +133,13 @@ class Activator:
         self.py_audio.close(stream=self.audio_stream)
         self.audio_stream = None
 
+    def executor(self):
+        """Closes the audio stream and calls the processor."""
+        logger.debug(f"Detected {settings.bot} at {datetime.now()}")
+        playsound(sound=fileio.acknowledgement, block=False)
+        self.close_stream()
+        return processor()
+
     def start(self) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info(f"Starting wake word detector with sensitivity: {env.sensitivity}")
@@ -138,38 +150,24 @@ class Activator:
             pcm = struct.unpack_from("h" * self.detector.frame_length,
                                      self.audio_stream.read(num_frames=self.detector.frame_length,
                                                             exception_on_overflow=False))
-            if self.detector.process(pcm=pcm) >= 0:
-                playsound(sound=fileio.acknowledgement, block=False)
-                self.close_stream()
-                if processor():
-                    break
-
-
-def sentry_mode() -> NoReturn:
-    """Listens forever and invokes ``initiator()`` when recognized. Stops when ``restart`` table has an entry.
-
-    See Also:
-        - Gets invoked only when run from Mac-OS older than 10.14.
-        - A regular listener is used to convert audio to text.
-        - The text is then condition matched for wake-up words.
-        - Additional wake words can be passed in a list as an env var ``LEGACY_KEYWORDS``.
-    """
-    while True:
-        sys.stdout.write("\rSentry Mode")
-        if wake_word := listener.listen(timeout=10, phrase_limit=2.5, stdout=False):
-            if any(word in wake_word.lower() for word in env.legacy_wake_words):
-                playsound(sound=fileio.acknowledgement, block=False)
-                if processor():
-                    break
+            result = self.detector.process(pcm=pcm)
+            if settings.legacy:
+                if len(env.wake_words) == 1 and result:
+                    settings.bot = env.wake_words[0]
+                    self.executor()
+                elif len(env.wake_words) > 1 and result >= 0:
+                    settings.bot = env.wake_words[result]
+                    self.executor()
+            else:
+                if result >= 0:
+                    settings.bot = env.wake_words[result]
+                    self.executor()
 
 
 def begin() -> None:
     """Starts main process to activate Jarvis and process requests via API calls."""
     try:
-        if env.macos and packaging.version.parse(platform.mac_ver()[0]) < packaging.version.parse('10.14'):
-            sentry_mode()
-        else:
-            Activator().start()
+        Activator().start()
     except KeyboardInterrupt:
         return
 
