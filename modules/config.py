@@ -8,7 +8,7 @@ import platform
 import warnings
 
 import pvporcupine
-from pydantic import BaseConfig
+from pydantic import BaseConfig, PositiveInt
 
 from modules.api_handler import make_request
 from modules.models import env, fileio, settings
@@ -25,6 +25,8 @@ class Config(BaseConfig):
 
     if env.request_url[-1] != "/":
         env.request_url += "/"
+    if isinstance(env.sensitivity, float) or isinstance(env.sensitivity, PositiveInt):
+        env.sensitivity = [env.sensitivity] * len(env.wake_words)
     EXCEPTION = ConnectionError(f"Unable to connect to the API via {env.request_url}")
     if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
         raise EXCEPTION

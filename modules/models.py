@@ -2,6 +2,7 @@
 
 >>> EnvConfig
 >>> FileIO
+>>> Settings
 
 """
 
@@ -14,7 +15,8 @@ import string
 import sys
 import warnings
 from datetime import datetime
-from typing import Union
+from enum import Enum
+from typing import List, Union
 
 from packaging.version import parse as parser
 from pydantic import BaseSettings, Field, FilePath, HttpUrl, PositiveInt
@@ -48,6 +50,16 @@ class Settings(BaseSettings):
 settings = Settings()
 
 
+class Sensitivity(float, Enum):
+    """Allowed values for sensitivity.
+
+    >>> Sensitivity
+
+    """
+
+    sensitivity: Union[float, PositiveInt]
+
+
 class EnvConfig(BaseSettings):
     """Configure all env vars and validate using ``pydantic`` to share across modules.
 
@@ -60,7 +72,7 @@ class EnvConfig(BaseSettings):
 
     request_timeout: Union[float, PositiveInt] = Field(default=5, env="REQUEST_TIMEOUT")
     speech_timeout: Union[float, PositiveInt] = Field(default=0, env="SPEECH_TIMEOUT")
-    sensitivity: Union[float, PositiveInt] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
+    sensitivity: Union[Sensitivity, List[Sensitivity]] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=3, env="VOICE_PHRASE_LIMIT")
     wake_words: list = Field(default=[settings.bot], env="WAKE_WORDS")

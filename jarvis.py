@@ -90,7 +90,7 @@ class Activator:
         self.py_audio = PyAudio()
         arguments = {
             "library_path": pvporcupine.LIBRARY_PATH,
-            "sensitivities": [env.sensitivity]
+            "sensitivities": env.sensitivity
         }
         if settings.legacy:
             arguments["keywords"] = env.wake_words
@@ -138,7 +138,8 @@ class Activator:
         logger.debug(f"Detected {settings.bot} at {datetime.now()}")
         playsound(sound=fileio.acknowledgement, block=False)
         self.close_stream()
-        return processor()
+        if processor():
+            raise KeyboardInterrupt
 
     def start(self) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
