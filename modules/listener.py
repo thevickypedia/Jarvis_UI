@@ -8,6 +8,7 @@ from speech_recognition import (Microphone, Recognizer, RequestError,
 from modules.logger import logger
 
 recognizer = Recognizer()  # initiates recognizer that uses google's translation
+microphone = Microphone()  # initiates microphone object
 
 
 def listen(timeout: Union[int, float], phrase_limit: Union[int, float], stdout: bool = True) -> Union[str, None]:
@@ -22,7 +23,7 @@ def listen(timeout: Union[int, float], phrase_limit: Union[int, float], stdout: 
         str:
          - Returns recognized statement from the microphone.
     """
-    with Microphone() as source:
+    with microphone as source:
         sys.stdout.write("\rListener activated..") if stdout else sys.stdout.flush()
         try:
             listened = recognizer.listen(source=source, timeout=timeout, phrase_time_limit=phrase_limit)

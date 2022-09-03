@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import NoReturn
 
 import pvporcupine
-from pyaudio import PyAudio, paInt16
+from pyaudio import PyAudio, Stream, paInt16
 
 from modules import listener, speaker
 from modules.api_handler import make_request
@@ -101,7 +101,7 @@ class Activator:
             arguments["keyword_paths"] = keyword_paths
 
         self.detector = pvporcupine.create(**arguments)
-        self.audio_stream = None
+        self.audio_stream = self.open_stream()
 
     def __del__(self) -> NoReturn:
         """Invoked when the run loop is exited or manual interrupt.
@@ -117,9 +117,14 @@ class Activator:
             self.audio_stream.close()
         self.py_audio.terminate()
 
-    def open_stream(self) -> NoReturn:
-        """Initializes an audio stream."""
-        self.audio_stream = self.py_audio.open(
+    def open_stream(self) -> Stream:
+        """Initializes an audio stream.
+
+        Returns:
+            Stream:
+            PyAudio stream.
+        """
+        return self.py_audio.open(
             rate=self.detector.sample_rate,
             channels=1,
             format=paInt16,
@@ -128,25 +133,20 @@ class Activator:
             input_device_index=self.input_device_index
         )
 
-    def close_stream(self) -> NoReturn:
-        """Closes audio stream so that other listeners can use microphone."""
-        self.py_audio.close(stream=self.audio_stream)
-        self.audio_stream = None
-
     def executor(self):
         """Closes the audio stream and calls the processor."""
         logger.debug(f"Detected {settings.bot} at {datetime.now()}")
         playsound(sound=fileio.acknowledgement, block=False)
-        self.close_stream()
+        self.py_audio.close(stream=self.audio_stream)
         if processor():
+            self.audio_stream = None
             raise KeyboardInterrupt
+        self.audio_stream = self.open_stream()
 
     def start(self) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info(f"Starting wake word detector with sensitivity: {env.sensitivity}")
         while True:
-            if not self.audio_stream:
-                self.open_stream()
             sys.stdout.write("\rSentry Mode")
             pcm = struct.unpack_from("h" * self.detector.frame_length,
                                      self.audio_stream.read(num_frames=self.detector.frame_length,

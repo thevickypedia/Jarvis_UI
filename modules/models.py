@@ -50,7 +50,7 @@ class Settings(BaseSettings):
 settings = Settings()
 
 
-class Sensitivity(float, Enum):
+class Sensitivity(float or PositiveInt, Enum):
     """Allowed values for sensitivity.
 
     >>> Sensitivity
@@ -75,7 +75,10 @@ class EnvConfig(BaseSettings):
     sensitivity: Union[Sensitivity, List[Sensitivity]] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=3, env="VOICE_PHRASE_LIMIT")
-    wake_words: list = Field(default=[settings.bot], env="WAKE_WORDS")
+    if settings.legacy:
+        wake_words: list = Field(default=['alexa'], env="WAKE_WORDS")
+    else:
+        wake_words: list = Field(default=[settings.bot], env="WAKE_WORDS")
     native_audio: bool = Field(default=False, env="NATIVE_AUDIO")
 
     class Config:

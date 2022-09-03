@@ -16,11 +16,11 @@ Connects to [`Jarvis`](https://github.com/thevickypedia/Jarvis/blob/master/api/f
 ### Optional Env Vars
 Click [here](https://github.com/thevickypedia/Jarvis#env-variables), for more information.
 - `REQUEST_TIMEOUT`: Defaults to `5` - _Timeout for API calls_
-- `SPEECH_TIMEOUT`: Defaults to `0` for MacOS, `5` for Windows - _Timeout for speech synthesis_
+- `SPEECH_TIMEOUT`: Defaults to `0` for macOS, `5` for Windows - _Timeout for speech synthesis_
 - `SENSITIVITY`: Defaults to `0.5` - _Sensitivity of wake word detection_
 - `VOICE_TIMEOUT`: Defaults to `3` - _Timeout for listener once wake word is detected_
 - `VOICE_PHRASE_LIMIT`: Defaults to `3` - _Timeout for phrase once listener is activated_
-- `WAKE_WORDS`: Defaults to `jarvis` - _Wake words to initiate Jarvis_
+- `WAKE_WORDS`: Defaults to `jarvis` (Defaults to `alexa` in legacy macOS) - _Wake words to initiate Jarvis_
 - `NATIVE_AUDIO`: Defaults to `False` - If set to `True`, the response is generated as audio in the source machine.
 
 > ONLY for `MacOS`: `SPEECH_TIMEOUT` is set to `0` by default which deactivates API calls to `/speech-synthesis`
