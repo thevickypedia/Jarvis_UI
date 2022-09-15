@@ -6,14 +6,32 @@
 import os
 import platform
 import warnings
+from typing import NoReturn
 
 import pvporcupine
 from pydantic import BaseConfig, PositiveInt
 
 from modules.api_handler import make_request
+from modules.logger import logger
 from modules.models import env, fileio, settings
 
 add_ss_extn = lambda filepath: os.path.splitext(filepath)[0] + "_ss" + os.path.splitext(filepath)[1]
+
+
+def swapper() -> NoReturn:
+    """Swaps any request URL with the public URL if returned by Jarvis.
+
+    Notes:
+        Avoid making calls via load balancers or reverse proxy (if one is in place) such as CloudFront or Nginx.
+    """
+    if (public_url := make_request(path='offline-communicator', timeout=env.request_timeout,
+                                   data={'command': 'ngrok public url'})) and public_url.get('detail'):
+        if public_url['detail'][-1] != "/":
+            public_url['detail'] += "/"
+        if public_url['detail'] == env.request_url:
+            return
+        logger.info(f"Switching {env.request_url} to {public_url['detail']}")
+        env.request_url = public_url['detail']
 
 
 class Config(BaseConfig):

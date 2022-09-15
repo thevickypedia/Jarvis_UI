@@ -62,6 +62,10 @@ Models
    :members:
    :undoc-members:
 
+.. autoclass:: modules.models.Sensitivity(float or PositiveInt, Enum)
+   :members:
+   :undoc-members:
+
 PlaySound
 =========
 

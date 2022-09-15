@@ -147,7 +147,7 @@ class Activator:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info(f"Starting wake word detector with sensitivity: {env.sensitivity}")
         while True:
-            sys.stdout.write("\rSentry Mode")
+            sys.stdout.write(f"\rAwaiting: [{', '.join(env.wake_words).upper()}]")
             pcm = struct.unpack_from("h" * self.detector.frame_length,
                                      self.audio_stream.read(num_frames=self.detector.frame_length,
                                                             exception_on_overflow=False))
