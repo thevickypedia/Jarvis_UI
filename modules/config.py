@@ -43,6 +43,7 @@ class Config(BaseConfig):
 
     if env.request_url[-1] != "/":
         env.request_url += "/"
+    swapper()
     if isinstance(env.sensitivity, float) or isinstance(env.sensitivity, PositiveInt):
         env.sensitivity = [env.sensitivity] * len(env.wake_words)
     EXCEPTION = ConnectionError(f"Unable to connect to the API via {env.request_url}")

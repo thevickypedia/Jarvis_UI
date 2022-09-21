@@ -44,8 +44,9 @@ def processor() -> bool:
         else:
             timeout = env.request_timeout
         if response := make_request(path='offline-communicator', timeout=timeout,
-                                    data={'command': phrase, 'native_audio': env.native_audio}):
-            if env.native_audio:
+                                    data={'command': phrase, 'native_audio': env.native_audio,
+                                          'speech_timeout': env.speech_timeout}):
+            if response is True:
                 logger.info("Response received as audio.")
                 sys.stdout.write("\rResponse received as audio.")
                 playsound(sound=fileio.speech_wav_file)

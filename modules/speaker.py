@@ -5,15 +5,12 @@
 
 """
 
-import os
 from typing import NoReturn
 
 import pyttsx3
 
-from modules.api_handler import make_request
 from modules.logger import logger
-from modules.models import env, fileio, settings
-from modules.playsound import playsound
+from modules.models import settings
 
 audio_driver = pyttsx3.init()
 voices = audio_driver.getProperty("voices")  # gets the list of voices available
@@ -35,12 +32,5 @@ def speak(text: str) -> NoReturn:
     text = text.replace('\n', '\t').strip()
     if not text.endswith('.') or not text.endswith('!'):
         text = text + '!'
-    if env.speech_timeout and make_request(path='speech-synthesis',
-                                           timeout=env.speech_timeout,  # Timeout for request to Jarvis API
-                                           data={'text': text, 'quality': 'low',
-                                                 'timeout': env.speech_timeout}):  # Timeout for request to Docker
-        playsound(sound=fileio.speech_wav_file)
-        os.remove(fileio.speech_wav_file)
-    else:
-        audio_driver.say(text=text)
-        audio_driver.runAndWait()
+    audio_driver.say(text=text)
+    audio_driver.runAndWait()
