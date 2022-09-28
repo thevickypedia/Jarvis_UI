@@ -6,7 +6,7 @@
 import os
 import platform
 import warnings
-from typing import NoReturn
+from typing import Callable, NoReturn
 
 import pvporcupine
 from pydantic import BaseConfig, PositiveInt
@@ -15,7 +15,7 @@ from modules.api_handler import make_request
 from modules.logger import logger
 from modules.models import env, fileio, settings
 
-add_ss_extn = lambda filepath: os.path.splitext(filepath)[0] + "_ss" + os.path.splitext(filepath)[1]
+add_ss_extn: Callable = lambda filepath: os.path.splitext(filepath)[0] + "_ss" + os.path.splitext(filepath)[1]
 
 
 def swapper() -> NoReturn:
@@ -55,13 +55,11 @@ class Config(BaseConfig):
         raise EXCEPTION
     if detail := keywords.get("detail", conversation.get("detail", api_compatible.get("detail"))):
         exit(detail)
-    if not settings.macos and (not env.speech_timeout or env.speech_timeout < env.request_timeout):
-        env.speech_timeout = env.request_timeout
 
     # delay_keywords = list(filter(lambda v: v is not None, delay_keywords))  # If 0 is to be included
     delay_with_ack = list(filter(None, keywords.get('car', []) + keywords.get('speed_test', []) +
-                                 keywords.get('google_home', [])))
-    delay_without_ack = list(filter(None, keywords.get('television', [])))  # Since only the initial turn on
+                                 keywords.get('google_home', []) + keywords.get('garage', [])))
+    delay_without_ack = list(filter(None, keywords.get('television', [])))  # Since delay is only on initial turn on
     keywords = sum([v for _, v in keywords.items()], [])
     conversation = sum([v for _, v in conversation.items()], [])
 
@@ -72,7 +70,11 @@ class Config(BaseConfig):
             "Disabling speech synthesis!!"
         )
         env.speech_timeout = 0
-    elif env.speech_timeout and not env.native_audio:
+
+    if not settings.macos and not env.native_audio and env.speech_timeout < env.request_timeout:
+        env.speech_timeout = env.request_timeout
+
+    if env.speech_timeout and not env.native_audio:
         fileio.failed = add_ss_extn(fileio.failed)
         fileio.shutdown = add_ss_extn(fileio.shutdown)
         fileio.processing = add_ss_extn(fileio.processing)

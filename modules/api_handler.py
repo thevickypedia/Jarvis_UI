@@ -8,15 +8,48 @@ import json
 from typing import Union
 
 import requests
+from requests.auth import AuthBase
+from requests.models import PreparedRequest
 
 from modules.logger import logger
 from modules.models import env, fileio
 
+
+class BearerAuth(AuthBase):
+    """Instantiates ``BearerAuth`` object.
+
+    >>> BearerAuth
+
+    References:
+        `New Forms of Authentication <https://requests.readthedocs.io/en/latest/user/authentication/#new
+        -forms-of-authentication>`__
+    """
+
+    def __init__(self, token: str):
+        """Initializes the class and assign object members.
+
+        Args:
+            token: Token for bearer auth.
+        """
+        self.token = token
+
+    def __call__(self, request: PreparedRequest) -> PreparedRequest:
+        """Override built-in.
+
+        Args:
+            request: Takes prepared request as an argument.
+
+        Returns:
+            PreparedRequest:
+            Returns the request after adding the auth header.
+        """
+        request.headers["authorization"] = "Bearer " + self.token
+        return request
+
+
 session = requests.Session()
-session.headers = {
-    'accept': 'application/json',
-    'Authorization': f'Bearer {env.token}'
-}
+session.auth = BearerAuth(token=env.token)
+session.headers['Accept'] = 'application/json'
 
 
 def make_request(path: str, timeout: Union[int, float], data: dict = None) -> Union[dict, bool]:
