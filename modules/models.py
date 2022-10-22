@@ -60,6 +60,20 @@ class Sensitivity(float or PositiveInt, Enum):
     sensitivity: Union[float, PositiveInt]
 
 
+class RecognizerSettings(BaseSettings):
+    """Settings for speech recognition.
+
+    >>> RecognizerSettings
+
+    """
+
+    energy_threshold: PositiveInt = 1100
+    pause_threshold: Union[PositiveInt, float] = 1
+    phrase_threshold: Union[PositiveInt, float] = 0.1
+    dynamic_energy_threshold: bool = False
+    non_speaking_duration: Union[PositiveInt, float] = 1
+
+
 class EnvConfig(BaseSettings):
     """Configure all env vars and validate using ``pydantic`` to share across modules.
 
@@ -69,12 +83,15 @@ class EnvConfig(BaseSettings):
 
     request_url: HttpUrl = Field(default=..., env="REQUEST_URL")
     token: str = Field(default=..., env="TOKEN")
+    recognizer_settings: RecognizerSettings = Field(default=None, env="RECOGNIZER_SETTINGS")
+    recognizer_settings_default: RecognizerSettings = RecognizerSettings()
 
     request_timeout: Union[float, PositiveInt] = Field(default=5, env="REQUEST_TIMEOUT")
     speech_timeout: Union[float, PositiveInt] = Field(default=0, env="SPEECH_TIMEOUT")
     sensitivity: Union[Sensitivity, List[Sensitivity]] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
-    voice_phrase_limit: Union[float, PositiveInt] = Field(default=3, env="VOICE_PHRASE_LIMIT")
+    voice_phrase_limit: Union[float, PositiveInt] = Field(default=None, env="VOICE_PHRASE_LIMIT")
+    restart_timer: Union[float, PositiveInt] = Field(default=86_400, env="RESTART_TIMER")
     if settings.legacy:
         wake_words: list = Field(default=['alexa'], env="WAKE_WORDS")
     else:
@@ -100,6 +117,7 @@ class FileIO(BaseSettings):
     processing: FilePath = os.path.join('indicators', 'processing.wav')
     unprocessable: FilePath = os.path.join('indicators', 'unprocessable.wav')
     acknowledgement: FilePath = os.path.join('indicators', 'acknowledgement.wav')
+    connection_failed: FilePath = os.path.join('indicators', 'connection_failed.wav')
 
     speech_wav_file: Union[FilePath, str] = os.path.join('indicators', 'speech-synthesis.wav')
     base_log_file: Union[FilePath, str] = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))

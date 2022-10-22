@@ -32,6 +32,7 @@ def swapper() -> NoReturn:
             return
         logger.info(f"Switching {env.request_url} to {public_url['detail']}")
         env.request_url = public_url['detail']
+        settings.redirect = True
 
 
 class Config(BaseConfig):
@@ -40,6 +41,8 @@ class Config(BaseConfig):
     >>> Config
 
     """
+    if not env.recognizer_settings and not env.voice_phrase_limit:
+        env.recognizer_settings = env.recognizer_settings_default  # Default override when phrase limit is not available
 
     if env.request_url[-1] != "/":
         env.request_url += "/"
@@ -48,13 +51,16 @@ class Config(BaseConfig):
         env.sensitivity = [env.sensitivity] * len(env.wake_words)
     EXCEPTION = ConnectionError(f"Unable to connect to the API via {env.request_url}")
     if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
-        raise EXCEPTION
+        logger.error(EXCEPTION)
+        keywords = {}
     if not (conversation := make_request(path='conversation', timeout=env.request_timeout)):
-        raise EXCEPTION
+        logger.error(EXCEPTION)
+        conversation = {}
     if not (api_compatible := make_request(path='api-compatible', timeout=env.request_timeout)):
-        raise EXCEPTION
+        logger.error(EXCEPTION)
+        api_compatible = {}
     if detail := keywords.get("detail", conversation.get("detail", api_compatible.get("detail"))):
-        exit(detail)
+        logger.error(detail)
 
     # delay_keywords = list(filter(lambda v: v is not None, delay_keywords))  # If 0 is to be included
     delay_with_ack = list(filter(None, keywords.get('car', []) + keywords.get('speed_test', []) +

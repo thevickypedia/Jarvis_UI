@@ -18,12 +18,32 @@ Click [here](https://github.com/thevickypedia/Jarvis#env-variables), for more in
 - `REQUEST_TIMEOUT`: Defaults to `5` - _Timeout for API calls_
 - `SPEECH_TIMEOUT`: Defaults to `0` for macOS, `5` for Windows - _Timeout for speech synthesis_
 - `SENSITIVITY`: Defaults to `0.5` - _Sensitivity of wake word detection_
-- `VOICE_TIMEOUT`: Defaults to `3` - _Timeout for listener once wake word is detected_
-- `VOICE_PHRASE_LIMIT`: Defaults to `3` - _Timeout for phrase once listener is activated_
-- `WAKE_WORDS`: Defaults to `jarvis` (Defaults to `alexa` in legacy macOS) - _Wake words to initiate Jarvis_
+- `WAKE_WORDS`: Defaults to `jarvis` (Defaults to `alexa` in macOS older than `10.14`) - _Wake words to initiate Jarvis_
 - `NATIVE_AUDIO`: Defaults to `False` - If set to `True`, the response is generated as audio in the source machine.
+<br><br>
+- `VOICE_TIMEOUT`: Defaults to `3` - _Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit_
+- `VOICE_PHRASE_LIMIT`: Defaults to `None` - _Timeout for phrase once listener is activated - Listener will be deactivated after this limit_
 
-> ONLY for `MacOS`: `SPEECH_TIMEOUT` is set to `0` by default which deactivates API calls to `/speech-synthesis`
+**Custom settings for speech recognition**
+
+These are customized according to the author's voice and pitch.
+Please use [test_listener.py](test_listener.py) to figure out the suitable values in a trial and error method.
+
+> These settings are added (optionally), to avoid the hard coded `VOICE_PHRASE_LIMIT`
+> <br>
+> Cons in using hard coded `VOICE_PHRASE_LIMIT`:
+>   - Disables the listener after the set limit even if speech is in progress (when user speaks in long sentences)
+>   - Listener will be active until the set limit even if the speech has ended (when user speaks in short phrases)
+
+Sample settings (formatted as JSON object)
+- `RECOGNIZER_SETTINGS`: `'{"energy_threshold": 1100, "dynamic_energy_threshold": false, "pause_threshold": 1, "phrase_threshold": 0.1}'`
+
+**Description**
+- `energy_threshold`: Minimum audio energy to consider for recording. Greater the value, louder the speech should be.
+- `dynamic_energy_threshold`: Change considerable audio energy threshold dynamically.
+- `pause_threshold`: Seconds of non-speaking audio before a phrase is considered complete.
+- `phrase_threshold`: Minimum seconds of speaking audio before it can be considered a phrase - values below this are ignored. This helps to filter out clicks and pops.
+- `non_speaking_duration`: Seconds of non-speaking audio to keep on both sides of the recording.
 
 Refer Jarvis' [README](https://github.com/thevickypedia/Jarvis/blob/master/README.md) for more information on setting up the backend server.
 

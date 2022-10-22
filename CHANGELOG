@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+0.3.9 (10/22/2022)
+------------------
+- Add custom recognizer settings
+- Add a static file to indicate a connection failure
+- Update README.md
+
 0.3.8 (09/27/2022)
 ------------------
 - Switch `Authorization` from headers to custom `BearerAuth`

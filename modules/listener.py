@@ -6,28 +6,33 @@ from speech_recognition import (Microphone, Recognizer, RequestError,
                                 UnknownValueError, WaitTimeoutError)
 
 from modules.logger import logger
+from modules.models import env
 
-recognizer = Recognizer()  # initiates recognizer that uses google's translation
+recognizer = Recognizer()  # initiates recognizer object
 microphone = Microphone()  # initiates microphone object
 
+if env.recognizer_settings:
+    recognizer.energy_threshold = env.recognizer_settings.energy_threshold
+    recognizer.pause_threshold = env.recognizer_settings.pause_threshold
+    recognizer.phrase_threshold = env.recognizer_settings.phrase_threshold
+    recognizer.dynamic_energy_threshold = env.recognizer_settings.dynamic_energy_threshold
+    recognizer.non_speaking_duration = env.recognizer_settings.non_speaking_duration
+    env.voice_phrase_limit = None  # Overrides voice phrase limit when recognizer settings are available
 
-def listen(timeout: Union[int, float], phrase_limit: Union[int, float], stdout: bool = True) -> Union[str, None]:
+
+def listen() -> Union[str, None]:
     """Function to activate listener, this function will be called by most upcoming functions to listen to user input.
-
-    Args:
-        timeout: Time in seconds for the overall listener to be active.
-        phrase_limit: Time in seconds for the listener to actively listen to a sound.
-        stdout: Flag whether to print the listener status on the screen.
 
     Returns:
         str:
          - Returns recognized statement from the microphone.
     """
     with microphone as source:
-        sys.stdout.write("\rListener activated..") if stdout else sys.stdout.flush()
+        sys.stdout.write("\rListener activated..")
         try:
-            listened = recognizer.listen(source=source, timeout=timeout, phrase_time_limit=phrase_limit)
-            sys.stdout.write("\r") if stdout else sys.stdout.flush()
+            listened = recognizer.listen(source=source, timeout=env.voice_timeout,
+                                         phrase_time_limit=env.voice_phrase_limit)
+            sys.stdout.write("\r")
             return recognizer.recognize_google(audio_data=listened)
         except (UnknownValueError, WaitTimeoutError, RequestError):
             return
