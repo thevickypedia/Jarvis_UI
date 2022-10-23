@@ -32,7 +32,6 @@ def swapper() -> NoReturn:
             return
         logger.info(f"Switching {env.request_url} to {public_url['detail']}")
         env.request_url = public_url['detail']
-        settings.redirect = True
 
 
 class Config(BaseConfig):

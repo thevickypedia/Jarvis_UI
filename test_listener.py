@@ -10,7 +10,7 @@ logger.addHandler(logging.StreamHandler())
 
 RECOGNIZER = speech_recognition.Recognizer()
 ERROR_TUPLE = speech_recognition.UnknownValueError, speech_recognition.RequestError, \
-              speech_recognition.WaitTimeoutError, TimeoutError, ConnectionError,
+    speech_recognition.WaitTimeoutError, TimeoutError, ConnectionError,
 
 defaults = dict(energy_threshold=RECOGNIZER.energy_threshold,
                 dynamic_energy_threshold=RECOGNIZER.dynamic_energy_threshold,

@@ -17,7 +17,7 @@ if env.recognizer_settings:
     recognizer.phrase_threshold = env.recognizer_settings.phrase_threshold
     recognizer.dynamic_energy_threshold = env.recognizer_settings.dynamic_energy_threshold
     recognizer.non_speaking_duration = env.recognizer_settings.non_speaking_duration
-    env.voice_phrase_limit = None  # Overrides voice phrase limit when recognizer settings are available
+    env.voice_phrase_limit = 7  # Override voice phrase limit when recognizer settings are available
 
 
 def listen() -> Union[str, None]:
