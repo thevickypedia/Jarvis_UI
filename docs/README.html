@@ -64,21 +64,30 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">SPEECH_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code> for macOS, <code class="docutils literal notranslate"><span class="pre">5</span></code> for Windows - <em>Timeout for speech synthesis</em></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">SENSITIVITY</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code> - <em>Sensitivity of wake word detection</em></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">WAKE_WORDS</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">jarvis</span></code> (Defaults to <code class="docutils literal notranslate"><span class="pre">alexa</span></code> in macOS older than <code class="docutils literal notranslate"><span class="pre">10.14</span></code>) - <em>Wake words to initiate Jarvis</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NATIVE_AUDIO</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the response is generated as audio in the source machine.
+<li><p><code class="docutils literal notranslate"><span class="pre">NATIVE_AUDIO</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - <em>If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the response is generated as audio from the server.</em>
 <br><br></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">VOICE_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code> - <em>Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Timeout for phrase once listener is activated - Listener will be deactivated after this limit</em></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Timeout for phrase once listener is activated - Listener will be deactivated after this limit</em>
+<br><br>
+<strong>Customized as per the author’s requirement.</strong></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SWAP_URL</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - <em>Tries to get the public URL from <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> if it uses a <code class="docutils literal notranslate"><span class="pre">reverse</span> <span class="pre">proxy/CDN</span></code></em></p>
+<ul>
+<li><p>I have a proxy tunneling my <code class="docutils literal notranslate"><span class="pre">localhost</span></code> from Jarvis server.</p></li>
+<li><p>I have a CDN setup that’s allowing me to access the tunnel with a custom domain.</p></li>
+<li><p>Since I don’t want my CDN to take the hit, and the tunnel origin changes often, I’m swapping the URL upon startup.</p></li>
+</ul>
+</li>
 </ul>
 <p><strong>Custom settings for speech recognition</strong></p>
-<p>These are customized according to the author’s voice and pitch.
+<p>These are customized according to the author’s voice pitch.
 Please use <a class="reference external" href="test_listener.py">test_listener.py</a> to figure out the suitable values in a trial and error method.</p>
 <blockquote>
 <div><p>These settings are added (optionally), to avoid the hard coded <code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>
 <br>
 Cons in using hard coded <code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>:</p>
 <ul class="simple">
-<li><p>Disables the listener after the set limit even if speech is in progress (when user speaks in long sentences)</p></li>
-<li><p>Listener will be active until the set limit even if the speech has ended (when user speaks in short phrases)</p></li>
+<li><p>Disables the listener after the set limit even the speaker is actively talking.</p></li>
+<li><p>Listener will be active until the set limit even after the speaker has stopped talking.</p></li>
 </ul>
 </div></blockquote>
 <p>Sample settings (formatted as JSON object)</p>

@@ -91,7 +91,7 @@ class EnvConfig(BaseSettings):
     sensitivity: Union[Sensitivity, List[Sensitivity]] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=None, env="VOICE_PHRASE_LIMIT")
-    restart_timer: Union[float, PositiveInt] = Field(default=86_400, env="RESTART_TIMER")
+    swap_url: bool = Field(default=False, env="SWAP_URL")
     if settings.legacy:
         wake_words: list = Field(default=['alexa'], env="WAKE_WORDS")
     else:
@@ -117,7 +117,6 @@ class FileIO(BaseSettings):
     processing: FilePath = os.path.join('indicators', 'processing.wav')
     unprocessable: FilePath = os.path.join('indicators', 'unprocessable.wav')
     acknowledgement: FilePath = os.path.join('indicators', 'acknowledgement.wav')
-    connection_failed: FilePath = os.path.join('indicators', 'connection_failed.wav')
 
     speech_wav_file: Union[FilePath, str] = os.path.join('indicators', 'speech-synthesis.wav')
     base_log_file: Union[FilePath, str] = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))

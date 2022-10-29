@@ -45,21 +45,21 @@ class Config(BaseConfig):
 
     if env.request_url[-1] != "/":
         env.request_url += "/"
-    swapper()
+
+    if env.swap_url:
+        swapper()
+
     if isinstance(env.sensitivity, float) or isinstance(env.sensitivity, PositiveInt):
         env.sensitivity = [env.sensitivity] * len(env.wake_words)
     EXCEPTION = ConnectionError(f"Unable to connect to the API via {env.request_url}")
     if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
-        logger.error(EXCEPTION)
-        keywords = {}
+        raise EXCEPTION
     if not (conversation := make_request(path='conversation', timeout=env.request_timeout)):
-        logger.error(EXCEPTION)
-        conversation = {}
+        raise EXCEPTION
     if not (api_compatible := make_request(path='api-compatible', timeout=env.request_timeout)):
-        logger.error(EXCEPTION)
-        api_compatible = {}
+        raise EXCEPTION
     if detail := keywords.get("detail", conversation.get("detail", api_compatible.get("detail"))):
-        logger.error(detail)
+        exit(detail)
 
     # delay_keywords = list(filter(lambda v: v is not None, delay_keywords))  # If 0 is to be included
     delay_with_ack = list(filter(None, keywords.get('car', []) + keywords.get('speed_test', []) +

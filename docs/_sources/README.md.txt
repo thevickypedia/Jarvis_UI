@@ -19,21 +19,27 @@ Click [here](https://github.com/thevickypedia/Jarvis#env-variables), for more in
 - `SPEECH_TIMEOUT`: Defaults to `0` for macOS, `5` for Windows - _Timeout for speech synthesis_
 - `SENSITIVITY`: Defaults to `0.5` - _Sensitivity of wake word detection_
 - `WAKE_WORDS`: Defaults to `jarvis` (Defaults to `alexa` in macOS older than `10.14`) - _Wake words to initiate Jarvis_
-- `NATIVE_AUDIO`: Defaults to `False` - If set to `True`, the response is generated as audio in the source machine.
+- `NATIVE_AUDIO`: Defaults to `False` - _If set to `True`, the response is generated as audio from the server._
 <br><br>
 - `VOICE_TIMEOUT`: Defaults to `3` - _Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit_
 - `VOICE_PHRASE_LIMIT`: Defaults to `None` - _Timeout for phrase once listener is activated - Listener will be deactivated after this limit_
+<br><br>
+**Customized as per the author's requirement.**
+- `SWAP_URL`: Defaults to `False` - _Tries to get the public URL from `Jarvis` if it uses a `reverse proxy/CDN`_
+  - I have a proxy tunneling my `localhost` from Jarvis server.
+  - I have a CDN setup that's allowing me to access the tunnel with a custom domain.
+  - Since I don't want my CDN to take the hit, and the tunnel origin changes often, I'm swapping the URL upon startup.
 
 **Custom settings for speech recognition**
 
-These are customized according to the author's voice and pitch.
+These are customized according to the author's voice pitch.
 Please use [test_listener.py](test_listener.py) to figure out the suitable values in a trial and error method.
 
 > These settings are added (optionally), to avoid the hard coded `VOICE_PHRASE_LIMIT`
 > <br>
 > Cons in using hard coded `VOICE_PHRASE_LIMIT`:
->   - Disables the listener after the set limit even if speech is in progress (when user speaks in long sentences)
->   - Listener will be active until the set limit even if the speech has ended (when user speaks in short phrases)
+>   - Disables the listener after the set limit even the speaker is actively talking.
+>   - Listener will be active until the set limit even after the speaker has stopped talking.
 
 Sample settings (formatted as JSON object)
 - `RECOGNIZER_SETTINGS`: `'{"energy_threshold": 1100, "dynamic_energy_threshold": false, "pause_threshold": 1, "phrase_threshold": 0.1}'`

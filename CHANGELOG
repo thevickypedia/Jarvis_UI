@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+0.4.1 (10/29/2022)
+------------------
+- Remove preflight check and timed restart
+- Have an env var to determine URL swapping
+- Add connection failed wav file
+- Update README.md
+
 0.4.0 (10/22/2022)
 ------------------
 - Set voice phrase limit to 7 seconds when recognizer settings are used

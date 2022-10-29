@@ -1,9 +1,6 @@
-#!/usr/bin/env python
-
 import os
 import struct
 import sys
-import time
 from datetime import datetime
 from typing import NoReturn
 
@@ -16,10 +13,6 @@ from modules.config import config
 from modules.logger import logger
 from modules.models import env, fileio, settings
 from modules.playsound import playsound
-
-# Convert to an executable file if not already
-if not os.access(__file__, os.X_OK):
-    os.chmod(__file__, 0o755)
 
 
 def processor() -> bool:
@@ -65,21 +58,6 @@ def processor() -> bool:
             speaker.speak(text=response)
         else:
             playsound(sound=fileio.failed)
-
-
-def preflight_check() -> bool:
-    """Checks if all requirements are satisfied and then triggers a restart if necessary.
-
-    Returns:
-        bool:
-        A boolean flag to indicate if a restart is required.
-    """
-    if not config.keywords and not config.conversation and not config.api_compatible:
-        playsound(sound=fileio.connection_failed)
-        logger.error("Keywords, Conversations and API Compatibles are not found. Initiating restart timer.")
-        env.restart_timer = 1
-        return False
-    return True
 
 
 class Activator:
@@ -159,18 +137,16 @@ class Activator:
     def executor(self):
         """Closes the audio stream and calls the processor."""
         logger.debug(f"Detected {settings.bot} at {datetime.now()}")
-        if preflight_check():
-            playsound(sound=fileio.acknowledgement, block=False)
-            self.py_audio.close(stream=self.audio_stream)
-            if processor():
-                self.audio_stream = None
-                raise KeyboardInterrupt
-            self.audio_stream = self.open_stream()
+        playsound(sound=fileio.acknowledgement, block=False)
+        self.py_audio.close(stream=self.audio_stream)
+        if processor():
+            self.audio_stream = None
+            raise KeyboardInterrupt
+        self.audio_stream = self.open_stream()
 
     def start(self) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info(f"Starting wake word detector with sensitivity: {env.sensitivity}")
-        now = time.time()
         while True:
             sys.stdout.write(f"\rAwaiting: [{', '.join(env.wake_words).upper()}]")
             pcm = struct.unpack_from("h" * self.detector.frame_length,
@@ -188,16 +164,6 @@ class Activator:
                 if result >= 0:
                     settings.bot = env.wake_words[result]
                     self.executor()
-            if now + env.restart_timer <= time.time():
-                # This will ensure the restart doesn't happen unnecessarily in case of low restart timers set
-                if config.keywords and config.conversation and config.api_compatible and \
-                        (status := make_request(path='health', timeout=3)):
-                    logger.info(status)
-                    logger.info("No reason to restart")
-                    continue
-                else:
-                    logger.info("Failed to get Jarvis's health status")
-                os.execv(__file__, sys.argv)
 
 
 def begin() -> None:
