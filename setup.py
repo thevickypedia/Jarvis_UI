@@ -10,15 +10,30 @@ base_url = 'https://github.com/thevickypedia/Jarvis_UI'
 classifiers = [
     'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Information Technology',
-    'Operating System :: OS Independent',
+    'Operating System :: MacOS :: MacOS X',
+    'Operating System :: Microsoft :: Windows :: Windows 10',
+    'Operating System :: POSIX :: Linux',
     'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
     'Topic :: Multimedia :: Sound/Audio :: Speech',
     'Topic :: Scientific/Engineering :: Human Machine Interfaces',
     'Topic :: Scientific/Engineering :: Artificial Intelligence',
+    'Topic :: Home Automation',
+    'Topic :: Scientific/Engineering :: Image Recognition',
+    'Topic :: System :: Hardware :: Universal Serial Bus (USB) :: Wireless Controller',
     'Topic :: Multimedia :: Sound/Audio :: Conversion',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    'Topic :: System :: Hardware :: Hardware Drivers',
+    'Topic :: System :: Hardware :: Symmetric Multi-processing',
+    'Topic :: System :: Hardware :: Universal Serial Bus (USB) :: Human Interface Device (HID)',
+    'Framework :: FastAPI',
+    'Framework :: Flake8',
+    'Framework :: AsyncIO',
+    'Framework :: Sphinx',
+    'Framework :: aiohttp',
     'Natural Language :: English'
 ]
 
@@ -63,7 +78,7 @@ setup(
     name='jarvis-ui',
     version='.'.join(str(c) for c in version_info),
     description="Jarvis UI to perform voice commands via API calls.",
-    long_description=read('README.md') + '\n\n' + read('CHANGELOG'),
+    long_description=read('README.md'),
     long_description_content_type='text/markdown',
     author='Vignesh Sivanandha Rao',
     author_email='svignesh1793@gmail.com',
@@ -78,6 +93,7 @@ setup(
     project_urls={
         'Source': base_url,
         'Docs': 'https://thevickypedia.github.io/Jarvis_UI',
+        'Release Notes': f'{base_url}/blob/main/release_notes.rst',
         'Bug Tracker': f'{base_url}/issues'
     },
     zip_safe=True

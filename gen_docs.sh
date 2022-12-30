@@ -12,6 +12,13 @@ if [[ ! $checker =~ "version.py" ]]; then
   exit 255
 fi
 
+if [[ ! $checker =~ "release_notes.rst" ]]; then
+  echo -e "\n********************************************************************ERROR**********************************************************"
+  echo "Docs generation was ABORTED since release notes was not updated!! Changelog generator requires the release notes to be in sync."
+  echo -e "***********************************************************************************************************************************\n"
+  exit 255
+fi
+
 rm -rf docs
 mkdir docs
 mkdir -p doc_generator/_static  # creates a _static folder if unavailable

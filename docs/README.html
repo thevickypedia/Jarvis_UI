@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Jarvis UI &#8212; Jarvis UI  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -80,7 +80,7 @@
 </ul>
 <p><strong>Custom settings for speech recognition</strong></p>
 <p>These are customized according to the author’s voice pitch.
-Please use <a class="reference external" href="test_listener.py">test_listener.py</a> to figure out the suitable values in a trial and error method.</p>
+Please use <a class="reference external" href="https://github.com/thevickypedia/Jarvis_UI/blob/main/test_listener.py">test_listener.py</a> to figure out the suitable values in a trial and error method.</p>
 <blockquote>
 <div><p>These settings are added (optionally), to avoid the hard coded <code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>
 <br>
@@ -114,11 +114,15 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
 <h3>Linting<a class="headerlink" href="#linting" title="Permalink to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">PreCommit</span></code> will ensure linting, and the doc creation are run on every commit.</p>
 <p><strong>Requirement</strong>
-<br>
-<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--no-cache</span> <span class="pre">--upgrade</span> <span class="pre">sphinx</span> <span class="pre">pre-commit</span> <span class="pre">recommonmark</span></code></p>
+<br></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install --no-cache <span class="nv">sphinx</span><span class="o">==</span><span class="m">5</span>.1.1 pre-commit recommonmark
+</pre></div>
+</div>
 <p><strong>Usage</strong>
-<br>
-<code class="docutils literal notranslate"><span class="pre">pre-commit</span> <span class="pre">run</span> <span class="pre">--all-files</span></code></p>
+<br></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit run --all-files
+</pre></div>
+</div>
 </section>
 <section id="pypi-package">
 <h3>Pypi Package<a class="headerlink" href="#pypi-package" title="Permalink to this heading">¶</a></h3>

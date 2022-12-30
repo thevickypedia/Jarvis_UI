@@ -1,5 +1,12 @@
-Change Log
-==========
+Release Notes
+=============
+
+0.4.3 (12/30/2022)
+------------------
+- Upgrade `PyAudio` and `pydantic` modules
+- Add a helper function in playsound.py
+- CHANGELOG -> release_notes.rst
+- Update setup.py
 
 0.4.2 (12/06/2022)
 ------------------
@@ -46,7 +53,7 @@ Change Log
 - Initialize microphone object before startup
 - Update README.md
 
-0.3.4 (08/30/2022)
+0.3.4 (08/31/2022)
 ------------------
 - Add individual sensitivity values for wake words
 - Fig bug on manual interruption

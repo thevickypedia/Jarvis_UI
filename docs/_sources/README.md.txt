@@ -33,7 +33,7 @@ Click [here](https://github.com/thevickypedia/Jarvis#env-variables), for more in
 **Custom settings for speech recognition**
 
 These are customized according to the author's voice pitch.
-Please use [test_listener.py](test_listener.py) to figure out the suitable values in a trial and error method.
+Please use [test_listener.py](https://github.com/thevickypedia/Jarvis_UI/blob/main/test_listener.py) to figure out the suitable values in a trial and error method.
 
 > These settings are added (optionally), to avoid the hard coded `VOICE_PHRASE_LIMIT`
 > <br>
@@ -64,11 +64,15 @@ Clean code with pre-commit hooks: [`flake8`](https://flake8.pycqa.org/en/latest/
 
 **Requirement**
 <br>
-`pip install --no-cache --upgrade sphinx pre-commit recommonmark`
+```bash
+pip install --no-cache sphinx==5.1.1 pre-commit recommonmark
+```
 
 **Usage**
 <br>
-`pre-commit run --all-files`
+```bash
+pre-commit run --all-files
+```
 
 #### Pypi Package
 [![pypi-module](https://img.shields.io/badge/Software%20Repository-pypi-1f425f.svg)](https://packaging.python.org/tutorials/packaging-projects/)

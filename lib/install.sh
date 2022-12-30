@@ -35,7 +35,7 @@ if [[ "$OSName" == "Darwin" ]]; then
         else echo "Found Homebrew, skipping installation"
     fi
     brew install portaudio
-    python -m pip install PyAudio==0.2.11
+    python -m pip install PyAudio==0.2.13
 
     # Checks current version and installs legacy pvporcupine version if macOS is older han 10.14
     base_ver="10.14"
