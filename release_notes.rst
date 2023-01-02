@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+0.4.4 (01/02/2022)
+------------------
+- Change HTTP requests method to match a change in Jarvis' API
+
 0.4.3 (12/30/2022)
 ------------------
 - Upgrade `PyAudio` and `pydantic` modules

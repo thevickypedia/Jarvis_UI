@@ -52,13 +52,12 @@
 <section id="mandatory-env-vars">
 <h2>Mandatory Env Vars<a class="headerlink" href="#mandatory-env-vars" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">REQUEST_URL</span></code>: URL to which the API call has to be made. Can be <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or a <code class="docutils literal notranslate"><span class="pre">tunneled</span></code> URL.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">REQUEST_URL</span></code>: URL to which the API call has to be made. Can be <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or a <code class="docutils literal notranslate"><span class="pre">tunneled</span></code> URL behind a reverse proxy/CDN.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">TOKEN</span></code>: Authentication token.</p></li>
 </ul>
 </section>
 <section id="optional-env-vars">
 <h2>Optional Env Vars<a class="headerlink" href="#optional-env-vars" title="Permalink to this heading">¶</a></h2>
-<p>Click <a class="reference external" href="https://github.com/thevickypedia/Jarvis#env-variables">here</a>, for more information.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">REQUEST_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">5</span></code> - <em>Timeout for API calls</em></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">SPEECH_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code> for macOS, <code class="docutils literal notranslate"><span class="pre">5</span></code> for Windows - <em>Timeout for speech synthesis</em></p></li>
@@ -115,12 +114,12 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
 <p><code class="docutils literal notranslate"><span class="pre">PreCommit</span></code> will ensure linting, and the doc creation are run on every commit.</p>
 <p><strong>Requirement</strong>
 <br></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install --no-cache <span class="nv">sphinx</span><span class="o">==</span><span class="m">5</span>.1.1 pre-commit recommonmark
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache<span class="w"> </span><span class="nv">sphinx</span><span class="o">==</span><span class="m">5</span>.1.1<span class="w"> </span>pre-commit<span class="w"> </span>recommonmark
 </pre></div>
 </div>
 <p><strong>Usage</strong>
 <br></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit run --all-files
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
 </pre></div>
 </div>
 </section>

@@ -1,4 +1,5 @@
 import os
+import string
 import struct
 import sys
 from datetime import datetime
@@ -103,6 +104,9 @@ class Activator:
 
         self.detector = pvporcupine.create(**arguments)
         self.audio_stream = self.open_stream()
+        label = ', '.join([f'{string.capwords(wake)!r}: {sens}' for wake, sens in
+                           zip(env.wake_words, env.sensitivity)])
+        self.label = f"Awaiting: [{label}]"
 
     def __del__(self) -> NoReturn:
         """Invoked when the run loop is exited or manual interrupt.
@@ -148,7 +152,7 @@ class Activator:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info(f"Starting wake word detector with sensitivity: {env.sensitivity}")
         while True:
-            sys.stdout.write(f"\rAwaiting: [{', '.join(env.wake_words).upper()}]")
+            sys.stdout.write(f"\r{self.label}")
             pcm = struct.unpack_from("h" * self.detector.frame_length,
                                      self.audio_stream.read(num_frames=self.detector.frame_length,
                                                             exception_on_overflow=False))

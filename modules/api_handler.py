@@ -52,13 +52,14 @@ session.auth = BearerAuth(token=env.token)
 session.headers['Accept'] = 'application/json'
 
 
-def make_request(path: str, timeout: Union[int, float], data: dict = None) -> Union[dict, bool]:
-    """Makes a ``POST`` call to the API running on the backend to execute a said task.
+def make_request(path: str, timeout: Union[int, float], data: dict = None, method: str = 'POST') -> Union[dict, bool]:
+    """Makes a requests call to the API running on the backend to execute a said task.
 
     Args:
         data: Takes the command to be executed as an argument.
         path: Path to make the api call.
         timeout: Timeout for a specific call.
+        method: HTTP methods, GET/POST.
 
     See Also:
         - Makes session calls using a fixed connect timeout for ``3 seconds`` and variable read timeout.
@@ -68,7 +69,10 @@ def make_request(path: str, timeout: Union[int, float], data: dict = None) -> Un
         Returns the JSON response if request was successful.
     """
     try:
-        response = session.post(url=env.request_url + path, json=data, timeout=(3, timeout))
+        if method == 'POST':
+            response = session.post(url=env.request_url + path, json=data, timeout=(3, timeout))
+        else:
+            response = session.get(url=env.request_url + path, json=data, timeout=(3, timeout))
     except requests.RequestException as error:
         logger.error(error)
         return False

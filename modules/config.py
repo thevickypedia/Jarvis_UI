@@ -52,11 +52,11 @@ class Config(BaseConfig):
     if isinstance(env.sensitivity, float) or isinstance(env.sensitivity, PositiveInt):
         env.sensitivity = [env.sensitivity] * len(env.wake_words)
     EXCEPTION = ConnectionError(f"Unable to connect to the API via {env.request_url}")
-    if not (keywords := make_request(path='keywords', timeout=env.request_timeout)):
+    if not (keywords := make_request(path='keywords', timeout=env.request_timeout, method='GET')):
         raise EXCEPTION
-    if not (conversation := make_request(path='conversation', timeout=env.request_timeout)):
+    if not (conversation := make_request(path='conversation', timeout=env.request_timeout, method='GET')):
         raise EXCEPTION
-    if not (api_compatible := make_request(path='api-compatible', timeout=env.request_timeout)):
+    if not (api_compatible := make_request(path='api-compatible', timeout=env.request_timeout, method='GET')):
         raise EXCEPTION
     if detail := keywords.get("detail", conversation.get("detail", api_compatible.get("detail"))):
         exit(detail)

@@ -10,11 +10,10 @@
 Connects to [`Jarvis`](https://github.com/thevickypedia/Jarvis/blob/master/api/fast.py) running in the backend to process request and response via API calls.
 
 ### Mandatory Env Vars
-- `REQUEST_URL`: URL to which the API call has to be made. Can be `localhost` or a `tunneled` URL.
+- `REQUEST_URL`: URL to which the API call has to be made. Can be `localhost` or a `tunneled` URL behind a reverse proxy/CDN.
 - `TOKEN`: Authentication token.
 
 ### Optional Env Vars
-Click [here](https://github.com/thevickypedia/Jarvis#env-variables), for more information.
 - `REQUEST_TIMEOUT`: Defaults to `5` - _Timeout for API calls_
 - `SPEECH_TIMEOUT`: Defaults to `0` for macOS, `5` for Windows - _Timeout for speech synthesis_
 - `SENSITIVITY`: Defaults to `0.5` - _Sensitivity of wake word detection_
