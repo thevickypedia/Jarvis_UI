@@ -13,14 +13,20 @@ import pathlib
 import platform
 import string
 import sys
-import warnings
+from collections import ChainMap
 from datetime import datetime
 from enum import Enum
 from typing import List, Union
 
+import pyttsx3
 from packaging.version import parse as parser
-from pydantic import BaseSettings, Field, FilePath, HttpUrl, PositiveInt
+from pydantic import (BaseSettings, Field, FilePath, HttpUrl, PositiveFloat,
+                      PositiveInt, validator)
 
+from modules.exceptions import UnsupportedOS
+from modules.peripherals import channel_type, get_audio_devices
+
+audio_driver = pyttsx3.init()
 if os.getcwd().endswith("doc_generator"):
     os.chdir(os.path.dirname(os.getcwd()))
 
@@ -34,16 +40,16 @@ class Settings(BaseSettings):
 
     """
 
-    if platform.system() == "Darwin":
-        macos = 1
-    else:
-        macos = 0
-        if platform.system() != "Windows":
-            warnings.warn(
-                f"Running on un-tested operating system: {platform.system()}.\n"
-                "Please raise an issue at https://github.com/thevickypedia/Jarvis_UI/issues/new/choose if found."
-            )
-    legacy: bool = True if macos and parser(platform.mac_ver()[0]) < parser('10.14') else False
+    os: str = platform.system()
+    if os not in ["Windows", "Darwin", "Linux"]:
+        raise UnsupportedOS(
+            f"\n{''.join('*' for _ in range(80))}\n\n"
+            "Unsupported Operating System. Currently Jarvis can run only on Mac and Windows OS.\n\n"
+            "To raise an issue: https://github.com/thevickypedia/Jarvis/issues/new\n"
+            "To reach out: https://vigneshrao.com/contact\n"
+            f"\n{''.join('*' for _ in range(80))}\n"
+        )
+    legacy: bool = True if os == "Darwin" and parser(platform.mac_ver()[0]) < parser('10.14') else False
     bot: str = pathlib.PurePath(sys.argv[0]).stem
 
 
@@ -58,6 +64,16 @@ class Sensitivity(float or PositiveInt, Enum):
     """
 
     sensitivity: Union[float, PositiveInt]
+
+
+class RestartTimer(float or PositiveInt, Enum):
+    """Allowed values for restart_timer.
+
+    >>> RestartTimer
+
+    """
+
+    restart_timer: Union[float, PositiveInt]
 
 
 class RecognizerSettings(BaseSettings):
@@ -81,16 +97,26 @@ class EnvConfig(BaseSettings):
 
     """
 
+    # Required env vars
     request_url: HttpUrl = Field(default=..., env="REQUEST_URL")
     token: str = Field(default=..., env="TOKEN")
+
+    # Speech recognition settings
     recognizer_settings: RecognizerSettings = Field(default=None, env="RECOGNIZER_SETTINGS")
     recognizer_settings_default: RecognizerSettings = RecognizerSettings()
 
-    restart_timer: Union[float, PositiveInt] = Field(default=86_400, env="RESTART_TIMER")
+    restart_timer: RestartTimer = Field(default=86_400, le=172_800, ge=1_800, env="RESTART_TIMER")
+    debug: bool = Field(default=False, env="DEBUG")
+    microphone_index: Union[int, PositiveInt] = Field(default=None, ge=0, env='MICROPHONE_INDEX')
 
     request_timeout: Union[float, PositiveInt] = Field(default=5, env="REQUEST_TIMEOUT")
     speech_timeout: Union[float, PositiveInt] = Field(default=0, env="SPEECH_TIMEOUT")
     sensitivity: Union[Sensitivity, List[Sensitivity]] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
+
+    # Built-in speaker config (Unused if speech synthesis is used)
+    voice_name: str = Field(default=None, env='VOICE_NAME')
+    voice_rate: Union[PositiveInt, PositiveFloat] = Field(default=audio_driver.getProperty("rate"), env='VOICE_RATE')
+
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=None, env="VOICE_PHRASE_LIMIT")
     if settings.legacy:
@@ -104,6 +130,19 @@ class EnvConfig(BaseSettings):
 
         env_prefix = ""
         env_file = ".env"
+
+    # noinspection PyMethodParameters
+    @validator("microphone_index", pre=True, allow_reuse=True)
+    def parse_microphone_index(cls, value: Union[int, PositiveInt]) -> Union[int, PositiveInt, None]:
+        """Validates microphone index."""
+        if not value:
+            return
+        if int(value) in list(map(lambda tag: tag['index'], get_audio_devices(channels=channel_type.input_channels))):
+            return value
+        else:
+            complicated = dict(ChainMap(*list(map(lambda tag: {tag['index']: tag['name']},
+                                                  get_audio_devices(channels=channel_type.input_channels)))))
+            raise ValueError(f"value should be one of {complicated}")
 
 
 class FileIO(BaseSettings):

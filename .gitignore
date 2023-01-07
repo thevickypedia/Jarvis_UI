@@ -6,5 +6,4 @@ venv
 logs
 .env
 speech_synthesis.wav
-temp.py
-test.py
+temp*.py

@@ -1,6 +1,15 @@
 Release Notes
 =============
 
+0.4.6 (01/07/2022)
+------------------
+- Use `multiprocessing.Manager` to block restart in between a task
+- Add support to Linux OS
+- Block of ALSA errors on Linux
+- Add an option to set voice name and voice rate for built-in speaker
+- Add custom exception handlers
+- Update .gitignore and README.md
+
 0.4.5 (01/07/2022)
 ------------------
 - Setup automatic restart based on env var

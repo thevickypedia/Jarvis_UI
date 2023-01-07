@@ -5,15 +5,15 @@ import struct
 import sys
 import time
 from datetime import datetime
-from multiprocessing import Process
-from typing import NoReturn
+from multiprocessing import Manager, Process
+from typing import Dict, NoReturn
 
 import pvporcupine
 from pyaudio import PyAudio, Stream, paInt16
 
 from modules import listener, speaker
 from modules.api_handler import make_request
-from modules.config import config
+from modules.config import config, time_converter
 from modules.logger import logger
 from modules.models import env, fileio, settings
 from modules.playsound import playsound
@@ -75,11 +75,8 @@ class Activator:
         - After processing the phrase, the converted text is sent as response to the API.
     """
 
-    def __init__(self, input_device_index: int = None):
+    def __init__(self):
         """Initiates Porcupine object for hot word detection.
-
-        Args:
-            input_device_index: Index of Input Device to use.
 
         See Also:
             - Instantiates an instance of Porcupine object and monitors audio stream for occurrences of keywords.
@@ -90,8 +87,6 @@ class Activator:
             - `Audio Overflow <https://people.csail.mit.edu/hubert/pyaudio/docs/#pyaudio.Stream.read>`__ handling.
         """
         keyword_paths = [pvporcupine.KEYWORD_PATHS[x] for x in env.wake_words]
-        self.input_device_index = input_device_index
-
         self.py_audio = PyAudio()
         arguments = {
             "library_path": pvporcupine.LIBRARY_PATH,
@@ -138,20 +133,24 @@ class Activator:
             format=paInt16,
             input=True,
             frames_per_buffer=self.detector.frame_length,
-            input_device_index=self.input_device_index
+            input_device_index=env.microphone_index
         )
 
-    def executor(self):
+    def executor(self, status):
         """Closes the audio stream and calls the processor."""
         logger.debug(f"Detected {settings.bot} at {datetime.now()}")
+        status["LOCKED"] = True
+        logger.debug("Restart locked")
         playsound(sound=fileio.acknowledgement, block=False)
         self.py_audio.close(stream=self.audio_stream)
         if processor():
             self.audio_stream = None
             raise KeyboardInterrupt
         self.audio_stream = self.open_stream()
+        status["LOCKED"] = False
+        logger.debug("Restart released")
 
-    def start(self) -> NoReturn:
+    def start(self, status: Dict) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info(f"Starting wake word detector with sensitivity: {env.sensitivity}")
         while True:
@@ -163,20 +162,20 @@ class Activator:
             if settings.legacy:
                 if len(env.wake_words) == 1 and result:
                     settings.bot = env.wake_words[0]
-                    self.executor()
+                    self.executor(status=status)
                 elif len(env.wake_words) > 1 and result >= 0:
                     settings.bot = env.wake_words[result]
-                    self.executor()
+                    self.executor(status=status)
             else:
                 if result >= 0:
                     settings.bot = env.wake_words[result]
-                    self.executor()
+                    self.executor(status=status)
 
 
-def starter() -> None:
+def starter(status: Dict) -> None:
     """Starts main process to activate Jarvis and process requests via API calls."""
     try:
-        Activator().start()
+        Activator().start(status=status)
     except KeyboardInterrupt:
         return
 
@@ -201,15 +200,27 @@ def terminate(process: Process):
             logger.error(error)
 
 
-def watchdog():
-    """Initiates Jarvis as a child process and restarts as per the timer set."""
-    process = Process(target=starter)
+def begin():
+    """Initiates Jarvis as a child process and restarts as per the timer set.
+
+    See Also:
+        - Swaps the public URL every time it restarts.
+        - Reloads env variables upon restart.
+        - Avoids memory overload.
+    """
+    sys.stdout.write(f"\rRestart set to {time_converter(second=env.restart_timer)}")
+    logger.info(f"Restart set to {time_converter(second=env.restart_timer)}")
+    status_dict = Manager().dict()
+    status_dict["LOCKED"] = False
+    process = Process(target=starter, args=(status_dict,))
     process.name = pathlib.Path(__file__).stem
     process.start()
     logger.info(f"Initiating as {process.name}[{process.pid}]")
     start_time = time.time()
     while True:
         if start_time + env.restart_timer <= time.time():
+            if status_dict["LOCKED"]:
+                continue  # Wait for the existing task to complete
             logger.info(f"Time to restart {process.name}[{process.pid}]")
             terminate(process=process)
             break
@@ -217,8 +228,8 @@ def watchdog():
             logger.info(f"Process {process.name}[{process.pid}] died. Ending loop.")
             return
         time.sleep(0.5)
-    watchdog()
+    begin()
 
 
 if __name__ == '__main__':
-    watchdog()
+    begin()

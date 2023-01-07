@@ -12,7 +12,7 @@ import logging
 import os
 from logging.config import dictConfig
 
-from modules.models import fileio
+from modules.models import env, fileio
 
 if not os.path.isdir('logs'):
     os.makedirs('logs')
@@ -23,8 +23,9 @@ dictConfig({
     'disable_existing_loggers': True,
 })
 logging.getLogger("_code_cache").propagate = False
+log_level = logging.DEBUG if env.debug else logging.INFO
 logging.basicConfig(
-    filename=fileio.base_log_file, filemode='a', level=logging.INFO,
+    filename=fileio.base_log_file, filemode='a', level=log_level,
     format='%(asctime)s - %(levelname)s - [%(module)s:%(lineno)d] - %(funcName)s - %(message)s',
     datefmt='%b-%d-%Y %I:%M:%S %p'
 )

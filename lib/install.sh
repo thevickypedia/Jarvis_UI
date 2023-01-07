@@ -45,6 +45,7 @@ if [[ "$OSName" == "Darwin" ]]; then
     else
       pip install 'pvporcupine==1.9.5'
     fi
+    os_independent_packages
 elif [[ "$OSName" == MSYS* ]]; then
     conda install portaudio=19.6.0
     # PyAudio wheel files original source:
@@ -53,11 +54,22 @@ elif [[ "$OSName" == MSYS* ]]; then
     pip install "$pyaudio"
     rm "$pyaudio"
     pip install 'pvporcupine==1.9.5'
+    os_independent_packages
+elif [[ "$OSName" == "Linux" ]]; then
+    dev_ver=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+    sudo apt install -y "python$dev_ver-distutils"  # Install distutils for the current python version
+    sudo apt-get install -y git libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+    sudo apt install -y build-essential ffmpeg espeak python3-pyaudio "python$dev_ver-dev"
+    python -m pip install PyAudio==0.2.12 pvporcupine==1.9.5
+    os_independent_packages
 else
-    sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
-    sudo apt-get install ffmpeg libav-tools
-    sudo pip install pyaudio
-    sudo pip install 'pvporcupine==1.9.5'
+    clear
+    echo "*****************************************************************************************************************"
+    echo "*****************************************************************************************************************"
+    echo ""
+    echo "Current Operating System: $OSName"
+    echo "Jarvis is currently supported only on Linux, MacOS and Windows"
+    echo ""
+    echo "*****************************************************************************************************************"
+    echo "*****************************************************************************************************************"
 fi
-
-os_independent_packages

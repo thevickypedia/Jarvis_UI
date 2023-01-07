@@ -52,23 +52,30 @@
 <section id="mandatory-env-vars">
 <h2>Mandatory Env Vars<a class="headerlink" href="#mandatory-env-vars" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">REQUEST_URL</span></code>: URL to which the API call has to be made. Can be <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or a <code class="docutils literal notranslate"><span class="pre">tunneled</span></code> URL behind a reverse proxy/CDN.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">TOKEN</span></code>: Authentication token.</p></li>
+<li><p><strong>REQUEST_URL</strong>: URL to which the API call has to be made. Can be <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or a <code class="docutils literal notranslate"><span class="pre">tunneled</span></code> URL behind a reverse proxy/CDN.</p></li>
+<li><p><strong>TOKEN</strong>: Authentication token.</p></li>
 </ul>
 </section>
 <section id="optional-env-vars">
 <h2>Optional Env Vars<a class="headerlink" href="#optional-env-vars" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">REQUEST_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">5</span></code> - <em>Timeout for API calls</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SPEECH_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code> for macOS, <code class="docutils literal notranslate"><span class="pre">5</span></code> for Windows - <em>Timeout for speech synthesis</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SENSITIVITY</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code> - <em>Sensitivity of wake word detection</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">WAKE_WORDS</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">jarvis</span></code> (Defaults to <code class="docutils literal notranslate"><span class="pre">alexa</span></code> in macOS older than <code class="docutils literal notranslate"><span class="pre">10.14</span></code>) - <em>Wake words to initiate Jarvis</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">NATIVE_AUDIO</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - <em>If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the response is generated as audio from the server.</em>
+<li><p><strong>DEBUG</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - <em>Enable debug level logging</em>
 <br><br></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">VOICE_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code> - <em>Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit</em></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Timeout for phrase once listener is activated - Listener will be deactivated after this limit</em>
+<li><p><strong>REQUEST_TIMEOUT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">5</span></code> - <em>Timeout for API calls</em></p></li>
+<li><p><strong>SPEECH_TIMEOUT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code> for macOS, <code class="docutils literal notranslate"><span class="pre">5</span></code> for Windows - <em>Timeout for speech synthesis</em>
 <br><br></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">RESTART_TIMER</span></code>: Defaults to 24 hours.</p>
+<li><p><strong>NATIVE_AUDIO</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - <em>If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the response is generated in the server’s default voice</em></p></li>
+<li><p><strong>WAKE_WORDS</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">jarvis</span></code> (Defaults to <code class="docutils literal notranslate"><span class="pre">alexa</span></code> in macOS older than <code class="docutils literal notranslate"><span class="pre">10.14</span></code>) - <em>Wake words to initiate Jarvis</em></p></li>
+<li><p><strong>SENSITIVITY</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code> - <em>Sensitivity of wake word detection</em>
+<br><br></p></li>
+<li><p><strong>MICROPHONE_INDEX</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Use <a class="reference external" href="https://github.com/thevickypedia/Jarvis_UI/blob/main/modules/peripherals.py">peripherals.py</a> to get the index values</em></p></li>
+<li><p><strong>VOICE_NAME</strong>: Defaults to the author’s favorite per the OS. <em>Name of the voice supported by the OperatingSystem</em></p></li>
+<li><p><strong>VOICE_RATE</strong>: Defaults to the value from <code class="docutils literal notranslate"><span class="pre">pyttsx3</span></code> module - <em>Speed/rate at which the text should be spoken</em>
+<br><br></p></li>
+<li><p><strong>VOICE_TIMEOUT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code> - <em>Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit</em></p></li>
+<li><p><strong>VOICE_PHRASE_LIMIT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Timeout for phrase once listener is activated - Listener will be deactivated after this limit</em>
+<br><br></p></li>
+<li><p><strong>RESTART_TIMER</strong>: Defaults to 24 hours.</p>
 <ul>
 <li><p>I have a proxy tunneling my <code class="docutils literal notranslate"><span class="pre">localhost</span></code> from Jarvis server.</p></li>
 <li><p>I have a CDN setup that’s allowing me to access the tunnel with a custom domain.</p></li>
@@ -91,15 +98,15 @@ Cons in using hard coded <code class="docutils literal notranslate"><span class=
 </div></blockquote>
 <p>Sample settings (formatted as JSON object)</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">RECOGNIZER_SETTINGS</span></code>: <code class="docutils literal notranslate"><span class="pre">'{&quot;energy_threshold&quot;:</span> <span class="pre">1100,</span> <span class="pre">&quot;dynamic_energy_threshold&quot;:</span> <span class="pre">false,</span> <span class="pre">&quot;pause_threshold&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;phrase_threshold&quot;:</span> <span class="pre">0.1}'</span></code></p></li>
+<li><p><strong>RECOGNIZER_SETTINGS</strong>: <code class="docutils literal notranslate"><span class="pre">'{&quot;energy_threshold&quot;:</span> <span class="pre">1100,</span> <span class="pre">&quot;dynamic_energy_threshold&quot;:</span> <span class="pre">false,</span> <span class="pre">&quot;pause_threshold&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;phrase_threshold&quot;:</span> <span class="pre">0.1}'</span></code></p></li>
 </ul>
 <p><strong>Description</strong></p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">energy_threshold</span></code>: Minimum audio energy to consider for recording. Greater the value, louder the speech should be.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dynamic_energy_threshold</span></code>: Change considerable audio energy threshold dynamically.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">pause_threshold</span></code>: Seconds of non-speaking audio before a phrase is considered complete.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">phrase_threshold</span></code>: Minimum seconds of speaking audio before it can be considered a phrase - values below this are ignored. This helps to filter out clicks and pops.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">non_speaking_duration</span></code>: Seconds of non-speaking audio to keep on both sides of the recording.</p></li>
+<li><p><strong>energy_threshold</strong>: Minimum audio energy to consider for recording. Greater the value, louder the speech should be.</p></li>
+<li><p><strong>dynamic_energy_threshold</strong>: Change considerable audio energy threshold dynamically.</p></li>
+<li><p><strong>pause_threshold</strong>: Seconds of non-speaking audio before a phrase is considered complete.</p></li>
+<li><p><strong>phrase_threshold</strong>: Minimum seconds of speaking audio before it can be considered a phrase - values below this are ignored. This helps to filter out clicks and pops.</p></li>
+<li><p><strong>non_speaking_duration</strong>: Seconds of non-speaking audio to keep on both sides of the recording.</p></li>
 </ul>
 <p>Refer Jarvis’ <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/README.md">README</a> for more information on setting up the backend server.</p>
 <section id="coding-standards">

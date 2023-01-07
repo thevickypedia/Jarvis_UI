@@ -66,6 +66,10 @@ Models
    :members:
    :undoc-members:
 
+.. autoclass:: modules.models.RestartTimer(float or PositiveInt, Enum)
+   :members:
+   :undoc-members:
+
 PlaySound
 =========
 
@@ -77,6 +81,20 @@ Speaker
 =======
 
 .. automodule:: modules.speaker
+   :members:
+   :undoc-members:
+
+Peripherals
+===========
+
+.. automodule:: modules.peripherals
+   :members:
+   :undoc-members:
+
+Exceptions
+==========
+
+.. automodule:: modules.exceptions
    :members:
    :undoc-members:
 
