@@ -214,18 +214,27 @@
 </dd></dl>
 
 </section>
-<section id="module-modules.config.Config">
-<span id="config"></span><h1>Config<a class="headerlink" href="#module-modules.config.Config" title="Permalink to this heading">¶</a></h1>
-<p>Gets keywords, conversation and api-compatibles during start up. Mandates <code class="docutils literal notranslate"><span class="pre">speech-synthesis</span></code> for WindowsOS.</p>
+<section id="config">
+<h1>Config<a class="headerlink" href="#config" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.config.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">BaseConfig</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.config.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets keywords, conversation and api-compatibles during start up. Runs custom validations on env-vars.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Config</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
-<dt class="field-odd">raises APIError<span class="colon">:</span></dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">raises If the UI is unable to connect to the API server.<span class="colon">:</span></dt>
-<dd class="field-even"><p></p></dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#modules.exceptions.APIError" title="modules.exceptions.APIError"><strong>APIError</strong></a> – </p></li>
+<li><p><strong>If the UI is unable to connect to the API server.</strong> – </p></li>
+<li><p><a class="reference internal" href="#modules.exceptions.InvalidEnvVars" title="modules.exceptions.InvalidEnvVars"><strong>InvalidEnvVars</strong></a> – </p></li>
+<li><p><strong>If the voice name is not present for the OperatingSystem.</strong> – </p></li>
+</ul>
+</dd>
 </dl>
+</dd></dl>
+
 </section>
 <section id="module-modules.listener">
 <span id="listener"></span><h1>Listener<a class="headerlink" href="#module-modules.listener" title="Permalink to this heading">¶</a></h1>
@@ -565,12 +574,6 @@
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Speaker</span>
 </pre></div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">raises InvalidEnvVars<span class="colon">:</span></dt>
-<dd class="field-odd"><p></p></dd>
-<dt class="field-even">raises If the voice name is not present for the OperatingSystem.<span class="colon">:</span></dt>
-<dd class="field-even"><p></p></dd>
-</dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="modules.speaker.speak">
 <span class="sig-prename descclassname"><span class="pre">modules.speaker.</span></span><span class="sig-name descname"><span class="pre">speak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#modules.speaker.speak" title="Permalink to this definition">¶</a></dt>
@@ -711,7 +714,7 @@
 <li><a class="reference internal" href="#">Welcome to Jarvis UI’s documentation!</a></li>
 <li><a class="reference internal" href="#module-jarvis">Jarvis</a></li>
 <li><a class="reference internal" href="#module-modules.api_handler">API Handler</a></li>
-<li><a class="reference internal" href="#module-modules.config.Config">Config</a></li>
+<li><a class="reference internal" href="#config">Config</a></li>
 <li><a class="reference internal" href="#module-modules.listener">Listener</a></li>
 <li><a class="reference internal" href="#module-modules.logger">Logger</a></li>
 <li><a class="reference internal" href="#models">Models</a></li>

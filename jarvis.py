@@ -60,7 +60,7 @@ def processor() -> Union[str, None]:
                 playsound(sound=fileio.speech_wav_file)
                 os.remove(fileio.speech_wav_file)
                 return
-            response = response.get('detail', '').replace("\N{DEGREE SIGN}F", " degrees fahrenheit").replace("\n", ". ")
+            response = response.get('detail', '')
             logger.info(f"Response: {response}")
             sys.stdout.write(f"\rResponse: {response}")
             speaker.speak(text=response)

@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+0.4.8 (01/07/2022)
+------------------
+- Move validations from `speaker.py` to `config.py`
+- Fix docstrings
+
 0.4.7 (01/07/2022)
 ------------------
 - Create `Enum` flags to communicate

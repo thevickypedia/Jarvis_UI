@@ -29,9 +29,9 @@ API Handler
 Config
 ======
 
-.. automodule:: modules.config.Config
+.. autoclass:: modules.config.Config(BaseConfig)
    :members:
-   :undoc-members:
+   :exclude-members:
 
 Listener
 ========

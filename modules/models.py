@@ -1,10 +1,4 @@
-"""This is a space for environment variables shared across multiple modules validated using pydantic.
-
->>> EnvConfig
->>> FileIO
->>> Settings
-
-"""
+"""This is a space for environment variables shared across multiple modules validated using pydantic."""
 
 import base64
 import binascii
