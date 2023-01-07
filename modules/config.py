@@ -6,6 +6,7 @@
 import os
 import platform
 import warnings
+from multiprocessing import current_process
 from typing import Callable, NoReturn
 
 import inflect
@@ -13,6 +14,7 @@ import pvporcupine
 from pydantic import BaseConfig, PositiveInt
 
 from modules.api_handler import make_request
+from modules.exceptions import APIError
 from modules.logger import logger
 from modules.models import env, fileio, settings
 
@@ -96,6 +98,9 @@ class Config(BaseConfig):
 
     >>> Config
 
+    Raises:
+        APIError:
+        If the UI is unable to connect to the API server.
     """
     if not env.recognizer_settings and not env.voice_phrase_limit:
         env.recognizer_settings = env.recognizer_settings_default  # Default override when phrase limit is not available
@@ -107,7 +112,7 @@ class Config(BaseConfig):
 
     if isinstance(env.sensitivity, float) or isinstance(env.sensitivity, PositiveInt):
         env.sensitivity = [env.sensitivity] * len(env.wake_words)
-    EXCEPTION = ConnectionError(f"Unable to connect to the API via {env.request_url}")
+    EXCEPTION = APIError(f"Unable to connect to the API via {env.request_url}")
     if not (keywords := make_request(path='keywords', timeout=env.request_timeout, method='GET')):
         raise EXCEPTION
     if not (conversation := make_request(path='conversation', timeout=env.request_timeout, method='GET')):
@@ -137,6 +142,7 @@ class Config(BaseConfig):
 
     if env.speech_timeout and not env.native_audio:
         fileio.failed = add_ss_extn(fileio.failed)
+        fileio.restart = add_ss_extn(fileio.restart)
         fileio.shutdown = add_ss_extn(fileio.shutdown)
         fileio.processing = add_ss_extn(fileio.processing)
         fileio.unprocessable = add_ss_extn(fileio.unprocessable)
@@ -162,4 +168,8 @@ class Config(BaseConfig):
             )
 
 
-config = Config()
+logger.info(f"Current Process: {current_process().name}")
+if current_process().name != "MainProcess":
+    config = Config()  # Run validations only on SyncManager and child process
+else:
+    config = None

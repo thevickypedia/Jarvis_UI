@@ -6,7 +6,7 @@ import sys
 import time
 from datetime import datetime
 from multiprocessing import Manager, Process
-from typing import Dict, NoReturn
+from typing import Dict, NoReturn, Union
 
 import pvporcupine
 from pyaudio import PyAudio, Stream, paInt16
@@ -15,11 +15,11 @@ from modules import listener, speaker
 from modules.api_handler import make_request
 from modules.config import config, time_converter
 from modules.logger import logger
-from modules.models import env, fileio, settings
+from modules.models import env, fileio, flag, settings
 from modules.playsound import playsound
 
 
-def processor() -> bool:
+def processor() -> Union[str, None]:
     """Processes the request after wake word is detected.
 
     Returns:
@@ -29,17 +29,21 @@ def processor() -> bool:
     if phrase := listener.listen():
         logger.info(f"Request: {phrase}")
         sys.stdout.write(f"\rRequest: {phrase}")
+        if "restart" in phrase.lower():
+            logger.info("User requested to restart.")
+            playsound(sound=fileio.restart)
+            return flag.restart
         if "stop running" in phrase.lower():
             logger.info("User requested to stop.")
             playsound(sound=fileio.shutdown)
-            return True
+            return flag.stop
         if not any(word in phrase.lower() for word in config.keywords + config.conversation):
             logger.warning(f"'{phrase}' is not a part of recognized keywords or conversation.")
-            return False
+            return
         if not any(word in phrase.lower() for word in config.api_compatible['compatible']):
             logger.warning(f"'{phrase}' is not a part of API compatible request.")
             playsound(sound=fileio.unprocessable)
-            return False
+            return
         if any(word in phrase.lower() for word in config.delay_with_ack + config.delay_without_ack):
             logger.info(f"Increasing timeout for: {phrase}")
             timeout = 30
@@ -55,7 +59,7 @@ def processor() -> bool:
                 sys.stdout.write("\rResponse received as audio.")
                 playsound(sound=fileio.speech_wav_file)
                 os.remove(fileio.speech_wav_file)
-                return False
+                return
             response = response.get('detail', '').replace("\N{DEGREE SIGN}F", " degrees fahrenheit").replace("\n", ". ")
             logger.info(f"Response: {response}")
             sys.stdout.write(f"\rResponse: {response}")
@@ -143,12 +147,16 @@ class Activator:
         logger.debug("Restart locked")
         playsound(sound=fileio.acknowledgement, block=False)
         self.py_audio.close(stream=self.audio_stream)
-        if processor():
+        processed = processor()
+        if processed == flag.stop:
             self.audio_stream = None
             raise KeyboardInterrupt
-        self.audio_stream = self.open_stream()
-        status["LOCKED"] = False
+        if processed == flag.restart:
+            status["LOCKED"] = None
+        else:
+            status["LOCKED"] = False
         logger.debug("Restart released")
+        self.audio_stream = self.open_stream()
 
     def start(self, status: Dict) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
@@ -189,7 +197,7 @@ def terminate(process: Process):
     logger.info(f"Terminating {process.name}[{process.pid}]")
     process.terminate()
     if process.is_alive():
-        logger.warning(f"Process {process.name}[{process.pid}] is still alive. Terminating.")
+        logger.warning(f"Process {process.name}[{process.pid}] is still alive. Killing it.")
         process.kill()
         process.join(timeout=1e-01)
         try:
@@ -227,6 +235,10 @@ def begin():
         if not process.is_alive():
             logger.info(f"Process {process.name}[{process.pid}] died. Ending loop.")
             return
+        if status_dict["LOCKED"] is None:
+            logger.info("Lock status was set to None")
+            terminate(process=process)
+            break
         time.sleep(0.5)
     begin()
 

@@ -60,3 +60,11 @@ class InvalidEnvVars(ValueError):
     >>> InvalidEnvVars
 
     """
+
+
+class APIError(ConnectionError):
+    """Custom ``APIError`` raised when the UI is unable to connect to the API.
+
+    >>> APIError
+
+    """

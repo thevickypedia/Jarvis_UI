@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+0.4.7 (01/07/2022)
+------------------
+- Create `Enum` flags to communicate
+- Add an option to restart upon user request
+- Add restart.wav and restart_ss.wav
+
 0.4.6 (01/07/2022)
 ------------------
 - Use `multiprocessing.Manager` to block restart in between a task

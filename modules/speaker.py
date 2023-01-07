@@ -3,6 +3,9 @@
 
 >>> Speaker
 
+Raises:
+    InvalidEnvVars:
+    If the voice name is not present for the OperatingSystem.
 """
 
 from typing import NoReturn, Union

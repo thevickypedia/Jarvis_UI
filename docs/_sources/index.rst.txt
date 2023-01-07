@@ -70,6 +70,10 @@ Models
    :members:
    :undoc-members:
 
+.. autoclass:: modules.models.Flag(str, Enum)
+   :members:
+   :undoc-members:
+
 PlaySound
 =========
 

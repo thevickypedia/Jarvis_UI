@@ -33,11 +33,28 @@ if os.getcwd().endswith("doc_generator"):
 UNICODE_PREFIX = base64.b64decode(b'XA==').decode(encoding="ascii") + string.ascii_letters[20] + string.digits[:1] * 2
 
 
+class Flag(str, Enum):
+    """Enum flags for restart and stop.
+
+    >>> Flag
+
+    """
+
+    stop: str = "STOP"
+    restart: str = "RESTART"
+
+
+flag = Flag
+
+
 class Settings(BaseSettings):
     """Loads most common system values.
 
     >>> Settings
 
+    Raises:
+        UnsupportedOS:
+        If the host operating system is other than Linux, macOS or Windows.
     """
 
     os: str = platform.system()
@@ -153,6 +170,7 @@ class FileIO(BaseSettings):
     """
 
     failed: FilePath = os.path.join('indicators', 'failed.wav')
+    restart: FilePath = os.path.join('indicators', 'restart.wav')
     shutdown: FilePath = os.path.join('indicators', 'shutdown.wav')
     processing: FilePath = os.path.join('indicators', 'processing.wav')
     unprocessable: FilePath = os.path.join('indicators', 'unprocessable.wav')
