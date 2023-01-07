@@ -86,12 +86,13 @@ class EnvConfig(BaseSettings):
     recognizer_settings: RecognizerSettings = Field(default=None, env="RECOGNIZER_SETTINGS")
     recognizer_settings_default: RecognizerSettings = RecognizerSettings()
 
+    restart_timer: Union[float, PositiveInt] = Field(default=86_400, env="RESTART_TIMER")
+
     request_timeout: Union[float, PositiveInt] = Field(default=5, env="REQUEST_TIMEOUT")
     speech_timeout: Union[float, PositiveInt] = Field(default=0, env="SPEECH_TIMEOUT")
     sensitivity: Union[Sensitivity, List[Sensitivity]] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=None, env="VOICE_PHRASE_LIMIT")
-    swap_url: bool = Field(default=False, env="SWAP_URL")
     if settings.legacy:
         wake_words: list = Field(default=['alexa'], env="WAKE_WORDS")
     else:

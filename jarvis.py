@@ -1,8 +1,11 @@
 import os
+import pathlib
 import string
 import struct
 import sys
+import time
 from datetime import datetime
+from multiprocessing import Process
 from typing import NoReturn
 
 import pvporcupine
@@ -170,7 +173,7 @@ class Activator:
                     self.executor()
 
 
-def begin() -> None:
+def starter() -> None:
     """Starts main process to activate Jarvis and process requests via API calls."""
     try:
         Activator().start()
@@ -178,5 +181,44 @@ def begin() -> None:
         return
 
 
+def terminate(process: Process):
+    """Terminates the process.
+
+    Args:
+        process: Takes the process object as an argument.
+    """
+    logger.info(f"Terminating {process.name}[{process.pid}]")
+    process.terminate()
+    if process.is_alive():
+        logger.warning(f"Process {process.name}[{process.pid}] is still alive. Terminating.")
+        process.kill()
+        process.join(timeout=1e-01)
+        try:
+            logger.info(f"Closing process: {process.name}[{process.pid}]")
+            process.close()  # Close immediately instead of waiting to be garbage collected
+        except ValueError as error:
+            # Expected when join timeout is insufficient. The resources will be released eventually but not immediately.
+            logger.error(error)
+
+
+def watchdog():
+    """Initiates Jarvis as a child process and restarts as per the timer set."""
+    process = Process(target=starter)
+    process.name = pathlib.Path(__file__).stem
+    process.start()
+    logger.info(f"Initiating as {process.name}[{process.pid}]")
+    start_time = time.time()
+    while True:
+        if start_time + env.restart_timer <= time.time():
+            logger.info(f"Time to restart {process.name}[{process.pid}]")
+            terminate(process=process)
+            break
+        if not process.is_alive():
+            logger.info(f"Process {process.name}[{process.pid}] died. Ending loop.")
+            return
+        time.sleep(0.5)
+    watchdog()
+
+
 if __name__ == '__main__':
-    begin()
+    watchdog()

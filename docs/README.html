@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>Jarvis UI &#8212; Jarvis UI  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -67,13 +67,13 @@
 <br><br></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">VOICE_TIMEOUT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code> - <em>Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit</em></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Timeout for phrase once listener is activated - Listener will be deactivated after this limit</em>
-<br><br>
-<strong>Customized as per the author’s requirement.</strong></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SWAP_URL</span></code>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - <em>Tries to get the public URL from <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> if it uses a <code class="docutils literal notranslate"><span class="pre">reverse</span> <span class="pre">proxy/CDN</span></code></em></p>
+<br><br></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RESTART_TIMER</span></code>: Defaults to 24 hours.</p>
 <ul>
 <li><p>I have a proxy tunneling my <code class="docutils literal notranslate"><span class="pre">localhost</span></code> from Jarvis server.</p></li>
 <li><p>I have a CDN setup that’s allowing me to access the tunnel with a custom domain.</p></li>
 <li><p>Since I don’t want my CDN to take the hit, and the tunnel origin changes often, I’m swapping the URL upon startup.</p></li>
+<li><p>This requires restarting the UI every now and then.</p></li>
 </ul>
 </li>
 </ul>
@@ -114,12 +114,12 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
 <p><code class="docutils literal notranslate"><span class="pre">PreCommit</span></code> will ensure linting, and the doc creation are run on every commit.</p>
 <p><strong>Requirement</strong>
 <br></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache<span class="w"> </span><span class="nv">sphinx</span><span class="o">==</span><span class="m">5</span>.1.1<span class="w"> </span>pre-commit<span class="w"> </span>recommonmark
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install --no-cache <span class="nv">sphinx</span><span class="o">==</span><span class="m">5</span>.1.1 pre-commit recommonmark
 </pre></div>
 </div>
 <p><strong>Usage</strong>
 <br></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit<span class="w"> </span>run<span class="w"> </span>--all-files
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pre-commit run --all-files
 </pre></div>
 </div>
 </section>

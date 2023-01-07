@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+0.4.5 (01/07/2022)
+------------------
+- Setup automatic restart based on env var
+- Update README.md
+
 0.4.4 (01/02/2022)
 ------------------
 - Change HTTP requests method to match a change in Jarvis' API

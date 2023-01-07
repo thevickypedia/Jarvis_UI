@@ -23,11 +23,11 @@ Connects to [`Jarvis`](https://github.com/thevickypedia/Jarvis/blob/master/api/f
 - `VOICE_TIMEOUT`: Defaults to `3` - _Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit_
 - `VOICE_PHRASE_LIMIT`: Defaults to `None` - _Timeout for phrase once listener is activated - Listener will be deactivated after this limit_
 <br><br>
-**Customized as per the author's requirement.**
-- `SWAP_URL`: Defaults to `False` - _Tries to get the public URL from `Jarvis` if it uses a `reverse proxy/CDN`_
+- `RESTART_TIMER`: Defaults to 24 hours.
   - I have a proxy tunneling my `localhost` from Jarvis server.
   - I have a CDN setup that's allowing me to access the tunnel with a custom domain.
   - Since I don't want my CDN to take the hit, and the tunnel origin changes often, I'm swapping the URL upon startup.
+  - This requires restarting the UI every now and then.
 
 **Custom settings for speech recognition**
 

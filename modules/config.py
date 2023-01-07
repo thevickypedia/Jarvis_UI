@@ -46,8 +46,7 @@ class Config(BaseConfig):
     if env.request_url[-1] != "/":
         env.request_url += "/"
 
-    if env.swap_url:
-        swapper()
+    swapper()
 
     if isinstance(env.sensitivity, float) or isinstance(env.sensitivity, PositiveInt):
         env.sensitivity = [env.sensitivity] * len(env.wake_words)
