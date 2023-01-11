@@ -24,9 +24,35 @@ dictConfig({
 })
 logging.getLogger("_code_cache").propagate = False
 log_level = logging.DEBUG if env.debug else logging.INFO
-logging.basicConfig(
-    filename=fileio.base_log_file, filemode='a', level=log_level,
-    format='%(asctime)s - %(levelname)s - [%(module)s:%(lineno)d] - %(funcName)s - %(message)s',
-    datefmt='%b-%d-%Y %I:%M:%S %p'
-)
-logger = logging.getLogger('jarvis')
+
+
+def file_logger() -> logging.Logger:
+    """Create custom file logger.
+
+    Returns:
+        Logger:
+        Returns the logger object.
+    """
+    logging.basicConfig(
+        filename=fileio.base_log_file, filemode='a', level=log_level,
+        format='%(asctime)s - %(levelname)s - [%(module)s:%(lineno)d] - %(funcName)s - %(message)s',
+        datefmt='%b-%d-%Y %I:%M:%S %p'
+    )
+    return logging.getLogger(__name__)
+
+
+def console_logger() -> logging.Logger:
+    """Create custom stream logger.
+
+    Returns:
+        Logger:
+        Returns the logger object.
+    """
+    logging.basicConfig(
+        format='%(asctime)s - %(levelname)s - [%(module)s:%(lineno)d] - %(funcName)s - %(message)s',
+        datefmt='%b-%d-%Y %I:%M:%S %p', level=log_level
+    )
+    return logging.getLogger(__name__)
+
+
+logger = file_logger()

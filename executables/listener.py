@@ -1,3 +1,10 @@
+# noinspection PyUnresolvedReferences
+"""Module for listener and speech recognition.
+
+>>> Listener
+
+"""
+
 import sys
 from typing import Union
 

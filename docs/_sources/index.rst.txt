@@ -22,7 +22,7 @@ Jarvis
 API Handler
 ===========
 
-.. automodule:: modules.api_handler
+.. automodule:: executables.api_handler
    :members:
    :undoc-members:
 
@@ -36,7 +36,7 @@ Config
 Listener
 ========
 
-.. automodule:: modules.listener
+.. automodule:: executables.listener
    :members:
    :undoc-members:
 
@@ -84,7 +84,14 @@ PlaySound
 Speaker
 =======
 
-.. automodule:: modules.speaker
+.. automodule:: executables.speaker
+   :members:
+   :undoc-members:
+
+Starter
+=======
+
+.. automodule:: executables.starter
    :members:
    :undoc-members:
 

@@ -117,6 +117,7 @@ class EnvConfig(BaseSettings):
     recognizer_settings_default: RecognizerSettings = RecognizerSettings()
 
     restart_timer: RestartTimer = Field(default=86_400, le=172_800, ge=1_800, env="RESTART_TIMER")
+    restart_attempts: int = Field(default=5, gt=1, le=10, env="RESTART_ATTEMPTS")
     debug: bool = Field(default=False, env="DEBUG")
     microphone_index: Union[int, PositiveInt] = Field(default=None, ge=0, env='MICROPHONE_INDEX')
 

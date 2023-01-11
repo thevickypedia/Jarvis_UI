@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+0.4.9 (01/11/2022)
+------------------
+- Set the application to restart in case of startup errors
+- Avoid application falling on its face during a restart
+- Restructure modules and executables
+
 0.4.8 (01/07/2022)
 ------------------
 - Move validations from `speaker.py` to `config.py`

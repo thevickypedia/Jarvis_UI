@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
     <title>Welcome to Jarvis UI’s documentation! &#8212; Jarvis UI  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -58,62 +58,6 @@
 </section>
 <section id="module-jarvis">
 <span id="jarvis"></span><h1>Jarvis<a class="headerlink" href="#module-jarvis" title="Permalink to this heading">¶</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="jarvis.Activator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">Activator</span></span><a class="headerlink" href="#jarvis.Activator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Awaits for the keyword <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> and triggers <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when heard.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Activator</span>
-</pre></div>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Creates an input audio stream from a microphone, monitors it, and detects the specified wake word.</p></li>
-<li><p>Once detected, Jarvis triggers the <code class="docutils literal notranslate"><span class="pre">listener.listen()</span></code> function with an <code class="docutils literal notranslate"><span class="pre">acknowledgement</span></code> sound played.</p></li>
-<li><p>After processing the phrase, the converted text is sent as response to the API.</p></li>
-</ul>
-</div>
-<p>Initiates Porcupine object for hot word detection.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Instantiates an instance of Porcupine object and monitors audio stream for occurrences of keywords.</p></li>
-<li><p>A higher sensitivity results in fewer misses at the cost of increasing the false alarm rate.</p></li>
-<li><p>sensitivity: Tolerance/Sensitivity level. Takes argument or env var <code class="docutils literal notranslate"><span class="pre">sensitivity</span></code> or defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></li>
-</ul>
-</div>
-<p class="rubric">References</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://people.csail.mit.edu/hubert/pyaudio/docs/#pyaudio.Stream.read">Audio Overflow</a> handling.</p></li>
-</ul>
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis.Activator.executor">
-<span class="sig-name descname"><span class="pre">executor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis.Activator.executor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the audio stream and calls the processor.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis.Activator.open_stream">
-<span class="sig-name descname"><span class="pre">open_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Stream</span></span></span><a class="headerlink" href="#jarvis.Activator.open_stream" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initializes an audio stream.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>PyAudio stream.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Stream</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis.Activator.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis.Activator.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs <code class="docutils literal notranslate"><span class="pre">audio_stream</span></code> in a forever loop and calls <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when the phrase <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> is heard.</p>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="jarvis.begin">
 <span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">begin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis.begin" title="Permalink to this definition">¶</a></dt>
@@ -129,28 +73,14 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jarvis.processor">
-<span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">processor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis.processor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Processes the request after wake word is detected.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Returns a <code class="docutils literal notranslate"><span class="pre">True</span></code> flag if a manual stop is requested.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis.starter">
-<span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">starter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#jarvis.starter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jarvis.initiator">
+<span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">initiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#jarvis.initiator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts main process to activate Jarvis and process requests via API calls.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jarvis.terminate">
-<span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">process</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Process</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis.terminate" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jarvis.terminator">
+<span class="sig-prename descclassname"><span class="pre">jarvis.</span></span><span class="sig-name descname"><span class="pre">terminator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">process</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Process</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis.terminator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Terminates the process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -160,15 +90,15 @@
 </dd></dl>
 
 </section>
-<section id="module-modules.api_handler">
-<span id="api-handler"></span><h1>API Handler<a class="headerlink" href="#module-modules.api_handler" title="Permalink to this heading">¶</a></h1>
+<section id="module-executables.api_handler">
+<span id="api-handler"></span><h1>API Handler<a class="headerlink" href="#module-executables.api_handler" title="Permalink to this heading">¶</a></h1>
 <p>Makes a post call to Jarvis API running in the backend to process a request and return the response.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">APIHandler</span>
 </pre></div>
 </div>
 <dl class="py class">
-<dt class="sig sig-object py" id="modules.api_handler.BearerAuth">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">modules.api_handler.</span></span><span class="sig-name descname"><span class="pre">BearerAuth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.api_handler.BearerAuth" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="executables.api_handler.BearerAuth">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">executables.api_handler.</span></span><span class="sig-name descname"><span class="pre">BearerAuth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#executables.api_handler.BearerAuth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instantiates <code class="docutils literal notranslate"><span class="pre">BearerAuth</span></code> object.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">BearerAuth</span>
 </pre></div>
@@ -184,8 +114,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="modules.api_handler.make_request">
-<span class="sig-prename descclassname"><span class="pre">modules.api_handler.</span></span><span class="sig-name descname"><span class="pre">make_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'POST'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#modules.api_handler.make_request" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="executables.api_handler.make_request">
+<span class="sig-prename descclassname"><span class="pre">executables.api_handler.</span></span><span class="sig-name descname"><span class="pre">make_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'POST'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#executables.api_handler.make_request" title="Permalink to this definition">¶</a></dt>
 <dd><p>Makes a requests call to the API running on the backend to execute a said task.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -236,11 +166,15 @@
 </dd></dl>
 
 </section>
-<section id="module-modules.listener">
-<span id="listener"></span><h1>Listener<a class="headerlink" href="#module-modules.listener" title="Permalink to this heading">¶</a></h1>
+<section id="module-executables.listener">
+<span id="listener"></span><h1>Listener<a class="headerlink" href="#module-executables.listener" title="Permalink to this heading">¶</a></h1>
+<p>Module for listener and speech recognition.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Listener</span>
+</pre></div>
+</div>
 <dl class="py function">
-<dt class="sig sig-object py" id="modules.listener.listen">
-<span class="sig-prename descclassname"><span class="pre">modules.listener.</span></span><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#modules.listener.listen" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="executables.listener.listen">
+<span class="sig-prename descclassname"><span class="pre">executables.listener.</span></span><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#executables.listener.listen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to activate listener, this function will be called by most upcoming functions to listen to user input.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -263,6 +197,34 @@
 </pre></div>
 </div>
 <p>Disables loggers from imported modules, while using the root logger without having to load an external file.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.logger.console_logger">
+<span class="sig-prename descclassname"><span class="pre">modules.logger.</span></span><span class="sig-name descname"><span class="pre">console_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="headerlink" href="#modules.logger.console_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create custom stream logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns the logger object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Logger</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.logger.file_logger">
+<span class="sig-prename descclassname"><span class="pre">modules.logger.</span></span><span class="sig-name descname"><span class="pre">file_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="headerlink" href="#modules.logger.file_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create custom file logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns the logger object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Logger</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="models">
 <h1>Models<a class="headerlink" href="#models" title="Permalink to this heading">¶</a></h1>
@@ -330,6 +292,11 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="modules.models.EnvConfig.request_url">
 <span class="sig-name descname"><span class="pre">request_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">HttpUrl</span></em><a class="headerlink" href="#modules.models.EnvConfig.request_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="modules.models.EnvConfig.restart_attempts">
+<span class="sig-name descname"><span class="pre">restart_attempts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#modules.models.EnvConfig.restart_attempts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -568,19 +535,96 @@
 </dd></dl>
 
 </section>
-<section id="module-modules.speaker">
-<span id="speaker"></span><h1>Speaker<a class="headerlink" href="#module-modules.speaker" title="Permalink to this heading">¶</a></h1>
+<section id="module-executables.speaker">
+<span id="speaker"></span><h1>Speaker<a class="headerlink" href="#module-executables.speaker" title="Permalink to this heading">¶</a></h1>
 <p>Module for speaker and voice options.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Speaker</span>
 </pre></div>
 </div>
 <dl class="py function">
-<dt class="sig sig-object py" id="modules.speaker.speak">
-<span class="sig-prename descclassname"><span class="pre">modules.speaker.</span></span><span class="sig-name descname"><span class="pre">speak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#modules.speaker.speak" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="executables.speaker.speak">
+<span class="sig-prename descclassname"><span class="pre">executables.speaker.</span></span><span class="sig-name descname"><span class="pre">speak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#executables.speaker.speak" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls <code class="docutils literal notranslate"><span class="pre">audio_driver.say</span></code> to speak a statement from the received text.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>text</strong> – Takes the text that has to be spoken as an argument.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-executables.starter">
+<span id="starter"></span><h1>Starter<a class="headerlink" href="#module-executables.starter" title="Permalink to this heading">¶</a></h1>
+<p>Module to kick off wake word detection.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Starter</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="executables.starter.Activator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">executables.starter.</span></span><span class="sig-name descname"><span class="pre">Activator</span></span><a class="headerlink" href="#executables.starter.Activator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Awaits for the keyword <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> and triggers <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when heard.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Activator</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Creates an input audio stream from a microphone, monitors it, and detects the specified wake word.</p></li>
+<li><p>Once detected, Jarvis triggers the <code class="docutils literal notranslate"><span class="pre">listener.listen()</span></code> function with an <code class="docutils literal notranslate"><span class="pre">acknowledgement</span></code> sound played.</p></li>
+<li><p>After processing the phrase, the converted text is sent as response to the API.</p></li>
+</ul>
+</div>
+<p>Initiates Porcupine object for hot word detection.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Instantiates an instance of Porcupine object and monitors audio stream for occurrences of keywords.</p></li>
+<li><p>A higher sensitivity results in fewer misses at the cost of increasing the false alarm rate.</p></li>
+<li><p>sensitivity: Tolerance/Sensitivity level. Takes argument or env var <code class="docutils literal notranslate"><span class="pre">sensitivity</span></code> or defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></li>
+</ul>
+</div>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://people.csail.mit.edu/hubert/pyaudio/docs/#pyaudio.Stream.read">Audio Overflow</a> handling.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="executables.starter.Activator.executor">
+<span class="sig-name descname"><span class="pre">executor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#executables.starter.Activator.executor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the audio stream and calls the processor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="executables.starter.Activator.open_stream">
+<span class="sig-name descname"><span class="pre">open_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Stream</span></span></span><a class="headerlink" href="#executables.starter.Activator.open_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes an audio stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>PyAudio stream.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Stream</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="executables.starter.Activator.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#executables.starter.Activator.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs <code class="docutils literal notranslate"><span class="pre">audio_stream</span></code> in a forever loop and calls <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when the phrase <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> is heard.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="executables.starter.processor">
+<span class="sig-prename descclassname"><span class="pre">executables.starter.</span></span><span class="sig-name descname"><span class="pre">processor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#executables.starter.processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes the request after wake word is detected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns a <code class="docutils literal notranslate"><span class="pre">True</span></code> flag if a manual stop is requested.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -713,13 +757,14 @@
     <ul>
 <li><a class="reference internal" href="#">Welcome to Jarvis UI’s documentation!</a></li>
 <li><a class="reference internal" href="#module-jarvis">Jarvis</a></li>
-<li><a class="reference internal" href="#module-modules.api_handler">API Handler</a></li>
+<li><a class="reference internal" href="#module-executables.api_handler">API Handler</a></li>
 <li><a class="reference internal" href="#config">Config</a></li>
-<li><a class="reference internal" href="#module-modules.listener">Listener</a></li>
+<li><a class="reference internal" href="#module-executables.listener">Listener</a></li>
 <li><a class="reference internal" href="#module-modules.logger">Logger</a></li>
 <li><a class="reference internal" href="#models">Models</a></li>
 <li><a class="reference internal" href="#module-modules.playsound">PlaySound</a></li>
-<li><a class="reference internal" href="#module-modules.speaker">Speaker</a></li>
+<li><a class="reference internal" href="#module-executables.speaker">Speaker</a></li>
+<li><a class="reference internal" href="#module-executables.starter">Starter</a></li>
 <li><a class="reference internal" href="#module-modules.peripherals">Peripherals</a></li>
 <li><a class="reference internal" href="#module-modules.exceptions">Exceptions</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
