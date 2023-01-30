@@ -12,7 +12,7 @@ Connects to [`Jarvis`](https://github.com/thevickypedia/Jarvis/blob/master/jarvi
 ### Kick off
 **Install**
 ```shell
-python -m pip install jarvis-ironman
+python -m pip install jarvis-ui
 ```
 
 **Initiate**

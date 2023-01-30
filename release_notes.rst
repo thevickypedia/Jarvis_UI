@@ -3,6 +3,10 @@ Release Notes
 
 0.5.0 (01/30/2022)
 ------------------
+- Update README.md
+
+0.5.0 (01/30/2022)
+------------------
 - Make `Jarvis_UI` pip installable
 - Onboard to pypi with pyproject.toml
 - Fix path for indicators
