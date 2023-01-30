@@ -12,7 +12,7 @@ import logging
 import os
 from logging.config import dictConfig
 
-from modules.models import env, fileio
+from jarvis_ui.modules.models import env, fileio
 
 if not os.path.isdir('logs'):
     os.makedirs('logs')

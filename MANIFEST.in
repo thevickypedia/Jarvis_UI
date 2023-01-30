@@ -1,0 +1,5 @@
+global-exclude .env
+global-exclude *.yaml
+global-exclude .DS_Store
+include jarvis_ui/lib/*
+include jarvis_ui/indicators/*

@@ -7,7 +7,22 @@
 
 # Jarvis UI
 
-Connects to [`Jarvis`](https://github.com/thevickypedia/Jarvis/blob/master/api/fast.py) running in the backend to process request and response via API calls.
+Connects to [`Jarvis`](https://github.com/thevickypedia/Jarvis/blob/master/jarvis/api/fast.py) running in the backend to process request and response via API calls.
+
+### Kick off
+**Install**
+```shell
+python -m pip install jarvis-ironman
+```
+
+**Initiate**
+```python
+import jarvis_ui
+
+
+if __name__ == '__main__':
+    jarvis_ui.start()
+```
 
 ### Mandatory Env Vars
 - **REQUEST_URL**: URL to which the API call has to be made. Can be `localhost` or a `tunneled` URL behind a reverse proxy/CDN.

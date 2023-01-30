@@ -12,10 +12,10 @@ from typing import Callable, NoReturn, Union
 import pvporcupine
 from pydantic import BaseConfig, PositiveInt
 
-from executables.api_handler import make_request
-from modules.exceptions import APIError, InvalidEnvVars
-from modules.logger import logger
-from modules.models import audio_driver, env, fileio, settings
+from jarvis_ui.executables.api_handler import make_request
+from jarvis_ui.modules.exceptions import APIError, InvalidEnvVars
+from jarvis_ui.modules.logger import logger
+from jarvis_ui.modules.models import audio_driver, env, fileio, settings
 
 add_ss_extn: Callable = lambda filepath: os.path.splitext(filepath)[0] + "_ss" + os.path.splitext(filepath)[1]
 
@@ -143,3 +143,7 @@ if current_process().name != "MainProcess":
     config = Config()  # Run validations only on SyncManager and child process
 else:
     config = None
+
+# Needs to be set for all processes but should happen after main process validations are done
+# Because keyword paths are changed for legacy macOS during main process validations
+settings.wake_words = list(pvporcupine.KEYWORD_PATHS.keys())

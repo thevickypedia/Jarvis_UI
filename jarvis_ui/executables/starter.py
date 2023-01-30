@@ -16,12 +16,12 @@ from typing import NoReturn, Union
 import pvporcupine
 from pyaudio import PyAudio, Stream, paInt16
 
-from executables import listener, speaker
-from executables.api_handler import make_request
-from modules.config import config
-from modules.logger import logger
-from modules.models import env, fileio, flag, settings
-from modules.playsound import playsound
+from jarvis_ui.executables import listener, speaker
+from jarvis_ui.executables.api_handler import make_request
+from jarvis_ui.modules.config import config
+from jarvis_ui.modules.logger import logger
+from jarvis_ui.modules.models import env, fileio, flag, settings
+from jarvis_ui.modules.playsound import playsound
 
 
 def processor() -> Union[str, None]:

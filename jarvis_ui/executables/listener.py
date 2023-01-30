@@ -12,8 +12,8 @@ import requests
 from speech_recognition import (Microphone, Recognizer, RequestError,
                                 UnknownValueError, WaitTimeoutError)
 
-from modules.logger import logger
-from modules.models import env
+from jarvis_ui.modules.logger import logger
+from jarvis_ui.modules.models import env
 
 recognizer = Recognizer()  # initiates recognizer object
 microphone = Microphone()  # initiates microphone object

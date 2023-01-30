@@ -7,3 +7,5 @@ logs
 .env
 speech_synthesis.wav
 temp*.py
+dist
+jarvis_ui.egg-info

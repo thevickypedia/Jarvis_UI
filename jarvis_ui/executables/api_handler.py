@@ -11,8 +11,8 @@ import requests
 from requests.auth import AuthBase
 from requests.models import PreparedRequest
 
-from modules.logger import logger
-from modules.models import env, fileio
+from jarvis_ui.modules.logger import logger
+from jarvis_ui.modules.models import env, fileio
 
 
 class BearerAuth(AuthBase):

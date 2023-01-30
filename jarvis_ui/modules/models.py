@@ -3,22 +3,21 @@
 import base64
 import binascii
 import os
-import pathlib
 import platform
 import string
-import sys
 from collections import ChainMap
 from datetime import datetime
 from enum import Enum
-from typing import List, Union
+from typing import List, Optional, Union
 
 import pyttsx3
 from packaging.version import parse as parser
 from pydantic import (BaseSettings, Field, FilePath, HttpUrl, PositiveFloat,
                       PositiveInt, validator)
 
-from modules.exceptions import UnsupportedOS
-from modules.peripherals import channel_type, get_audio_devices
+from jarvis_ui import indicators
+from jarvis_ui.modules.exceptions import UnsupportedOS
+from jarvis_ui.modules.peripherals import channel_type, get_audio_devices
 
 audio_driver = pyttsx3.init()
 if os.getcwd().endswith("doc_generator"):
@@ -61,7 +60,8 @@ class Settings(BaseSettings):
             f"\n{''.join('*' for _ in range(80))}\n"
         )
     legacy: bool = True if os == "Darwin" and parser(platform.mac_ver()[0]) < parser('10.14') else False
-    bot: str = pathlib.PurePath(sys.argv[0]).stem
+    bot: str = "jarvis"
+    wake_words: Optional[List[str]]
 
 
 settings = Settings()
@@ -164,14 +164,14 @@ class FileIO(BaseSettings):
 
     """
 
-    failed: FilePath = os.path.join('indicators', 'failed.wav')
-    restart: FilePath = os.path.join('indicators', 'restart.wav')
-    shutdown: FilePath = os.path.join('indicators', 'shutdown.wav')
-    processing: FilePath = os.path.join('indicators', 'processing.wav')
-    unprocessable: FilePath = os.path.join('indicators', 'unprocessable.wav')
-    acknowledgement: FilePath = os.path.join('indicators', 'acknowledgement.wav')
+    failed: FilePath = os.path.join(indicators.__path__[0], 'failed.wav')
+    restart: FilePath = os.path.join(indicators.__path__[0], 'restart.wav')
+    shutdown: FilePath = os.path.join(indicators.__path__[0], 'shutdown.wav')
+    processing: FilePath = os.path.join(indicators.__path__[0], 'processing.wav')
+    unprocessable: FilePath = os.path.join(indicators.__path__[0], 'unprocessable.wav')
+    acknowledgement: FilePath = os.path.join(indicators.__path__[0], 'acknowledgement.wav')
 
-    speech_wav_file: Union[FilePath, str] = os.path.join('indicators', 'speech-synthesis.wav')
+    speech_wav_file: Union[FilePath, str] = os.path.join(indicators.__path__[0], 'speech-synthesis.wav')
     base_log_file: Union[FilePath, str] = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))
 
 

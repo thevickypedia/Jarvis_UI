@@ -1,0 +1,61 @@
+[project]
+name = "jarvis-ui"
+dynamic = ["version", "dependencies"]
+description = "Jarvis UI to perform voice commands via API calls"
+readme = "README.md"
+authors = [{ name = "Vignesh Sivanandha Rao", email = "svignesh1793@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Information Technology",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows :: Windows 10",
+    "Operating System :: POSIX :: Linux",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Scientific/Engineering :: Human Machine Interfaces",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Home Automation",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Topic :: System :: Hardware :: Universal Serial Bus (USB) :: Wireless Controller",
+    "Topic :: Multimedia :: Sound/Audio :: Conversion",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Hardware :: Hardware Drivers",
+    "Topic :: System :: Hardware :: Symmetric Multi-processing",
+    "Topic :: System :: Hardware :: Universal Serial Bus (USB) :: Human Interface Device (HID)",
+    "Framework :: FastAPI",
+    "Framework :: Flake8",
+    "Framework :: AsyncIO",
+    "Framework :: Sphinx",
+    "Framework :: aiohttp",
+    "Natural Language :: English"
+]
+keywords = ["python", "natural-language-processing", "text-to-speech", "speech-recognition", "jarvis",
+            "hotword-detection", "virtual-assistant", "multiprocessing", "threadpool"]
+requires-python = ">=3.8"
+
+[tool.setuptools]
+packages     = ["jarvis_ui", "jarvis_ui.executables", "jarvis_ui.modules"]
+script-files = ["jarvis_ui/lib/install.sh"]
+
+[tool.setuptools.dynamic]
+version      = {attr = "jarvis_ui.version"}
+dependencies = {file = ["jarvis_ui/lib/requirements.txt"]}
+
+[build-system]
+requires      = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+dev = ["pytest", "pre-commit"]
+
+[project.urls]
+Homepage        = "https://github.com/thevickypedia/Jarvis_UI"
+Docs            = "https://thevickypedia.github.io/Jarvis_UI"
+Source          = "https://github.com/thevickypedia/Jarvis_UI"
+"Bug Tracker"   = "https://github.com/thevickypedia/Jarvis_UI/issues"
+"Release Notes" = "https://github.com/thevickypedia/Jarvis_UI/blob/main/release_notes.rst"

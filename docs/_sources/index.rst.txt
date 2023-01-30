@@ -15,97 +15,97 @@ Welcome to Jarvis UI's documentation!
 Jarvis
 ====================
 
-.. automodule:: jarvis
+.. automodule:: jarvis_ui.main
    :members:
    :undoc-members:
 
 API Handler
 ===========
 
-.. automodule:: executables.api_handler
+.. automodule:: jarvis_ui.executables.api_handler
    :members:
    :undoc-members:
 
 Config
 ======
 
-.. autoclass:: modules.config.Config(BaseConfig)
+.. autoclass:: jarvis_ui.modules.config.Config(BaseConfig)
    :members:
    :exclude-members:
 
 Listener
 ========
 
-.. automodule:: executables.listener
+.. automodule:: jarvis_ui.executables.listener
    :members:
    :undoc-members:
 
 Logger
 ======
 
-.. automodule:: modules.logger
+.. automodule:: jarvis_ui.modules.logger
    :members:
    :undoc-members:
 
 Models
 ======
 
-.. autoclass:: modules.models.EnvConfig(BaseSettings)
+.. autoclass:: jarvis_ui.modules.models.EnvConfig(BaseSettings)
    :members:
    :undoc-members:
 
-.. autoclass:: modules.models.FileIO(BaseSettings)
+.. autoclass:: jarvis_ui.modules.models.FileIO(BaseSettings)
    :members:
    :undoc-members:
 
-.. autoclass:: modules.models.Settings(BaseSettings)
+.. autoclass:: jarvis_ui.modules.models.Settings(BaseSettings)
    :members:
    :undoc-members:
 
-.. autoclass:: modules.models.Sensitivity(float or PositiveInt, Enum)
+.. autoclass:: jarvis_ui.modules.models.Sensitivity(float or PositiveInt, Enum)
    :members:
    :undoc-members:
 
-.. autoclass:: modules.models.RestartTimer(float or PositiveInt, Enum)
+.. autoclass:: jarvis_ui.modules.models.RestartTimer(float or PositiveInt, Enum)
    :members:
    :undoc-members:
 
-.. autoclass:: modules.models.Flag(str, Enum)
+.. autoclass:: jarvis_ui.modules.models.Flag(str, Enum)
    :members:
    :undoc-members:
 
 PlaySound
 =========
 
-.. automodule:: modules.playsound
+.. automodule:: jarvis_ui.modules.playsound
    :members:
    :undoc-members:
 
 Speaker
 =======
 
-.. automodule:: executables.speaker
+.. automodule:: jarvis_ui.executables.speaker
    :members:
    :undoc-members:
 
 Starter
 =======
 
-.. automodule:: executables.starter
+.. automodule:: jarvis_ui.executables.starter
    :members:
    :undoc-members:
 
 Peripherals
 ===========
 
-.. automodule:: modules.peripherals
+.. automodule:: jarvis_ui.modules.peripherals
    :members:
    :undoc-members:
 
 Exceptions
 ==========
 
-.. automodule:: modules.exceptions
+.. automodule:: jarvis_ui.modules.exceptions
    :members:
    :undoc-members:
 

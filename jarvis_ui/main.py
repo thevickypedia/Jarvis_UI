@@ -2,22 +2,18 @@ import pathlib
 import time
 import warnings
 from multiprocessing import Manager, Process
+from multiprocessing.managers import DictProxy  # noqa
 
-from executables.helper import time_converter, word_engine
-from modules.exceptions import APIError
-from modules.logger import logger
-
-try:
-    from multiprocessing.managers import DictProxy  # noqa
-except ImportError:
-    from typing import Dict as DictProxy
+from jarvis_ui.executables.helper import time_converter, word_engine
+from jarvis_ui.modules.exceptions import APIError
+from jarvis_ui.modules.logger import logger
 
 
 def initiator(status_manager: DictProxy) -> None:
     """Starts main process to activate Jarvis and process requests via API calls."""
     try:
         # Import within a function to catch startup errors
-        from executables.starter import Activator
+        from jarvis_ui.executables.starter import Activator
     except APIError as error:
         logger.error(error)
         status_manager["LOCKED"] = "RESTART"
@@ -49,7 +45,7 @@ def terminator(process: Process):
             logger.error(error)
 
 
-def begin():
+def start():
     """Initiates Jarvis as a child process and restarts as per the timer set.
 
     See Also:
@@ -58,9 +54,9 @@ def begin():
         - Avoids memory overload.
     """
     # Import within a function to be called repeatedly
-    from modules.models import env
+    from jarvis_ui.modules.models import env
     logger.info(f"Restart set to {time_converter(second=env.restart_timer)}")
-    status_manager: DictProxy = Manager().dict()
+    status_manager = Manager().dict()
     status_manager["LOCKED"] = False  # Instantiate DictProxy
     process = Process(target=initiator, args=(status_manager,))
     process.name = pathlib.Path(__file__).stem
@@ -75,15 +71,15 @@ def begin():
             terminator(process=process)
             break
         if not process.is_alive():
-            if begin.count > env.restart_attempts:
+            if start.count > env.restart_attempts:
                 warnings.warn(
                     "Retry limit exceeded after consecutive start up errors."
                 )
                 logger.critical("Retry limit exceeded.")
                 return
             if status_manager["LOCKED"] == "RESTART":  # Called only when restart fails during initial connect
-                begin.count += 1
-                logger.warning(f"{word_engine.ordinal(begin.count)} restart because of a problem.")
+                start.count += 1
+                logger.warning(f"{word_engine.ordinal(start.count)} restart because of a problem.")
                 break
             logger.info(f"Process {process.name}[{process.pid}] died. Ending loop.")
             return
@@ -92,9 +88,4 @@ def begin():
             terminator(process=process)
             break
         time.sleep(0.5)
-    begin()
-
-
-if __name__ == '__main__':
-    begin.count = 0
-    begin()
+    start()

@@ -48,7 +48,22 @@
 <a class="reference external" href="https://github.com/thevickypedia/Jarvis_UI/actions/workflows/python-publish.yml"><img alt="pypi" src="https://github.com/thevickypedia/Jarvis_UI/actions/workflows/python-publish.yml/badge.svg" /></a></p>
 <section id="jarvis-ui">
 <h1>Jarvis UI<a class="headerlink" href="#jarvis-ui" title="Permalink to this heading">¶</a></h1>
-<p>Connects to <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/api/fast.py"><code class="docutils literal notranslate"><span class="pre">Jarvis</span></code></a> running in the backend to process request and response via API calls.</p>
+<p>Connects to <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/jarvis/api/fast.py"><code class="docutils literal notranslate"><span class="pre">Jarvis</span></code></a> running in the backend to process request and response via API calls.</p>
+<section id="kick-off">
+<h2>Kick off<a class="headerlink" href="#kick-off" title="Permalink to this heading">¶</a></h2>
+<p><strong>Install</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>jarvis-ironman
+</pre></div>
+</div>
+<p><strong>Initiate</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">jarvis_ui</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jarvis_ui</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 <section id="mandatory-env-vars">
 <h2>Mandatory Env Vars<a class="headerlink" href="#mandatory-env-vars" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
@@ -159,6 +174,7 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
     <h3><a href="index.html">Table of Contents</a></h3>
     <ul>
 <li><a class="reference internal" href="#">Jarvis UI</a><ul>
+<li><a class="reference internal" href="#kick-off">Kick off</a></li>
 <li><a class="reference internal" href="#mandatory-env-vars">Mandatory Env Vars</a></li>
 <li><a class="reference internal" href="#optional-env-vars">Optional Env Vars</a><ul>
 <li><a class="reference internal" href="#coding-standards">Coding Standards</a></li>

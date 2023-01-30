@@ -7,7 +7,7 @@
 
 from typing import NoReturn
 
-from modules.models import audio_driver
+from jarvis_ui.modules.models import audio_driver
 
 
 def speak(text: str) -> NoReturn:

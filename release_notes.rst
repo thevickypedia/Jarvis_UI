@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+0.5.0 (01/30/2022)
+------------------
+- Make `Jarvis_UI` pip installable
+- Onboard to pypi with pyproject.toml
+- Fix path for indicators
+- Switch python-publish.yml to support pyproject.toml
+
 0.4.9 (01/11/2022)
 ------------------
 - Set the application to restart in case of startup errors

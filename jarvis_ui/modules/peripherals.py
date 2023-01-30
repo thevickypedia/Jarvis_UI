@@ -5,7 +5,7 @@ from typing import Dict, Iterable, Union
 
 import pyaudio
 
-from modules.exceptions import no_alsa_err
+from jarvis_ui.modules.exceptions import no_alsa_err
 
 if platform.system() == "Linux":
     with no_alsa_err():
