@@ -35,6 +35,7 @@ def listen() -> Union[str, None]:
         str:
          - Returns recognized statement from the microphone.
     """
+    helper.flush_screen()
     return_val = None
     with microphone as source:
         sys.stdout.write("\rListener activated..")

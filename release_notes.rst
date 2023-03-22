@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+0.5.3 (03/22/2023)
+------------------
+- Fix static IDE identifier on child processes
+- Bump max allowed retry limit to 1000
+
 0.5.2 (03/21/2023)
 ------------------
 - Flush screen to support terminals

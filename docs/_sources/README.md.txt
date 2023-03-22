@@ -59,7 +59,7 @@ Please use [test_listener.py](https://github.com/thevickypedia/Jarvis_UI/blob/ma
 > These settings are added (optionally), to avoid the hard coded `VOICE_PHRASE_LIMIT`
 > <br>
 > Cons in using hard coded `VOICE_PHRASE_LIMIT`:
->   - Disables the listener after the set limit even the speaker is actively talking.
+>   - Disables the listener after the set limit even when the speaker is actively talking.
 >   - Listener will be active until the set limit even after the speaker has stopped talking.
 
 Sample settings (formatted as JSON object)

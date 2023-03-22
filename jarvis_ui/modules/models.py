@@ -8,6 +8,7 @@ import string
 from collections import ChainMap
 from datetime import datetime
 from enum import Enum
+from multiprocessing import current_process
 from typing import List, Optional, Union
 
 import psutil
@@ -63,7 +64,10 @@ class Settings(BaseSettings):
     legacy: bool = True if os == "Darwin" and parser(platform.mac_ver()[0]) < parser('10.14') else False
     bot: str = "jarvis"
     wake_words: Optional[List[str]]
-    pid: PositiveInt = os.getpid()
+    if current_process().name == 'MainProcess':
+        pid: PositiveInt = os.getpid()
+    else:
+        pid: PositiveInt = os.getppid()
     runenv: str = psutil.Process(pid).parent().name()
     if runenv.endswith('sh'):
         ide = False
@@ -124,7 +128,7 @@ class EnvConfig(BaseSettings):
     recognizer_settings_default: RecognizerSettings = RecognizerSettings()
 
     restart_timer: RestartTimer = Field(default=86_400, le=172_800, ge=1_800, env="RESTART_TIMER")
-    restart_attempts: int = Field(default=5, gt=1, le=10, env="RESTART_ATTEMPTS")
+    restart_attempts: int = Field(default=5, gt=1, le=1000, env="RESTART_ATTEMPTS")
     debug: bool = Field(default=False, env="DEBUG")
     microphone_index: Union[int, PositiveInt] = Field(default=None, ge=0, env='MICROPHONE_INDEX')
 
