@@ -80,6 +80,17 @@ Styling conventions: [`PEP 8`](https://www.python.org/dev/peps/pep-0008/) <br>
 Clean code with pre-commit hooks: [`flake8`](https://flake8.pycqa.org/en/latest/) and 
 [`isort`](https://pycqa.github.io/isort/)
 
+#### [Release Notes](https://github.com/thevickypedia/Jarvis_UI/blob/main/release_notes.rst)
+**Requirement**
+```shell
+python -m pip install changelog-generator
+```
+
+**Usage**
+```shell
+changelog reverse -f release_notes.rst -t 'Release Notes'
+```
+
 #### Linting
 `PreCommit` will ensure linting, and the doc creation are run on every commit.
 

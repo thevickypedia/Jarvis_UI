@@ -85,7 +85,7 @@ class Config(BaseConfig):
         )
         env.speech_timeout = 0
 
-    if settings.os != "Darwin" and not env.native_audio and env.speech_timeout < env.request_timeout:
+    if settings.operating_system != "Darwin" and not env.native_audio and env.speech_timeout < env.request_timeout:
         env.speech_timeout = env.request_timeout
 
     if env.speech_timeout and not env.native_audio:
@@ -118,11 +118,11 @@ class Config(BaseConfig):
     voices: Union[list, object] = audio_driver.getProperty("voices")  # gets the list of voices available
     voice_names = [__voice.name for __voice in voices]
     if not env.voice_name:
-        if settings.os == "Darwin":
+        if settings.operating_system == "Darwin":
             env.voice_name = "Daniel"
-        elif settings.os == "Windows":
+        elif settings.operating_system == "Windows":
             env.voice_name = "David"
-        elif settings.os == "Linux":
+        elif settings.operating_system == "Linux":
             env.voice_name = "english-us"
     elif env.voice_name not in voice_names:
         raise InvalidEnvVars(

@@ -12,6 +12,7 @@ import requests
 from speech_recognition import (Microphone, Recognizer, RequestError,
                                 UnknownValueError, WaitTimeoutError)
 
+from jarvis_ui.executables import helper
 from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env
 
@@ -34,14 +35,16 @@ def listen() -> Union[str, None]:
         str:
          - Returns recognized statement from the microphone.
     """
+    return_val = None
     with microphone as source:
         sys.stdout.write("\rListener activated..")
         try:
             listened = recognizer.listen(source=source, timeout=env.voice_timeout,
                                          phrase_time_limit=env.voice_phrase_limit)
-            sys.stdout.write("\r")
-            return recognizer.recognize_google(audio_data=listened)
-        except (UnknownValueError, WaitTimeoutError, RequestError):
-            return
+            return_val = recognizer.recognize_google(audio_data=listened)
+        except (UnknownValueError, WaitTimeoutError, RequestError) as error:
+            logger.debug(error)
         except requests.exceptions.RequestException as error:
             logger.error(error)
+        helper.flush_screen()
+        return return_val

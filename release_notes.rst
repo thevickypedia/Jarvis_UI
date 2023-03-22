@@ -1,35 +1,40 @@
 Release Notes
 =============
 
-0.5.0 (01/30/2022)
+0.5.2 (03/21/2023)
+------------------
+- Flush screen to support terminals
+- Update release_notes.rst and README.md
+
+0.5.1 (01/30/2023)
 ------------------
 - Update README.md
 
-0.5.0 (01/30/2022)
+0.5.0 (01/30/2023)
 ------------------
 - Make `Jarvis_UI` pip installable
 - Onboard to pypi with pyproject.toml
 - Fix path for indicators
 - Switch python-publish.yml to support pyproject.toml
 
-0.4.9 (01/11/2022)
+0.4.9 (01/11/2023)
 ------------------
 - Set the application to restart in case of startup errors
 - Avoid application falling on its face during a restart
 - Restructure modules and executables
 
-0.4.8 (01/07/2022)
+0.4.8 (01/07/2023)
 ------------------
 - Move validations from `speaker.py` to `config.py`
 - Fix docstrings
 
-0.4.7 (01/07/2022)
+0.4.7 (01/07/2023)
 ------------------
 - Create `Enum` flags to communicate
 - Add an option to restart upon user request
 - Add restart.wav and restart_ss.wav
 
-0.4.6 (01/07/2022)
+0.4.6 (01/07/2023)
 ------------------
 - Use `multiprocessing.Manager` to block restart in between a task
 - Add support to Linux OS
@@ -38,12 +43,12 @@ Release Notes
 - Add custom exception handlers
 - Update .gitignore and README.md
 
-0.4.5 (01/07/2022)
+0.4.5 (01/07/2023)
 ------------------
 - Setup automatic restart based on env var
 - Update README.md
 
-0.4.4 (01/02/2022)
+0.4.4 (01/02/2023)
 ------------------
 - Change HTTP requests method to match a change in Jarvis' API
 

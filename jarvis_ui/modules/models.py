@@ -10,6 +10,7 @@ from datetime import datetime
 from enum import Enum
 from typing import List, Optional, Union
 
+import psutil
 import pyttsx3
 from packaging.version import parse as parser
 from pydantic import (BaseSettings, Field, FilePath, HttpUrl, PositiveFloat,
@@ -50,8 +51,8 @@ class Settings(BaseSettings):
         If the host operating system is other than Linux, macOS or Windows.
     """
 
-    os: str = platform.system()
-    if os not in ["Windows", "Darwin", "Linux"]:
+    operating_system: str = platform.system()
+    if operating_system not in ["Windows", "Darwin", "Linux"]:
         raise UnsupportedOS(
             f"\n{''.join('*' for _ in range(80))}\n\n"
             "Unsupported Operating System. Currently Jarvis can run only on Mac and Windows OS.\n\n"
@@ -62,6 +63,12 @@ class Settings(BaseSettings):
     legacy: bool = True if os == "Darwin" and parser(platform.mac_ver()[0]) < parser('10.14') else False
     bot: str = "jarvis"
     wake_words: Optional[List[str]]
+    pid: PositiveInt = os.getpid()
+    runenv: str = psutil.Process(pid).parent().name()
+    if runenv.endswith('sh'):
+        ide = False
+    else:
+        ide = True
 
 
 settings = Settings()

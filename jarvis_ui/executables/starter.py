@@ -16,7 +16,7 @@ from typing import NoReturn, Union
 import pvporcupine
 from pyaudio import PyAudio, Stream, paInt16
 
-from jarvis_ui.executables import listener, speaker
+from jarvis_ui.executables import helper, listener, speaker
 from jarvis_ui.executables.api_handler import make_request
 from jarvis_ui.modules.config import config
 from jarvis_ui.modules.logger import logger
@@ -31,6 +31,7 @@ def processor() -> Union[str, None]:
         bool:
         Returns a ``True`` flag if a manual stop is requested.
     """
+    helper.flush_screen()
     if phrase := listener.listen():
         logger.info(f"Request: {phrase}")
         sys.stdout.write(f"\rRequest: {phrase}")
@@ -59,6 +60,7 @@ def processor() -> Union[str, None]:
         if response := make_request(path='offline-communicator', timeout=timeout,
                                     data={'command': phrase, 'native_audio': env.native_audio,
                                           'speech_timeout': env.speech_timeout}):
+            helper.flush_screen()
             if response is True:
                 logger.info("Response received as audio.")
                 sys.stdout.write("\rResponse received as audio.")
@@ -163,6 +165,7 @@ class Activator:
             status_manager["LOCKED"] = False
         logger.debug("Restart released")
         self.audio_stream = self.open_stream()
+        helper.flush_screen()
 
     def start(self, status_manager: DictProxy) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
