@@ -73,7 +73,7 @@ def time_converter(second: float) -> str:
 
 def flush_screen() -> NoReturn:
     """Flushes the screen output."""
-    if models.settings.ide:
-        sys.stdout.write("\r")
-    else:
+    if models.settings.interactive:
         sys.stdout.write(f"\r{' '.join(['' for _ in range(os.get_terminal_size().columns)])}")
+    else:
+        sys.stdout.write("\r")

@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+0.5.4 (03/22/2023)
+------------------
+- Fix interactive mode on Windows OS
+- Update requirements.txt
+
 0.5.3 (03/22/2023)
 ------------------
 - Fix static IDE identifier on child processes

@@ -5,13 +5,12 @@ import binascii
 import os
 import platform
 import string
+import sys
 from collections import ChainMap
 from datetime import datetime
 from enum import Enum
-from multiprocessing import current_process
 from typing import List, Optional, Union
 
-import psutil
 import pyttsx3
 from packaging.version import parse as parser
 from pydantic import (BaseSettings, Field, FilePath, HttpUrl, PositiveFloat,
@@ -64,15 +63,10 @@ class Settings(BaseSettings):
     legacy: bool = True if os == "Darwin" and parser(platform.mac_ver()[0]) < parser('10.14') else False
     bot: str = "jarvis"
     wake_words: Optional[List[str]]
-    if current_process().name == 'MainProcess':
-        pid: PositiveInt = os.getpid()
+    if sys.stdin.isatty():
+        interactive = True
     else:
-        pid: PositiveInt = os.getppid()
-    runenv: str = psutil.Process(pid).parent().name()
-    if runenv.endswith('sh'):
-        ide = False
-    else:
-        ide = True
+        interactive = False
 
 
 settings = Settings()

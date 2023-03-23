@@ -2,7 +2,7 @@ import os
 
 from pynotification import pynotifier
 
-version = "0.5.3"
+version = "0.5.4"
 
 try:
     import pvporcupine  # noqa
