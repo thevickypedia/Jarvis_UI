@@ -1,17 +1,20 @@
 import os
 
-from pynotification import pynotifier
+version = "0.7"
 
-version = "0.5.4"
+install_script = os.path.join(os.path.dirname(__file__), 'lib', 'install.sh')
 
 try:
-    import pvporcupine  # noqa
-    import pyaudio  # noqa
+    import pvporcupine  # noqa: F401
+    import pyaudio  # noqa: F401
+    import pynotification  # noqa: F401
 except ImportError as error:
-    pynotifier(title="First time user?", dialog=True,
-               message=f"Please run\n\n{os.path.join(os.path.dirname(__file__), 'lib', 'install.sh')}")
-    raise UserWarning(f"{error.__str__()}\n\nPlease run\n\n"
-                      f"{os.path.join(os.path.dirname(__file__), 'lib', 'install.sh')}")
+    try:
+        pynotification.pynotifier(title="First time user?", dialog=True, message=f"Please run\n\n{install_script}")
+    except NameError:
+        pass
+    raise UserWarning(f"{error.__str__()}\n\nPlease run\n\n{install_script}\n\n"
+                      "Note: Shell script will quit for any non-zero exit status, "
+                      "so it might have to be triggered twice.")
 else:
-    from .main import start
-    start.count = 0
+    from .main import start  # noqa: F401

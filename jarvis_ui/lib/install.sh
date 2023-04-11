@@ -25,14 +25,24 @@ os_independent_packages() {
 }
 
 if [[ "$OSName" == "Darwin" ]]; then
-    xcode-select --install
-    # Looks for brew installation and installs only if brew is not found in /usr/local/bin
+    # Looks for xcode installation and installs only if xcode is not found already
+    which xcodebuild > tmp_xcode && xcode_check=$(cat tmp_xcode) && rm tmp_xcode
+    if  [[ "$xcode_check" == "/usr/bin/xcodebuild" ]] || [[ $HOST == "/*" ]] ; then
+        xcode_version=$(pkgutil --pkg-info=com.apple.pkg.CLTools_Executables | grep version)
+        echo "xcode $xcode_version"
+    else
+        echo "Installing xcode"
+        xcode-select --install
+    fi
+
+    # Looks for brew installation and installs only if brew is not found
     brew_check=$(which brew)
-    brew_condition="/usr/local/bin/brew"
-    if [[ "$brew_check" != "$brew_condition" ]]; then
+    if [[ "$brew_check" == "/usr/local/bin/brew" ]] || [[ "$brew_check" == "/usr/bin/brew" ]]; then
+        brew -v > tmp_brew && brew_version=$(head -n 1 tmp_brew) && rm tmp_brew
+        echo "$brew_version"
+    else
         echo "Installing Homebrew"
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-        else echo "Found Homebrew, skipping installation"
     fi
     brew install portaudio
     python -m pip install PyAudio==0.2.13

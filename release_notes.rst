@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+0.5.5 (04/10/2023)
+------------------
+- Update initialization and installation script
+- Unhook version dependencies with changelog-generator
+
 0.5.4 (03/22/2023)
 ------------------
 - Fix interactive mode on Windows OS

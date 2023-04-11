@@ -55,13 +55,13 @@ def start():
     """
     # Import within a function to be called repeatedly
     from jarvis_ui.modules.models import env
-    logger.info(f"Restart set to {time_converter(second=env.restart_timer)}")
+    logger.info(f"Restart timer set to {time_converter(second=env.restart_timer)}")
     status_manager = Manager().dict()
     status_manager["LOCKED"] = False  # Instantiate DictProxy
     process = Process(target=initiator, args=(status_manager,))
     process.name = pathlib.Path(__file__).stem
     process.start()
-    logger.info(f"Initiating as {process.name}[{process.pid}]")
+    logger.info(f"Initiating as {process.name} [{process.pid}]")
     start_time = time.time()
     while True:
         if start_time + env.restart_timer <= time.time():
@@ -89,3 +89,6 @@ def start():
             break
         time.sleep(0.5)
     start()
+
+
+start.count = 0
