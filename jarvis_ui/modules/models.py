@@ -2,14 +2,18 @@
 
 import base64
 import binascii
+import importlib
 import os
 import platform
 import string
+import subprocess
 import sys
 from collections import ChainMap
 from datetime import datetime
 from enum import Enum
-from typing import List, Optional, Union
+from multiprocessing import current_process
+from threading import Thread
+from typing import Dict, List, NoReturn, Optional, Union
 
 import pyttsx3
 from packaging.version import parse as parser
@@ -17,10 +21,10 @@ from pydantic import (BaseSettings, Field, FilePath, HttpUrl, PositiveFloat,
                       PositiveInt, validator)
 
 from jarvis_ui import indicators
-from jarvis_ui.modules.exceptions import UnsupportedOS
+from jarvis_ui.modules.exceptions import SegmentationError, UnsupportedOS
 from jarvis_ui.modules.peripherals import channel_type, get_audio_devices
 
-audio_driver = pyttsx3.init()
+module: Dict[str, pyttsx3.Engine] = {}
 if os.getcwd().endswith("doc_generator"):
     os.chdir(os.path.dirname(os.getcwd()))
 
@@ -70,6 +74,58 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+
+def import_module() -> NoReturn:
+    """Instantiates pyttsx3 after importing ``nsss`` drivers beforehand."""
+    if settings.operating_system == "Darwin":
+        importlib.import_module("pyttsx3.drivers.nsss")
+    module['pyttsx3'] = pyttsx3.init()
+
+
+def dynamic_rate() -> int:
+    """Speech rate based on the Operating System."""
+    if settings.operating_system == "Linux":
+        return 1
+    return 200
+
+
+def get_driver() -> pyttsx3.Engine:
+    """Get audio driver by instantiating pyttsx3.
+
+    Returns:
+        pyttsx3.Engine:
+        Audio driver.
+    """
+    try:
+        subprocess.run(["python3", "-c", "import pyttsx3; pyttsx3.init()"], check=True)
+    except subprocess.CalledProcessError as error:
+        if error.returncode == -11:  # Segmentation fault error code
+            if current_process().name == "MainProcess":
+                print(f"\033[91mERROR:{'':<6}Segmentation fault when loading audio driver "
+                      "(interrupted by signal 11: SIGSEGV)\033[0m")
+                print(f"\033[93mWARNING:{'':<4}Trying alternate solution...\033[0m")
+            thread = Thread(target=import_module)
+            thread.start()
+            thread.join(timeout=10)
+            if module.get('pyttsx3'):
+                if current_process().name == "MainProcess":
+                    print(f"\033[92mINFO:{'':<7}Instantiated audio driver successfully\033[0m")
+                return module['pyttsx3']
+            else:
+                raise SegmentationError(
+                    "Segmentation fault when loading audio driver (interrupted by signal 11: SIGSEGV)"
+                )
+        else:
+            return pyttsx3.init()
+    else:
+        return pyttsx3.init()
+
+
+try:
+    audio_driver = get_driver()
+except (SegmentationError, Exception):  # resolve to speech-synthesis
+    audio_driver = None
 
 
 class Sensitivity(float or PositiveInt, Enum):
@@ -132,7 +188,8 @@ class EnvConfig(BaseSettings):
 
     # Built-in speaker config (Unused if speech synthesis is used)
     voice_name: str = Field(default=None, env='VOICE_NAME')
-    voice_rate: Union[PositiveInt, PositiveFloat] = Field(default=audio_driver.getProperty("rate"), env='VOICE_RATE')
+    _rate = audio_driver.getProperty("rate") if audio_driver else dynamic_rate()
+    voice_rate: Union[PositiveInt, PositiveFloat] = Field(default=_rate, env='VOICE_RATE')
 
     voice_timeout: Union[float, PositiveInt] = Field(default=3, env="VOICE_TIMEOUT")
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=None, env="VOICE_PHRASE_LIMIT")
@@ -186,3 +243,5 @@ raw_token = env.token
 env.token = UNICODE_PREFIX + UNICODE_PREFIX.join(binascii.hexlify(data=env.token.encode(encoding="utf-8"),
                                                                   sep="-").decode(encoding="utf-8").split(sep="-"))
 assert raw_token == bytes(env.token, "utf-8").decode(encoding="unicode_escape")  # Check decoded value before startup
+if not audio_driver:
+    env.speech_timeout = 10

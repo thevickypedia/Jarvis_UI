@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+0.5.6 (04/19/2023)
+------------------
+- Resolve edge case scenario with `ObjectiveC`
+- Check pyttsx3 instantiation in a thread
+- Use custom module instead of pyttsx3
+- Install coreutils on macOS using brew
+
 0.5.5 (04/10/2023)
 ------------------
 - Update initialization and installation script

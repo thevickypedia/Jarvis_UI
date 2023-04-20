@@ -68,3 +68,11 @@ class APIError(ConnectionError):
     >>> APIError
 
     """
+
+
+class SegmentationError(EnvironmentError):
+    """Custom ``SegmentationError`` raised when the code exits with SIGSEGV.
+
+    >>> SegmentationError
+
+    """

@@ -7,10 +7,11 @@ import os
 import platform
 import warnings
 from multiprocessing import current_process
-from typing import Callable, NoReturn, Union
+from typing import Callable, List, NoReturn
 
 import pvporcupine
 from pydantic import BaseConfig, PositiveInt
+from pyttsx3.voice import Voice
 
 from jarvis_ui.executables.api_handler import make_request
 from jarvis_ui.modules.exceptions import APIError, InvalidEnvVars
@@ -115,27 +116,30 @@ class Config(BaseConfig):
                 f"Available keywords are: {', '.join(list(pvporcupine.KEYWORD_PATHS.keys()))}"
             )
 
-    voices: Union[list, object] = audio_driver.getProperty("voices")  # gets the list of voices available
-    voice_names = [__voice.name for __voice in voices]
-    if not env.voice_name:
-        if settings.operating_system == "Darwin":
-            env.voice_name = "Daniel"
-        elif settings.operating_system == "Windows":
-            env.voice_name = "David"
-        elif settings.operating_system == "Linux":
-            env.voice_name = "english-us"
-    elif env.voice_name not in voice_names:
-        raise InvalidEnvVars(
-            f"{env.voice_name!r} is not available.\nAvailable voices are: {', '.join(voice_names)}"
-        )
-    for ind_d, voice in enumerate(voices):  # noqa
-        if voice.name == env.voice_name:
-            logger.debug(voice.__dict__)
-            audio_driver.setProperty("voice", voices[ind_d].id)
-            audio_driver.setProperty("rate", env.voice_rate)
-            break
+    if audio_driver:
+        voices: List[Voice] = audio_driver.getProperty("voices")  # gets the list of voices available
+        voice_names = [__voice.name for __voice in voices]
+        if not env.voice_name:
+            if settings.operating_system == "Darwin":
+                env.voice_name = "Daniel"
+            elif settings.operating_system == "Windows":
+                env.voice_name = "David"
+            elif settings.operating_system == "Linux":
+                env.voice_name = "english-us"
+        elif env.voice_name not in voice_names:
+            raise InvalidEnvVars(
+                f"{env.voice_name!r} is not available.\nAvailable voices are: {', '.join(voice_names)}"
+            )
+        for ind_d, voice in enumerate(voices):  # noqa
+            if voice.name == env.voice_name:
+                logger.debug(voice.__dict__)
+                audio_driver.setProperty("voice", voices[ind_d].id)
+                audio_driver.setProperty("rate", env.voice_rate)
+                break
+        else:
+            logger.info("Using default voice model.")
     else:
-        logger.info("Using default voice model.")
+        logger.warning("Failed to load the audio driver. Resolving to use SpeechSynthesis")
 
 
 logger.info(f"Current Process: {current_process().name}")

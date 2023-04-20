@@ -44,7 +44,7 @@ if [[ "$OSName" == "Darwin" ]]; then
         echo "Installing Homebrew"
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     fi
-    brew install portaudio
+    brew install portaudio coreutils
     python -m pip install PyAudio==0.2.13
 
     # Checks current version and installs legacy pvporcupine version if macOS is older han 10.14
