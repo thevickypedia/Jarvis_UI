@@ -42,6 +42,11 @@ requires-python = ">=3.8"
 packages     = ["jarvis_ui", "jarvis_ui.executables", "jarvis_ui.modules"]
 script-files = ["jarvis_ui/lib/install.sh"]
 
+[tool.poetry]
+authors = ["Vignesh Rao"]
+readme = "README.md"
+repository = "https://github.com/thevickypedia/Jarvis_UI"
+
 [tool.setuptools.dynamic]
 version      = {attr = "jarvis_ui.version"}
 dependencies = {file = ["jarvis_ui/lib/requirements.txt"]}
