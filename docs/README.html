@@ -76,8 +76,7 @@
 <ul class="simple">
 <li><p><strong>DEBUG</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - <em>Enable debug level logging</em>
 <br><br></p></li>
-<li><p><strong>REQUEST_TIMEOUT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">5</span></code> - <em>Timeout for API calls</em></p></li>
-<li><p><strong>SPEECH_TIMEOUT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code> for macOS, <code class="docutils literal notranslate"><span class="pre">5</span></code> for Windows - <em>Timeout for speech synthesis</em>
+<li><p><strong>SPEECH_TIMEOUT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code> for macOS, <code class="docutils literal notranslate"><span class="pre">10</span></code> for Windows - <em>Timeout for speech synthesis</em>
 <br><br></p></li>
 <li><p><strong>NATIVE_AUDIO</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - <em>If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the response is generated in the server’s default voice</em></p></li>
 <li><p><strong>WAKE_WORDS</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">jarvis</span></code> (Defaults to <code class="docutils literal notranslate"><span class="pre">alexa</span></code> in macOS older than <code class="docutils literal notranslate"><span class="pre">10.14</span></code>) - <em>Wake words to initiate Jarvis</em></p></li>
@@ -88,16 +87,7 @@
 <li><p><strong>VOICE_RATE</strong>: Defaults to the value from <code class="docutils literal notranslate"><span class="pre">pyttsx3</span></code> module - <em>Speed/rate at which the text should be spoken</em>
 <br><br></p></li>
 <li><p><strong>VOICE_TIMEOUT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code> - <em>Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit</em></p></li>
-<li><p><strong>VOICE_PHRASE_LIMIT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Timeout for phrase once listener is activated - Listener will be deactivated after this limit</em>
-<br><br></p></li>
-<li><p><strong>RESTART_TIMER</strong>: Defaults to 24 hours.</p>
-<ul>
-<li><p>I have a proxy tunneling my <code class="docutils literal notranslate"><span class="pre">localhost</span></code> from Jarvis server.</p></li>
-<li><p>I have a CDN setup that’s allowing me to access the tunnel with a custom domain.</p></li>
-<li><p>Since I don’t want my CDN to take the hit, and the tunnel origin changes often, I’m swapping the URL upon startup.</p></li>
-<li><p>This requires restarting the UI every now and then.</p></li>
-</ul>
-</li>
+<li><p><strong>VOICE_PHRASE_LIMIT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Timeout for phrase once listener is activated - Listener will be deactivated after this limit</em></p></li>
 </ul>
 <p><strong>Custom settings for speech recognition</strong></p>
 <p>These are customized according to the author’s voice pitch.

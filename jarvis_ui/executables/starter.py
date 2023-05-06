@@ -8,7 +8,6 @@
 import os
 import string
 import struct
-import sys
 from datetime import datetime
 from multiprocessing.managers import DictProxy  # noqa
 from typing import NoReturn, Union
@@ -16,11 +15,11 @@ from typing import NoReturn, Union
 import pvporcupine
 from pyaudio import PyAudio, Stream, paInt16
 
-from jarvis_ui.executables import helper, listener, speaker
+from jarvis_ui.executables import display, listener, speaker
 from jarvis_ui.executables.api_handler import make_request
 from jarvis_ui.modules.config import config
 from jarvis_ui.modules.logger import logger
-from jarvis_ui.modules.models import env, fileio, flag, settings
+from jarvis_ui.modules.models import env, fileio, settings
 from jarvis_ui.modules.playsound import playsound
 
 
@@ -31,49 +30,40 @@ def processor() -> Union[str, None]:
         bool:
         Returns a ``True`` flag if a manual stop is requested.
     """
-    helper.flush_screen()
     if phrase := listener.listen():
         logger.info(f"Request: {phrase}")
-        sys.stdout.write(f"\rRequest: {phrase}")
+        display.write_screen(f"Request: {phrase}")
         if "restart" in phrase.lower():
             logger.info("User requested to restart.")
             playsound(sound=fileio.restart)
-            return flag.restart
+            display.write_screen("Restarting...")
+            return "RESTART"
         if "stop running" in phrase.lower():
             logger.info("User requested to stop.")
             playsound(sound=fileio.shutdown)
-            return flag.stop
-        if not any(word in phrase.lower() for word in config.keywords + config.conversation):
-            logger.warning(f"'{phrase}' is not a part of recognized keywords or conversation.")
-            return
-        if not any(word in phrase.lower() for word in config.api_compatible['compatible']):
-            logger.warning(f"'{phrase}' is not a part of API compatible request.")
-            playsound(sound=fileio.unprocessable)
-            return
-        if any(word in phrase.lower() for word in config.delay_with_ack + config.delay_without_ack):
-            logger.info(f"Increasing timeout for: {phrase}")
-            timeout = 30
-            if any(word in phrase.lower() for word in config.delay_with_ack):
-                playsound(sound=fileio.processing, block=False)
-        else:
-            timeout = env.request_timeout
-        if response := make_request(path='offline-communicator', timeout=timeout,
+            display.write_screen("Shutting down")
+            return "STOP"
+        if not config.keywords:
+            logger.warning("keywords are not loaded yet, restarting")
+            playsound(sound=fileio.connection_restart)
+            display.write_screen("Trying to re-establish connection with Server...")
+            return "RESTART"
+        if response := make_request(path='offline-communicator',
                                     data={'command': phrase, 'native_audio': env.native_audio,
                                           'speech_timeout': env.speech_timeout}):
-            helper.flush_screen()
             if response is True:
                 logger.info("Response received as audio.")
-                sys.stdout.write("\rResponse received as audio.")
+                display.write_screen("Response received as audio.")
                 playsound(sound=fileio.speech_wav_file)
                 os.remove(fileio.speech_wav_file)
                 return
             response = response.get('detail', '')
             logger.info(f"Response: {response}")
-            sys.stdout.write(f"\rResponse: {response}")
+            display.write_screen(f"Response: {response}")
             speaker.speak(text=response)
         else:
             playsound(sound=fileio.failed)
-            return flag.restart
+            return "RESTART"
 
 
 class Activator:
@@ -156,34 +146,27 @@ class Activator:
         playsound(sound=fileio.acknowledgement, block=False)
         self.py_audio.close(stream=self.audio_stream)
         processed = processor()
-        if processed == flag.stop:
+        if processed == "STOP":
             self.audio_stream = None
             raise KeyboardInterrupt
-        if processed == flag.restart:
+        if processed == "RESTART":
             status_manager["LOCKED"] = None
-        else:
-            status_manager["LOCKED"] = False
+            while True:
+                pass  # To ensure the listener doesn't end so that, the main process can kill and restart
+        status_manager["LOCKED"] = False
         logger.debug("Restart released")
         self.audio_stream = self.open_stream()
-        helper.flush_screen()
+        display.flush_screen()
 
     def start(self, status_manager: DictProxy) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info(f"Starting wake word detector with sensitivity: {env.sensitivity}")
         while True:
-            sys.stdout.write(f"\r{self.label}")
+            display.write_screen(self.label)
             pcm = struct.unpack_from("h" * self.detector.frame_length,
                                      self.audio_stream.read(num_frames=self.detector.frame_length,
                                                             exception_on_overflow=False))
             result = self.detector.process(pcm=pcm)
-            if settings.legacy:
-                if len(env.wake_words) == 1 and result:
-                    settings.bot = env.wake_words[0]
-                    self.executor(status_manager=status_manager)
-                elif len(env.wake_words) > 1 and result >= 0:
-                    settings.bot = env.wake_words[result]
-                    self.executor(status_manager=status_manager)
-            else:
-                if result >= 0:
-                    settings.bot = env.wake_words[result]
-                    self.executor(status_manager=status_manager)
+            if result is False or result < 0:
+                continue
+            self.executor(status_manager=status_manager)

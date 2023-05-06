@@ -5,14 +5,13 @@
 
 """
 
-import sys
 from typing import Union
 
 import requests
 from speech_recognition import (Microphone, Recognizer, RequestError,
                                 UnknownValueError, WaitTimeoutError)
 
-from jarvis_ui.executables import helper
+from jarvis_ui.executables import display
 from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env
 
@@ -35,10 +34,9 @@ def listen() -> Union[str, None]:
         str:
          - Returns recognized statement from the microphone.
     """
-    helper.flush_screen()
     return_val = None
     with microphone as source:
-        sys.stdout.write("\rListener activated..")
+        display.write_screen("Listener activated..")
         try:
             listened = recognizer.listen(source=source, timeout=env.voice_timeout,
                                          phrase_time_limit=env.voice_phrase_limit)
@@ -47,5 +45,5 @@ def listen() -> Union[str, None]:
             logger.debug(error)
         except requests.exceptions.RequestException as error:
             logger.error(error)
-        helper.flush_screen()
+        display.flush_screen()
         return return_val

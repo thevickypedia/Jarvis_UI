@@ -13,7 +13,7 @@ from datetime import datetime
 from enum import Enum
 from multiprocessing import current_process
 from threading import Thread
-from typing import Dict, List, NoReturn, Optional, Union
+from typing import Dict, List, NoReturn, Union
 
 import pyttsx3
 from packaging.version import parse as parser
@@ -29,20 +29,6 @@ if os.getcwd().endswith("doc_generator"):
     os.chdir(os.path.dirname(os.getcwd()))
 
 UNICODE_PREFIX = base64.b64decode(b'XA==').decode(encoding="ascii") + string.ascii_letters[20] + string.digits[:1] * 2
-
-
-class Flag(str, Enum):
-    """Enum flags for restart and stop.
-
-    >>> Flag
-
-    """
-
-    stop: str = "STOP"
-    restart: str = "RESTART"
-
-
-flag = Flag
 
 
 class Settings(BaseSettings):
@@ -66,7 +52,6 @@ class Settings(BaseSettings):
         )
     legacy: bool = True if os == "Darwin" and parser(platform.mac_ver()[0]) < parser('10.14') else False
     bot: str = "jarvis"
-    wake_words: Optional[List[str]]
     if sys.stdin.isatty():
         interactive = True
     else:
@@ -177,8 +162,6 @@ class EnvConfig(BaseSettings):
     recognizer_settings: RecognizerSettings = Field(default=None, env="RECOGNIZER_SETTINGS")
     recognizer_settings_default: RecognizerSettings = RecognizerSettings()
 
-    restart_timer: RestartTimer = Field(default=86_400, le=172_800, ge=1_800, env="RESTART_TIMER")
-    restart_attempts: int = Field(default=5, gt=1, le=1000, env="RESTART_ATTEMPTS")
     debug: bool = Field(default=False, env="DEBUG")
     microphone_index: Union[int, PositiveInt] = Field(default=None, ge=0, env='MICROPHONE_INDEX')
 
@@ -232,6 +215,7 @@ class FileIO(BaseSettings):
     processing: FilePath = os.path.join(indicators.__path__[0], 'processing.wav')
     unprocessable: FilePath = os.path.join(indicators.__path__[0], 'unprocessable.wav')
     acknowledgement: FilePath = os.path.join(indicators.__path__[0], 'acknowledgement.wav')
+    connection_restart: FilePath = os.path.join(indicators.__path__[0], 'connection_restart.wav')
 
     speech_wav_file: Union[FilePath, str] = os.path.join(indicators.__path__[0], 'speech-synthesis.wav')
     base_log_file: Union[FilePath, str] = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))

@@ -96,11 +96,11 @@ def _convert_sound_file(filepath: Union[os.PathLike, str], samplerate: int = 16_
     try:
         import librosa  # noqa: PyPackageRequirements
     except ImportError:
-        raise ImportError("install librosa using python -m pip install librosa==0.9.2")
+        raise ImportError("install librosa==0.9.2")
     try:
         import soundfile  # noqa: PyPackageRequirements
     except ImportError:
-        raise ImportError("install soundfile using python -m pip install soundfile==0.11.0")
+        raise ImportError("install soundfile==0.11.0")
     data, _ = librosa.load(path=filepath, sr=samplerate)
     soundfile.write(file=filepath, data=data, samplerate=samplerate)
     wave.open(f=filepath, mode='r')

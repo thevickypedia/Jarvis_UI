@@ -27,7 +27,7 @@ def swapper() -> NoReturn:
     Notes:
         Avoid making calls via load balancers or reverse proxy (if one is in place) such as CloudFront or Nginx.
     """
-    if (public_url := make_request(path='offline-communicator', timeout=env.request_timeout,
+    if (public_url := make_request(path='offline-communicator',
                                    data={'command': 'ngrok public url'})) and public_url.get('detail'):
         if public_url['detail'][-1] != "/":
             public_url['detail'] += "/"
@@ -38,7 +38,7 @@ def swapper() -> NoReturn:
 
 
 class Config(BaseConfig):
-    """Gets keywords, conversation and api-compatibles during start up. Runs custom validations on env-vars.
+    """Gets keywords during start up. Runs custom validations on env-vars.
 
     >>> Config
 
@@ -62,21 +62,11 @@ class Config(BaseConfig):
     if isinstance(env.sensitivity, float) or isinstance(env.sensitivity, PositiveInt):
         env.sensitivity = [env.sensitivity] * len(env.wake_words)
     EXCEPTION = APIError(f"Unable to connect to the API via {env.request_url}")
-    if not (keywords := make_request(path='keywords', timeout=env.request_timeout, method='GET')):
-        raise EXCEPTION
-    if not (conversation := make_request(path='conversation', timeout=env.request_timeout, method='GET')):
-        raise EXCEPTION
-    if not (api_compatible := make_request(path='api-compatible', timeout=env.request_timeout, method='GET')):
-        raise EXCEPTION
-    if detail := keywords.get("detail", conversation.get("detail", api_compatible.get("detail"))):
-        raise APIError(detail)
+    if keywords := make_request(path='keywords', method='GET'):
+        logger.info("keywords have been loaded")
 
-    # delay_keywords = list(filter(lambda v: v is not None, delay_keywords))  # If 0 is to be included
-    delay_with_ack = list(filter(None, keywords.get('car', []) + keywords.get('speed_test', []) +
-                                 keywords.get('google_home', []) + keywords.get('garage', [])))
-    delay_without_ack = list(filter(None, keywords.get('television', [])))  # Since delay is only on initial turn on
-    keywords = sum([v for _, v in keywords.items()], [])
-    conversation = sum([v for _, v in conversation.items()], [])
+    if keywords:
+        keywords = sum([v for _, v in keywords.items()], [])
 
     if env.speech_timeout and env.native_audio:
         warnings.warn(
@@ -86,8 +76,8 @@ class Config(BaseConfig):
         )
         env.speech_timeout = 0
 
-    if settings.operating_system != "Darwin" and not env.native_audio and env.speech_timeout < env.request_timeout:
-        env.speech_timeout = env.request_timeout
+    if settings.operating_system != "Darwin" and not env.native_audio:
+        env.speech_timeout = 10
 
     if env.speech_timeout and not env.native_audio:
         fileio.failed = add_ss_extn(fileio.failed)
@@ -147,7 +137,3 @@ if current_process().name != "MainProcess":
     config = Config()  # Run validations only on SyncManager and child process
 else:
     config = None
-
-# Needs to be set for all processes but should happen after main process validations are done
-# Because keyword paths are changed for legacy macOS during main process validations
-settings.wake_words = list(pvporcupine.KEYWORD_PATHS.keys())

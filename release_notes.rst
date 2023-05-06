@@ -1,6 +1,14 @@
 Release Notes
 =============
 
+0.5.7 (05/06/2023)
+------------------
+- Set UI to trigger even when failed to reach server
+- Add connection restart wav files for indicators
+- Remove timeout and timeout extensions
+- Reduce latency in response
+- Cleanup unwanted objects
+
 0.5.6 (04/19/2023)
 ------------------
 - Resolve edge case scenario with `ObjectiveC`

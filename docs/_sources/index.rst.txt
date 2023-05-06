@@ -109,6 +109,13 @@ Exceptions
    :members:
    :undoc-members:
 
+Display
+=======
+
+.. automodule:: jarvis_ui.executables.display
+   :members:
+   :undoc-members:
+
 Indices and tables
 ==================
 

@@ -31,8 +31,7 @@ if __name__ == '__main__':
 ### Optional Env Vars
 - **DEBUG**: Defaults to `False` - _Enable debug level logging_
 <br><br>
-- **REQUEST_TIMEOUT**: Defaults to `5` - _Timeout for API calls_
-- **SPEECH_TIMEOUT**: Defaults to `0` for macOS, `5` for Windows - _Timeout for speech synthesis_
+- **SPEECH_TIMEOUT**: Defaults to `0` for macOS, `10` for Windows - _Timeout for speech synthesis_
 <br><br>
 - **NATIVE_AUDIO**: Defaults to `False` - _If set to `True`, the response is generated in the server's default voice_
 - **WAKE_WORDS**: Defaults to `jarvis` (Defaults to `alexa` in macOS older than `10.14`) - _Wake words to initiate Jarvis_
@@ -44,12 +43,6 @@ if __name__ == '__main__':
 <br><br>
 - **VOICE_TIMEOUT**: Defaults to `3` - _Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit_
 - **VOICE_PHRASE_LIMIT**: Defaults to `None` - _Timeout for phrase once listener is activated - Listener will be deactivated after this limit_
-<br><br>
-- **RESTART_TIMER**: Defaults to 24 hours.
-  - I have a proxy tunneling my `localhost` from Jarvis server.
-  - I have a CDN setup that's allowing me to access the tunnel with a custom domain.
-  - Since I don't want my CDN to take the hit, and the tunnel origin changes often, I'm swapping the URL upon startup.
-  - This requires restarting the UI every now and then.
 
 **Custom settings for speech recognition**
 
