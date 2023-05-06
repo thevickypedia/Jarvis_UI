@@ -62,14 +62,6 @@ class InvalidEnvVars(ValueError):
     """
 
 
-class APIError(ConnectionError):
-    """Custom ``APIError`` raised when the UI is unable to connect to the API.
-
-    >>> APIError
-
-    """
-
-
 class SegmentationError(EnvironmentError):
     """Custom ``SegmentationError`` raised when the code exits with SIGSEGV.
 

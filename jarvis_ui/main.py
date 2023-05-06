@@ -2,11 +2,12 @@ import pathlib
 import time
 from multiprocessing import Manager, Process
 from multiprocessing.managers import DictProxy  # noqa
+from typing import NoReturn
 
 from jarvis_ui.modules.logger import logger
 
 
-def initiator(status_manager: DictProxy) -> None:
+def initiator(status_manager: DictProxy) -> NoReturn:
     """Starts main process to activate Jarvis and process requests via API calls."""
     from jarvis_ui.executables.starter import Activator
     try:
@@ -16,7 +17,7 @@ def initiator(status_manager: DictProxy) -> None:
         return
 
 
-def terminator(process: Process):
+def terminator(process: Process) -> NoReturn:
     """Terminates the process.
 
     Args:
@@ -36,14 +37,8 @@ def terminator(process: Process):
             logger.error(error)
 
 
-def start():
-    """Initiates Jarvis as a child process and restarts as per the timer set.
-
-    See Also:
-        - Swaps the public URL every time it restarts.
-        - Reloads env variables upon restart.
-        - Avoids memory overload.
-    """
+def start() -> NoReturn:
+    """Initiates Jarvis as a child process."""
     # Import within a function to be called repeatedly
     from jarvis_ui.modules.models import env  # noqa: F401
     status_manager = Manager().dict()

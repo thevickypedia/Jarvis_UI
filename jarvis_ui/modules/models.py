@@ -165,7 +165,6 @@ class EnvConfig(BaseSettings):
     debug: bool = Field(default=False, env="DEBUG")
     microphone_index: Union[int, PositiveInt] = Field(default=None, ge=0, env='MICROPHONE_INDEX')
 
-    request_timeout: Union[float, PositiveInt] = Field(default=5, env="REQUEST_TIMEOUT")
     speech_timeout: Union[float, PositiveInt] = Field(default=0, env="SPEECH_TIMEOUT")
     sensitivity: Union[Sensitivity, List[Sensitivity]] = Field(default=0.5, le=1, ge=0, env="SENSITIVITY")
 

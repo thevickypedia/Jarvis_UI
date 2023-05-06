@@ -73,7 +73,6 @@ class Activator:
 
     See Also:
         - Creates an input audio stream from a microphone, monitors it, and detects the specified wake word.
-        - Once detected, Jarvis triggers the ``listener.listen()`` function with an ``acknowledgement`` sound played.
         - After processing the phrase, the converted text is sent as response to the API.
     """
 

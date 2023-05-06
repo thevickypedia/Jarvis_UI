@@ -16,14 +16,19 @@ def write_screen(text: Any) -> NoReturn:
     """Write text to a screen that can be cleared later.
 
     Args:
-        text: Text to be written.
+        text: Text to be written on screen..
     """
     flush_screen()
     sys.stdout.write(f"\r{text}")
 
 
 def flush_screen() -> NoReturn:
-    """Flushes the screen output."""
+    """Flushes the screen output.
+
+    See Also:
+        - Writes white spaces to the window size in a terminal.
+        - Writes recursive empty text in IDE to flush screen.
+    """
     if models.settings.interactive:
         sys.stdout.write(f"\r{' '.join(['' for _ in range(os.get_terminal_size().columns)])}")
     else:

@@ -11,7 +11,7 @@ from jarvis_ui.modules.models import audio_driver
 
 
 def speak(text: str) -> NoReturn:
-    """Calls ``audio_driver.say`` to speak a statement from the received text.
+    """Speak the received text using audio driver.
 
     Args:
         text: Takes the text that has to be spoken as an argument.

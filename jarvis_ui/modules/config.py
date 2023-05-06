@@ -14,7 +14,7 @@ from pydantic import BaseConfig, PositiveInt
 from pyttsx3.voice import Voice
 
 from jarvis_ui.executables.api_handler import make_request
-from jarvis_ui.modules.exceptions import APIError, InvalidEnvVars
+from jarvis_ui.modules.exceptions import InvalidEnvVars
 from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import audio_driver, env, fileio, settings
 
@@ -43,10 +43,6 @@ class Config(BaseConfig):
     >>> Config
 
     Raises:
-        APIError:
-        If the UI is unable to connect to the API server.
-
-    Raises:
         InvalidEnvVars:
         If the voice name is not present for the OperatingSystem.
     """
@@ -61,7 +57,6 @@ class Config(BaseConfig):
 
     if isinstance(env.sensitivity, float) or isinstance(env.sensitivity, PositiveInt):
         env.sensitivity = [env.sensitivity] * len(env.wake_words)
-    EXCEPTION = APIError(f"Unable to connect to the API via {env.request_url}")
     if keywords := make_request(path='keywords', method='GET'):
         logger.info("keywords have been loaded")
 

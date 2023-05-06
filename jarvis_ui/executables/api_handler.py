@@ -60,9 +60,6 @@ def make_request(path: str, data: dict = None, method: str = 'POST') -> Union[di
         path: Path to make the api call.
         method: HTTP methods, GET/POST.
 
-    See Also:
-        - Makes session calls using a fixed connect timeout for ``3 seconds`` and variable read timeout.
-
     Returns:
         dict:
         Returns the JSON response if request was successful.

@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+0.5.8 (05/06/2023)
+------------------
+- Update doc strings and remove dead code
+
 0.5.7 (05/06/2023)
 ------------------
 - Set UI to trigger even when failed to reach server
