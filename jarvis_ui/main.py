@@ -43,6 +43,7 @@ def start() -> NoReturn:
     from jarvis_ui.modules.models import env  # noqa: F401
     status_manager = Manager().dict()
     status_manager["LOCKED"] = False  # Instantiate DictProxy
+    # todo: Process won't work for Linux as it doesn't stream on audio I/O devices in child processes
     process = Process(target=initiator, args=(status_manager,))
     process.name = pathlib.Path(__file__).stem
     process.start()

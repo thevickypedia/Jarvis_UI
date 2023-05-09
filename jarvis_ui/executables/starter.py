@@ -9,7 +9,9 @@ import os
 import string
 import struct
 from datetime import datetime
+from multiprocessing import Process
 from multiprocessing.managers import DictProxy  # noqa
+from threading import Timer
 from typing import NoReturn, Union
 
 import pvporcupine
@@ -54,8 +56,18 @@ def processor() -> Union[str, None]:
             if response is True:
                 logger.info("Response received as audio.")
                 display.write_screen("Response received as audio.")
-                playsound(sound=fileio.speech_wav_file)
-                os.remove(fileio.speech_wav_file)
+                # Because Windows runs into PermissionError if audio file is open when removing it
+                if settings.operating_system == "Windows":
+                    player = Process(target=playsound, kwargs={'sound': fileio.speech_wav_file})
+                    player.start()
+                    player.join()
+                    if player.is_alive():
+                        player.terminate()
+                        player.kill()
+                    Timer(interval=3, function=os.remove, args=(fileio.speech_wav_file,)).start()
+                else:
+                    playsound(sound=fileio.speech_wav_file)
+                    os.remove(fileio.speech_wav_file)
                 return
             response = response.get('detail', '')
             logger.info(f"Response: {response}")

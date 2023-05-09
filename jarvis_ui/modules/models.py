@@ -59,6 +59,9 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+# Intermittently changes to Windows_NT because of pydantic
+if settings.operating_system.startswith('Windows'):
+    settings.operating_system = "Windows"
 
 
 def import_module() -> NoReturn:
@@ -211,6 +214,10 @@ class FileIO(BaseSettings):
 
 env = EnvConfig()
 fileio = FileIO()
+# because playaudio in Windows uses string concatenation assuming input sound is going to be a string
+if settings.operating_system == "Windows":
+    for key, value in fileio.__dict__.items():
+        setattr(fileio, key, value.__str__())
 raw_token = env.token
 env.token = UNICODE_PREFIX + UNICODE_PREFIX.join(binascii.hexlify(data=env.token.encode(encoding="utf-8"),
                                                                   sep="-").decode(encoding="utf-8").split(sep="-"))

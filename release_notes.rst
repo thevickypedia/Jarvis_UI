@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+0.6.0 (05/09/2023)
+------------------
+- Fix ``PermissionError`` on Windows for playsound
+- Convert ``FileIO`` object's attributes to strings
+- Windows doesn't ``PathLike`` attributes
+
 0.5.9 (05/09/2023)
 ------------------
 - Improve audio quality on predefined responses
