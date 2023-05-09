@@ -78,8 +78,8 @@ class Config(BaseConfig):
         fileio.failed = add_ss_extn(fileio.failed)
         fileio.restart = add_ss_extn(fileio.restart)
         fileio.shutdown = add_ss_extn(fileio.shutdown)
-        fileio.processing = add_ss_extn(fileio.processing)
         fileio.unprocessable = add_ss_extn(fileio.unprocessable)
+        fileio.connection_restart = add_ss_extn(fileio.connection_restart)
 
     if settings.legacy:
         pvporcupine.KEYWORD_PATHS = {}

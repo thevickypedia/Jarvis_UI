@@ -13,6 +13,7 @@ from multiprocessing.managers import DictProxy  # noqa
 from typing import NoReturn, Union
 
 import pvporcupine
+from playsound import playsound
 from pyaudio import PyAudio, Stream, paInt16
 
 from jarvis_ui.executables import display, listener, speaker
@@ -20,7 +21,6 @@ from jarvis_ui.executables.api_handler import make_request
 from jarvis_ui.modules.config import config
 from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env, fileio, settings
-from jarvis_ui.modules.playsound import playsound
 
 
 def processor() -> Union[str, None]:

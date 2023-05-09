@@ -123,16 +123,6 @@ class Sensitivity(float or PositiveInt, Enum):
     sensitivity: Union[float, PositiveInt]
 
 
-class RestartTimer(float or PositiveInt, Enum):
-    """Allowed values for restart_timer.
-
-    >>> RestartTimer
-
-    """
-
-    restart_timer: Union[float, PositiveInt]
-
-
 class RecognizerSettings(BaseSettings):
     """Settings for speech recognition.
 
@@ -211,7 +201,6 @@ class FileIO(BaseSettings):
     failed: FilePath = os.path.join(indicators.__path__[0], 'failed.wav')
     restart: FilePath = os.path.join(indicators.__path__[0], 'restart.wav')
     shutdown: FilePath = os.path.join(indicators.__path__[0], 'shutdown.wav')
-    processing: FilePath = os.path.join(indicators.__path__[0], 'processing.wav')
     unprocessable: FilePath = os.path.join(indicators.__path__[0], 'unprocessable.wav')
     acknowledgement: FilePath = os.path.join(indicators.__path__[0], 'acknowledgement.wav')
     connection_restart: FilePath = os.path.join(indicators.__path__[0], 'connection_restart.wav')

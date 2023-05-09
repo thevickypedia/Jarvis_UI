@@ -343,11 +343,6 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.processing">
-<span class="sig-name descname"><span class="pre">processing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.processing" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.restart">
 <span class="sig-name descname"><span class="pre">restart</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.restart" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -415,76 +410,6 @@
 <span class="sig-name descname"><span class="pre">sensitivity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.Sensitivity.sensitivity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="jarvis_ui.modules.models.RestartTimer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.models.</span></span><span class="sig-name descname"><span class="pre">RestartTimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">float</span> <span class="pre">or</span> <span class="pre">PositiveInt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Enum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.models.RestartTimer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Allowed values for restart_timer.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RestartTimer</span>
-</pre></div>
-</div>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jarvis_ui.modules.models.RestartTimer.restart_timer">
-<span class="sig-name descname"><span class="pre">restart_timer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.RestartTimer.restart_timer" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-jarvis_ui.modules.playsound">
-<span id="playsound"></span><h1>PlaySound<a class="headerlink" href="#module-jarvis_ui.modules.playsound" title="Permalink to this heading">¶</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="jarvis_ui.modules.playsound.PlayAudio">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.playsound.</span></span><span class="sig-name descname"><span class="pre">PlayAudio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PathLike</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.playsound.PlayAudio" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instantiates <code class="docutils literal notranslate"><span class="pre">PlayAudio</span></code> object to play an audio wav file.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">PlayAudio</span>
-</pre></div>
-</div>
-<p>Initializes the necessary args.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>filename</strong> – Takes the audio filename as an argument.</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis_ui.modules.playsound.PlayAudio.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.modules.playsound.PlayAudio.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the wav file and resources blocked by pyaudio.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis_ui.modules.playsound.PlayAudio.play">
-<span class="sig-name descname"><span class="pre">play</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.modules.playsound.PlayAudio.play" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads the data based on chunk size and plays the stream while writing to the stream.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis_ui.modules.playsound.PlayAudio.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.modules.playsound.PlayAudio.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Override built-in.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.modules.playsound.playsound">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.playsound.</span></span><span class="sig-name descname"><span class="pre">playsound</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sound</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PathLike</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.modules.playsound.playsound" title="Permalink to this definition">¶</a></dt>
-<dd><p>Triggers the <code class="docutils literal notranslate"><span class="pre">PlayAudio</span></code> object.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sound</strong> – Takes the filename as the argument.</p></li>
-<li><p><strong>block</strong> – Takes an argument whether to run as a thread to block the current process or not.</p></li>
-</ul>
-</dd>
-</dl>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<ul class="simple">
-<li><p>Beware of specifying <code class="docutils literal notranslate"><span class="pre">block=False</span></code> when combining with other processes that use pyaudio resources.</p></li>
-</ul>
-</div>
 </dd></dl>
 
 </section>
@@ -745,7 +670,6 @@
 <li><a class="reference internal" href="#module-jarvis_ui.executables.listener">Listener</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.modules.logger">Logger</a></li>
 <li><a class="reference internal" href="#models">Models</a></li>
-<li><a class="reference internal" href="#module-jarvis_ui.modules.playsound">PlaySound</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.speaker">Speaker</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.starter">Starter</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.modules.peripherals">Peripherals</a></li>

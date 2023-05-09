@@ -45,7 +45,7 @@ if [[ "$OSName" == "Darwin" ]]; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     fi
     brew install portaudio coreutils
-    python -m pip install PyAudio==0.2.13
+    python -m pip install PyAudio==0.2.13 playsound==1.3.0
 
     # Checks current version and installs legacy pvporcupine version if macOS is older han 10.14
     base_ver="10.14"
@@ -63,7 +63,7 @@ elif [[ "$OSName" == MSYS* ]]; then
     curl https://vigneshrao.com/Jarvis/"$pyaudio" --output "$pyaudio" --silent
     pip install "$pyaudio"
     rm "$pyaudio"
-    pip install 'pvporcupine==1.9.5'
+    pip install pvporcupine==1.9.5 pywin32==305 playsound==1.2.2
     os_independent_packages
 elif [[ "$OSName" == "Linux" ]]; then
     dev_ver=$(python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
@@ -71,6 +71,9 @@ elif [[ "$OSName" == "Linux" ]]; then
     sudo apt-get install -y git libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
     sudo apt install -y build-essential ffmpeg espeak python3-pyaudio "python$dev_ver-dev"
     python -m pip install PyAudio==0.2.12 pvporcupine==1.9.5
+    python -m pip install gobject PyGObject
+    # Install as stand alone as playsound depends on gobject
+    python -m pip install playsound==1.3.0
     os_independent_packages
 else
     clear

@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+0.5.9 (05/09/2023)
+------------------
+- Improve audio quality on predefined responses
+- Install playsound to deal with audio
+
 0.5.8 (05/06/2023)
 ------------------
 - Update doc strings and remove dead code

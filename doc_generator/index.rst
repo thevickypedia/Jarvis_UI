@@ -66,21 +66,6 @@ Models
    :members:
    :undoc-members:
 
-.. autoclass:: jarvis_ui.modules.models.RestartTimer(float or PositiveInt, Enum)
-   :members:
-   :undoc-members:
-
-.. autoclass:: jarvis_ui.modules.models.Flag(str, Enum)
-   :members:
-   :undoc-members:
-
-PlaySound
-=========
-
-.. automodule:: jarvis_ui.modules.playsound
-   :members:
-   :undoc-members:
-
 Speaker
 =======
 
