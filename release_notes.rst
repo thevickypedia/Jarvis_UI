@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+0.6.2 (05/10/2023)
+------------------
+- Improvements in audio quality for static responses
+- Implemented heart beat for server's health check
+- Release v1.1
+
 0.6.1 (05/10/2023)
 ------------------
 - Setup ``heartbeat`` for server's health check
