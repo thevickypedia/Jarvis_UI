@@ -29,6 +29,7 @@ if __name__ == '__main__':
 - **TOKEN**: Authentication token.
 
 ### Optional Env Vars
+- **HEART_BEAT**: Defaults to `None` - _If # of seconds is set, background health check with the server will be enabled_
 - **DEBUG**: Defaults to `False` - _Enable debug level logging_
 <br><br>
 - **SPEECH_TIMEOUT**: Defaults to `0` for macOS, `10` for Windows - _Timeout for speech synthesis_

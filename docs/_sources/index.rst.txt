@@ -66,6 +66,13 @@ Models
    :members:
    :undoc-members:
 
+Repeated Timer
+==============
+
+.. automodule:: jarvis_ui.modules.timer
+   :members:
+   :undoc-members:
+
 Speaker
 =======
 

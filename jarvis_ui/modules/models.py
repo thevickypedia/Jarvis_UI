@@ -151,6 +151,9 @@ class EnvConfig(BaseSettings):
     request_url: HttpUrl = Field(default=..., env="REQUEST_URL")
     token: str = Field(default=..., env="TOKEN")
 
+    # Heart beat
+    heart_beat: int = Field(default=None, le=3_600, ge=5, env="HEART_BEAT")
+
     # Speech recognition settings
     recognizer_settings: RecognizerSettings = Field(default=None, env="RECOGNIZER_SETTINGS")
     recognizer_settings_default: RecognizerSettings = RecognizerSettings()

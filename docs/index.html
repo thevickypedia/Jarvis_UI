@@ -241,6 +241,11 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.heart_beat">
+<span class="sig-name descname"><span class="pre">heart_beat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.heart_beat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.microphone_index">
 <span class="sig-name descname"><span class="pre">microphone_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.microphone_index" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -413,6 +418,47 @@
 </dd></dl>
 
 </section>
+<section id="module-jarvis_ui.modules.timer">
+<span id="repeated-timer"></span><h1>Repeated Timer<a class="headerlink" href="#module-jarvis_ui.modules.timer" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.timer.</span></span><span class="sig-name descname"><span class="pre">RepeatedTimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates RepeatedTimer object to kick off the threading.Timer object with custom intervals.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RepeatedTimer</span>
+</pre></div>
+</div>
+<p>Repeats the <code class="docutils literal notranslate"><span class="pre">Timer</span></code> object from threading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interval</strong> – Interval in seconds.</p></li>
+<li><p><strong>function</strong> – Function to trigger with intervals.</p></li>
+<li><p><strong>args</strong> – Arguments for the function.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments for the function.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate cancellation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger target function if timer isn’t running already.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the timer and cancel all futures.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-jarvis_ui.executables.speaker">
 <span id="speaker"></span><h1>Speaker<a class="headerlink" href="#module-jarvis_ui.executables.speaker" title="Permalink to this heading">¶</a></h1>
 <p>Module for speaker and voice options.</p>
@@ -490,6 +536,24 @@
 <dd><p>Runs <code class="docutils literal notranslate"><span class="pre">audio_stream</span></code> in a forever loop and calls <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when the phrase <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> is heard.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.starter.heart_beat">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">heart_beat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.heart_beat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate health check with the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>status_manager</strong> – Shared multiprocessing dict to update in case of failed health check.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Heart beat should be set no lesser than 5 seconds to avoid throttling and no longer than an hour.</p></li>
+<li><p>Maintains a consecutive failure threshold of 5, as a single failed health check doesn’t warrant a restart.</p></li>
+</ul>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -670,6 +734,7 @@
 <li><a class="reference internal" href="#module-jarvis_ui.executables.listener">Listener</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.modules.logger">Logger</a></li>
 <li><a class="reference internal" href="#models">Models</a></li>
+<li><a class="reference internal" href="#module-jarvis_ui.modules.timer">Repeated Timer</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.speaker">Speaker</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.starter">Starter</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.modules.peripherals">Peripherals</a></li>

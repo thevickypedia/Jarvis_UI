@@ -15,6 +15,7 @@ from threading import Timer
 from typing import NoReturn, Union
 
 import pvporcupine
+import requests
 from playsound import playsound
 from pyaudio import PyAudio, Stream, paInt16
 
@@ -23,6 +24,34 @@ from jarvis_ui.executables.api_handler import make_request
 from jarvis_ui.modules.config import config
 from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env, fileio, settings
+
+FAILED_HEALTH_CHECK = {'count': 0}
+
+
+def heart_beat(status_manager: DictProxy) -> NoReturn:
+    """Initiate health check with the server.
+
+    Args:
+        status_manager: Shared multiprocessing dict to update in case of failed health check.
+
+    See Also:
+        - Heart beat should be set no lesser than 5 seconds to avoid throttling and no longer than an hour.
+        - Maintains a consecutive failure threshold of 5, as a single failed health check doesn't warrant a restart.
+    """
+    try:
+        response = requests.get(url=env.request_url + 'health', timeout=(3, 3))
+    except requests.RequestException as error:
+        logger.error(error)
+    else:
+        if response.ok:
+            if FAILED_HEALTH_CHECK['count']:
+                logger.debug("Resetting failure count")
+                FAILED_HEALTH_CHECK['count'] = 0
+            logger.debug(response.json())
+            return
+    if FAILED_HEALTH_CHECK['count'] > 5:
+        status_manager['LOCKED'] = None
+    FAILED_HEALTH_CHECK['count'] += 1
 
 
 def processor() -> Union[str, None]:
@@ -167,17 +196,18 @@ class Activator:
         status_manager["LOCKED"] = False
         logger.debug("Restart released")
         self.audio_stream = self.open_stream()
-        display.flush_screen()
+        display.write_screen(self.label)
 
     def start(self, status_manager: DictProxy) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info(f"Starting wake word detector with sensitivity: {env.sensitivity}")
+        display.write_screen(self.label)
         while True:
-            display.write_screen(self.label)
-            pcm = struct.unpack_from("h" * self.detector.frame_length,
-                                     self.audio_stream.read(num_frames=self.detector.frame_length,
-                                                            exception_on_overflow=False))
-            result = self.detector.process(pcm=pcm)
+            result = self.detector.process(
+                pcm=struct.unpack_from("h" * self.detector.frame_length,
+                                       self.audio_stream.read(num_frames=self.detector.frame_length,
+                                                              exception_on_overflow=False))
+            )
             if result is False or result < 0:
                 continue
             self.executor(status_manager=status_manager)

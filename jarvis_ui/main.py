@@ -9,11 +9,20 @@ from jarvis_ui.modules.logger import logger
 
 def initiator(status_manager: DictProxy) -> NoReturn:
     """Starts main process to activate Jarvis and process requests via API calls."""
-    from jarvis_ui.executables.starter import Activator
+    from jarvis_ui.executables.starter import Activator, env, heart_beat
+    from jarvis_ui.modules.timer import RepeatedTimer
+    if env.heart_beat:
+        logger.info("Initiating heart beat")
+        timer = RepeatedTimer(function=heart_beat, interval=env.heart_beat, args=(status_manager,))
+        timer.start()
+    else:
+        timer = None
     try:
         status_manager["LOCKED"] = False
         Activator().start(status_manager=status_manager)
     except KeyboardInterrupt:
+        if timer:
+            timer.stop()
         return
 
 
@@ -43,7 +52,7 @@ def start() -> NoReturn:
     from jarvis_ui.modules.models import env  # noqa: F401
     status_manager = Manager().dict()
     status_manager["LOCKED"] = False  # Instantiate DictProxy
-    # todo: Process won't work for Linux as it doesn't stream on audio I/O devices in child processes
+    # todo: Process won't work for Linux as it doesn't stream on audio I/O devices in multiple processes
     process = Process(target=initiator, args=(status_manager,))
     process.name = pathlib.Path(__file__).stem
     process.start()
@@ -58,6 +67,3 @@ def start() -> NoReturn:
             break
         time.sleep(1)
     start()
-
-
-start.count = 0

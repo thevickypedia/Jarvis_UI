@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+0.6.1 (05/10/2023)
+------------------
+- Setup ``heartbeat`` for server's health check
+- Clean up and update README.md
+
 0.6.0 (05/09/2023)
 ------------------
 - Fix ``PermissionError`` on Windows for playsound
