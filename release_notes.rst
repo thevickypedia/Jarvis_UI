@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+0.6.4 (05/10/2023)
+------------------
+- Fix startup errors on Linux OS
+- Provide better user experience with runbook
+- Implement background health check process
+- Release v2.0
+
 0.6.3 (05/10/2023)
 ------------------
 - Support self restart on Linux OS
