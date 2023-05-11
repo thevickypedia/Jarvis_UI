@@ -73,7 +73,7 @@ def make_request(path: str, data: dict = None, method: str = 'POST') -> Union[di
         logger.error(error)
         return False
     if not response.ok:
-        logger.error(f"{response.status_code} - {response.reason}")
+        logger.error("%d - %s", response.status_code, response.reason)
         return False
     if response.headers.get("Content-Type", "NO MATCH") == "application/octet-stream":
         with open(file=fileio.speech_wav_file, mode="wb") as file:

@@ -64,15 +64,17 @@
 </pre></div>
 </div>
 </section>
-<section id="mandatory-env-vars">
-<h2>Mandatory Env Vars<a class="headerlink" href="#mandatory-env-vars" title="Permalink to this heading">¶</a></h2>
+<section id="environment-variables">
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading">¶</a></h2>
+<section id="mandatory">
+<h3>Mandatory<a class="headerlink" href="#mandatory" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><strong>REQUEST_URL</strong>: URL to which the API call has to be made. Can be <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or a <code class="docutils literal notranslate"><span class="pre">tunneled</span></code> URL behind a reverse proxy/CDN.</p></li>
 <li><p><strong>TOKEN</strong>: Authentication token.</p></li>
 </ul>
 </section>
-<section id="optional-env-vars">
-<h2>Optional Env Vars<a class="headerlink" href="#optional-env-vars" title="Permalink to this heading">¶</a></h2>
+<section id="optional">
+<h3>Optional<a class="headerlink" href="#optional" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><strong>HEART_BEAT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>If # of seconds is set, background health check with the server will be enabled</em></p></li>
 <li><p><strong>DEBUG</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - <em>Enable debug level logging</em>
@@ -115,15 +117,17 @@ Cons in using hard coded <code class="docutils literal notranslate"><span class=
 <li><p><strong>non_speaking_duration</strong>: Seconds of non-speaking audio to keep on both sides of the recording.</p></li>
 </ul>
 <p>Refer Jarvis’ <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/README.md">README</a> for more information on setting up the backend server.</p>
+</section>
+</section>
 <section id="coding-standards">
-<h3>Coding Standards<a class="headerlink" href="#coding-standards" title="Permalink to this heading">¶</a></h3>
+<h2>Coding Standards<a class="headerlink" href="#coding-standards" title="Permalink to this heading">¶</a></h2>
 <p>Docstring format: <a class="reference external" href="https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings"><code class="docutils literal notranslate"><span class="pre">Google</span></code></a> <br>
 Styling conventions: <a class="reference external" href="https://www.python.org/dev/peps/pep-0008/"><code class="docutils literal notranslate"><span class="pre">PEP</span> <span class="pre">8</span></code></a> <br>
 Clean code with pre-commit hooks: <a class="reference external" href="https://flake8.pycqa.org/en/latest/"><code class="docutils literal notranslate"><span class="pre">flake8</span></code></a> and
 <a class="reference external" href="https://pycqa.github.io/isort/"><code class="docutils literal notranslate"><span class="pre">isort</span></code></a></p>
 </section>
 <section id="release-notes">
-<h3><a class="reference external" href="https://github.com/thevickypedia/Jarvis_UI/blob/main/release_notes.rst">Release Notes</a><a class="headerlink" href="#release-notes" title="Permalink to this heading">¶</a></h3>
+<h2><a class="reference external" href="https://github.com/thevickypedia/Jarvis_UI/blob/main/release_notes.rst">Release Notes</a><a class="headerlink" href="#release-notes" title="Permalink to this heading">¶</a></h2>
 <p><strong>Requirement</strong></p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>changelog-generator
 </pre></div>
@@ -134,7 +138,7 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
 </div>
 </section>
 <section id="linting">
-<h3>Linting<a class="headerlink" href="#linting" title="Permalink to this heading">¶</a></h3>
+<h2>Linting<a class="headerlink" href="#linting" title="Permalink to this heading">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">PreCommit</span></code> will ensure linting, and the doc creation are run on every commit.</p>
 <p><strong>Requirement</strong>
 <br></p>
@@ -148,15 +152,14 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
 </div>
 </section>
 <section id="pypi-package">
-<h3>Pypi Package<a class="headerlink" href="#pypi-package" title="Permalink to this heading">¶</a></h3>
+<h2>Pypi Package<a class="headerlink" href="#pypi-package" title="Permalink to this heading">¶</a></h2>
 <p><a class="reference external" href="https://packaging.python.org/tutorials/packaging-projects/"><img alt="pypi-module" src="https://img.shields.io/badge/Software%20Repository-pypi-1f425f.svg" /></a></p>
 <p><a class="reference external" href="https://pypi.org/project/jarvis-ui/">https://pypi.org/project/jarvis-ui/</a></p>
 </section>
 <section id="runbook">
-<h3>Runbook<a class="headerlink" href="#runbook" title="Permalink to this heading">¶</a></h3>
+<h2>Runbook<a class="headerlink" href="#runbook" title="Permalink to this heading">¶</a></h2>
 <p><a class="reference external" href="https://www.sphinx-doc.org/en/master/man/sphinx-autogen.html"><img alt="made-with-sphinx-doc" src="https://img.shields.io/badge/Code%20Docs-Sphinx-1f425f.svg" /></a></p>
 <p><a class="reference external" href="https://thevickypedia.github.io/Jarvis_UI/">https://thevickypedia.github.io/Jarvis_UI/</a></p>
-</section>
 </section>
 <section id="license-copyright">
 <h2>License &amp; copyright<a class="headerlink" href="#license-copyright" title="Permalink to this heading">¶</a></h2>
@@ -177,15 +180,16 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
     <ul>
 <li><a class="reference internal" href="#">Jarvis UI</a><ul>
 <li><a class="reference internal" href="#kick-off">Kick off</a></li>
-<li><a class="reference internal" href="#mandatory-env-vars">Mandatory Env Vars</a></li>
-<li><a class="reference internal" href="#optional-env-vars">Optional Env Vars</a><ul>
+<li><a class="reference internal" href="#environment-variables">Environment Variables</a><ul>
+<li><a class="reference internal" href="#mandatory">Mandatory</a></li>
+<li><a class="reference internal" href="#optional">Optional</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#coding-standards">Coding Standards</a></li>
 <li><a class="reference internal" href="#release-notes">Release Notes</a></li>
 <li><a class="reference internal" href="#linting">Linting</a></li>
 <li><a class="reference internal" href="#pypi-package">Pypi Package</a></li>
 <li><a class="reference internal" href="#runbook">Runbook</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#license-copyright">License &amp; copyright</a></li>
 </ul>
 </li>

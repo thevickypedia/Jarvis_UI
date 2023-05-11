@@ -8,50 +8,21 @@
 import os
 import string
 import struct
-from datetime import datetime
 from multiprocessing import Process
 from multiprocessing.managers import DictProxy  # noqa
 from threading import Timer
 from typing import NoReturn, Union
 
 import pvporcupine
-import requests
 from playsound import playsound
 from pyaudio import PyAudio, Stream, paInt16
 
 from jarvis_ui.executables import display, listener, speaker
 from jarvis_ui.executables.api_handler import make_request
+from jarvis_ui.executables.helper import linux_restart
 from jarvis_ui.modules.config import config
 from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env, fileio, settings
-
-FAILED_HEALTH_CHECK = {'count': 0}
-
-
-def heart_beat(status_manager: DictProxy) -> NoReturn:
-    """Initiate health check with the server.
-
-    Args:
-        status_manager: Shared multiprocessing dict to update in case of failed health check.
-
-    See Also:
-        - Heart beat should be set no lesser than 5 seconds to avoid throttling and no longer than an hour.
-        - Maintains a consecutive failure threshold of 5, as a single failed health check doesn't warrant a restart.
-    """
-    try:
-        response = requests.get(url=env.request_url + 'health', timeout=(3, 3))
-    except requests.RequestException as error:
-        logger.error(error)
-    else:
-        if response.ok:
-            if FAILED_HEALTH_CHECK['count']:
-                logger.debug("Resetting failure count")
-                FAILED_HEALTH_CHECK['count'] = 0
-            logger.debug(response.json())
-            return
-    if FAILED_HEALTH_CHECK['count'] > 5:
-        status_manager['LOCKED'] = None
-    FAILED_HEALTH_CHECK['count'] += 1
 
 
 def processor() -> Union[str, None]:
@@ -62,7 +33,7 @@ def processor() -> Union[str, None]:
         Returns a ``True`` flag if a manual stop is requested.
     """
     if phrase := listener.listen():
-        logger.info(f"Request: {phrase}")
+        logger.info("Request: %s", phrase)
         display.write_screen(f"Request: {phrase}")
         if "restart" in phrase.lower():
             logger.info("User requested to restart.")
@@ -99,7 +70,7 @@ def processor() -> Union[str, None]:
                     os.remove(fileio.speech_wav_file)
                 return
             response = response.get('detail', '')
-            logger.info(f"Response: {response}")
+            logger.info("Response: %s", response)
             display.write_screen(f"Response: {response}")
             speaker.speak(text=response)
         else:
@@ -178,11 +149,11 @@ class Activator:
             input_device_index=env.microphone_index
         )
 
-    def executor(self, status_manager: DictProxy):
+    def executor(self, status_manager: DictProxy = None):
         """Closes the audio stream and calls the processor."""
-        logger.debug(f"Detected {settings.bot} at {datetime.now()}")
-        status_manager["LOCKED"] = True
-        logger.debug("Restart locked")
+        if status_manager:
+            status_manager["LOCKED"] = True
+            logger.debug("Restart locked")
         playsound(sound=fileio.acknowledgement, block=False)
         self.py_audio.close(stream=self.audio_stream)
         processed = processor()
@@ -190,17 +161,20 @@ class Activator:
             self.audio_stream = None
             raise KeyboardInterrupt
         if processed == "RESTART":
+            if settings.operating_system == "Linux":
+                linux_restart()
             status_manager["LOCKED"] = None
             while True:
                 pass  # To ensure the listener doesn't end so that, the main process can kill and restart
-        status_manager["LOCKED"] = False
-        logger.debug("Restart released")
+        if status_manager:
+            status_manager["LOCKED"] = False
+            logger.debug("Restart released")
         self.audio_stream = self.open_stream()
         display.write_screen(self.label)
 
-    def start(self, status_manager: DictProxy) -> NoReturn:
+    def start(self, status_manager: DictProxy = None) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
-        logger.info(f"Starting wake word detector with sensitivity: {env.sensitivity}")
+        logger.info("Starting wake word detector with sensitivity: %s", env.sensitivity)
         display.write_screen(self.label)
         while True:
             result = self.detector.process(

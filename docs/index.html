@@ -49,8 +49,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="README.html">Jarvis UI</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="README.html#kick-off">Kick off</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#mandatory-env-vars">Mandatory Env Vars</a></li>
-<li class="toctree-l2"><a class="reference internal" href="README.html#optional-env-vars">Optional Env Vars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#environment-variables">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#coding-standards">Coding Standards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#release-notes">Release Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#linting">Linting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#pypi-package">Pypi Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="README.html#runbook">Runbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="README.html#license-copyright">License &amp; copyright</a></li>
 </ul>
 </li>
@@ -61,7 +65,7 @@
 <span id="jarvis"></span><h1>Jarvis<a class="headerlink" href="#module-jarvis_ui.main" title="Permalink to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="jarvis_ui.main.initiator">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.main.</span></span><span class="sig-name descname"><span class="pre">initiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.main.initiator" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.main.</span></span><span class="sig-name descname"><span class="pre">initiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DictProxy</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.main.initiator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts main process to activate Jarvis and process requests via API calls.</p>
 </dd></dl>
 
@@ -82,6 +86,9 @@
 </dl>
 </dd></dl>
 
+</section>
+<section id="executables">
+<h1>Executables<a class="headerlink" href="#executables" title="Permalink to this heading">¶</a></h1>
 </section>
 <section id="module-jarvis_ui.executables.api_handler">
 <span id="api-handler"></span><h1>API Handler<a class="headerlink" href="#module-jarvis_ui.executables.api_handler" title="Permalink to this heading">¶</a></h1>
@@ -128,21 +135,72 @@
 </dd></dl>
 
 </section>
-<section id="config">
-<h1>Config<a class="headerlink" href="#config" title="Permalink to this heading">¶</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="jarvis_ui.modules.config.Config">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">BaseConfig</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.config.Config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets keywords during start up. Runs custom validations on env-vars.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Config</span>
+<section id="module-jarvis_ui.executables.display">
+<span id="display"></span><h1>Display<a class="headerlink" href="#module-jarvis_ui.executables.display" title="Permalink to this heading">¶</a></h1>
+<p>OnScreen display functions for the UI.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Display</span>
 </pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.display.flush_screen">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.display.</span></span><span class="sig-name descname"><span class="pre">flush_screen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.display.flush_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flushes the screen output.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Writes white spaces to the window size in a terminal.</p></li>
+<li><p>Writes recursive empty text in IDE to flush screen.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.display.write_screen">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.display.</span></span><span class="sig-name descname"><span class="pre">write_screen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.display.write_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write text to a screen that can be cleared later.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> – Text to be written on screen..</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-jarvis_ui.executables.helper">
+<span id="helper"></span><h1>Helper<a class="headerlink" href="#module-jarvis_ui.executables.helper" title="Permalink to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.helper.heart_beat">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.helper.</span></span><span class="sig-name descname"><span class="pre">heart_beat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DictProxy</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.helper.heart_beat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate health check with the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>status_manager</strong> – Shared multiprocessing dict to update in case of failed health check.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Heart beat should be set no lesser than 5 seconds to avoid throttling and no longer than an hour.</p></li>
+<li><p>Maintains a consecutive failure threshold of 5, as a single failed health check doesn’t warrant a restart.</p></li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.helper.linux_restart">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.helper.</span></span><span class="sig-name descname"><span class="pre">linux_restart</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.helper.linux_restart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restarts the base script on Linux OS.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>In Linux, it is not possible to trigger port audio on multiple processes.</p></li>
+<li><p>To overcome this problem, JarvisUI on Linux is set to restart from self.</p></li>
+<li><p>Since restarting executable triggers the base script, explicit reload of env vars are not required.</p></li>
+</ul>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#jarvis_ui.modules.exceptions.InvalidEnvVars" title="jarvis_ui.modules.exceptions.InvalidEnvVars"><strong>InvalidEnvVars</strong></a> – </p></li>
-<li><p><strong>If the voice name is not present for the OperatingSystem.</strong> – </p></li>
-</ul>
+<dd class="field-odd"><p><strong>- KeyboardInterrupt</strong> – To stop the current process to avoid recursion.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -169,6 +227,187 @@
 <dd class="field-even"><p>str</p>
 </dd>
 </dl>
+</dd></dl>
+
+</section>
+<section id="module-jarvis_ui.executables.speaker">
+<span id="speaker"></span><h1>Speaker<a class="headerlink" href="#module-jarvis_ui.executables.speaker" title="Permalink to this heading">¶</a></h1>
+<p>Module for speaker and voice options.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Speaker</span>
+</pre></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.speaker.speak">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.speaker.</span></span><span class="sig-name descname"><span class="pre">speak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.speaker.speak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Speak the received text using audio driver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> – Takes the text that has to be spoken as an argument.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-jarvis_ui.executables.starter">
+<span id="starter"></span><h1>Starter<a class="headerlink" href="#module-jarvis_ui.executables.starter" title="Permalink to this heading">¶</a></h1>
+<p>Module to kick off wake word detection.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Starter</span>
+</pre></div>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="jarvis_ui.executables.starter.Activator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">Activator</span></span><a class="headerlink" href="#jarvis_ui.executables.starter.Activator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Awaits for the keyword <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> and triggers <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when heard.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Activator</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Creates an input audio stream from a microphone, monitors it, and detects the specified wake word.</p></li>
+<li><p>After processing the phrase, the converted text is sent as response to the API.</p></li>
+</ul>
+</div>
+<p>Initiates Porcupine object for hot word detection.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p>Instantiates an instance of Porcupine object and monitors audio stream for occurrences of keywords.</p></li>
+<li><p>A higher sensitivity results in fewer misses at the cost of increasing the false alarm rate.</p></li>
+<li><p>sensitivity: Tolerance/Sensitivity level. Takes argument or env var <code class="docutils literal notranslate"><span class="pre">sensitivity</span></code> or defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></li>
+</ul>
+</div>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://people.csail.mit.edu/hubert/pyaudio/docs/#pyaudio.Stream.read">Audio Overflow</a> handling.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis_ui.executables.starter.Activator.executor">
+<span class="sig-name descname"><span class="pre">executor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DictProxy</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.executables.starter.Activator.executor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the audio stream and calls the processor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis_ui.executables.starter.Activator.open_stream">
+<span class="sig-name descname"><span class="pre">open_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Stream</span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.Activator.open_stream" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes an audio stream.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>PyAudio stream.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Stream</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis_ui.executables.starter.Activator.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DictProxy</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.Activator.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs <code class="docutils literal notranslate"><span class="pre">audio_stream</span></code> in a forever loop and calls <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when the phrase <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> is heard.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.starter.processor">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">processor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes the request after wake word is detected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns a <code class="docutils literal notranslate"><span class="pre">True</span></code> flag if a manual stop is requested.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="modules">
+<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this heading">¶</a></h1>
+</section>
+<section id="config">
+<h1>Config<a class="headerlink" href="#config" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jarvis_ui.modules.config.Config">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">BaseConfig</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.config.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets keywords during start up. Runs custom validations on env-vars.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Config</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#jarvis_ui.modules.exceptions.InvalidEnvVars" title="jarvis_ui.modules.exceptions.InvalidEnvVars"><strong>InvalidEnvVars</strong></a> – </p></li>
+<li><p><strong>If the voice name is not present for the OperatingSystem.</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-jarvis_ui.modules.exceptions">
+<span id="exceptions"></span><h1>Exceptions<a class="headerlink" href="#module-jarvis_ui.modules.exceptions" title="Permalink to this heading">¶</a></h1>
+<dl class="py exception">
+<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.InvalidEnvVars">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidEnvVars</span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.InvalidEnvVars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom <code class="docutils literal notranslate"><span class="pre">InvalidEnvVars</span></code> raised when invalid env vars are passed.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">InvalidEnvVars</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.SegmentationError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">SegmentationError</span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.SegmentationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom <code class="docutils literal notranslate"><span class="pre">SegmentationError</span></code> raised when the code exits with SIGSEGV.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">SegmentationError</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.UnsupportedOS">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">UnsupportedOS</span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.UnsupportedOS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom <code class="docutils literal notranslate"><span class="pre">OSError</span></code> raised when initiated in an unsupported operating system.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">UnsupportedOS</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.no_alsa_err">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">no_alsa_err</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span></span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.no_alsa_err" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper to suppress ALSA error messages when <code class="docutils literal notranslate"><span class="pre">PyAudio</span></code> module is called.</p>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>This happens specifically for Linux based operating systems.</p></li>
+<li><p>There are usually multiple sound APIs to choose from but not all of them might be configured correctly.</p></li>
+<li><p>PyAudio goes through “ALSA”, “PulseAudio” and “Jack” looking for audio hardware and that triggers warnings.</p></li>
+<li><p>None of the options below seemed to work in all given conditions, so the approach taken was to hide them.</p></li>
+</ul>
+<dl class="simple">
+<dt>Options:</dt><dd><ul class="simple">
+<li><p>Comment off the ALSA devices where the error is triggered.</p></li>
+<li><p>Set energy threshold to the output from <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">speech_recognition</span></code></p></li>
+<li><p>Setting dynamic energy threshold to <code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/Uberi/speech_recognition/issues/100">https://github.com/Uberi/speech_recognition/issues/100</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Uberi/speech_recognition/issues/182">https://github.com/Uberi/speech_recognition/issues/182</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Uberi/speech_recognition/issues/191">https://github.com/Uberi/speech_recognition/issues/191</a></p></li>
+<li><p><a class="reference external" href="https://forums.raspberrypi.com/viewtopic.php?t=136974">https://forums.raspberrypi.com/viewtopic.php?t=136974</a></p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.py_error_handler">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">py_error_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ByteString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ByteString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ByteString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.py_error_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles errors from pyaudio module especially for Linux based operating systems.</p>
 </dd></dl>
 
 </section>
@@ -387,11 +626,6 @@
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jarvis_ui.modules.models.Settings.bot">
-<span class="sig-name descname"><span class="pre">bot</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#jarvis_ui.modules.models.Settings.bot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.Settings.legacy">
 <span class="sig-name descname"><span class="pre">legacy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#jarvis_ui.modules.models.Settings.legacy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -415,159 +649,6 @@
 <span class="sig-name descname"><span class="pre">sensitivity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.Sensitivity.sensitivity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-</section>
-<section id="module-jarvis_ui.modules.timer">
-<span id="repeated-timer"></span><h1>Repeated Timer<a class="headerlink" href="#module-jarvis_ui.modules.timer" title="Permalink to this heading">¶</a></h1>
-<dl class="py class">
-<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.timer.</span></span><span class="sig-name descname"><span class="pre">RepeatedTimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Instantiates RepeatedTimer object to kick off the threading.Timer object with custom intervals.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RepeatedTimer</span>
-</pre></div>
-</div>
-<p>Repeats the <code class="docutils literal notranslate"><span class="pre">Timer</span></code> object from threading.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>interval</strong> – Interval in seconds.</p></li>
-<li><p><strong>function</strong> – Function to trigger with intervals.</p></li>
-<li><p><strong>args</strong> – Arguments for the function.</p></li>
-<li><p><strong>kwargs</strong> – Keyword arguments for the function.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer.cancel">
-<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer.cancel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initiate cancellation.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Trigger target function if timer isn’t running already.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer.stop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stop the timer and cancel all futures.</p>
-</dd></dl>
-
-</dd></dl>
-
-</section>
-<section id="module-jarvis_ui.executables.speaker">
-<span id="speaker"></span><h1>Speaker<a class="headerlink" href="#module-jarvis_ui.executables.speaker" title="Permalink to this heading">¶</a></h1>
-<p>Module for speaker and voice options.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Speaker</span>
-</pre></div>
-</div>
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.executables.speaker.speak">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.speaker.</span></span><span class="sig-name descname"><span class="pre">speak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.speaker.speak" title="Permalink to this definition">¶</a></dt>
-<dd><p>Speak the received text using audio driver.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text</strong> – Takes the text that has to be spoken as an argument.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
-<section id="module-jarvis_ui.executables.starter">
-<span id="starter"></span><h1>Starter<a class="headerlink" href="#module-jarvis_ui.executables.starter" title="Permalink to this heading">¶</a></h1>
-<p>Module to kick off wake word detection.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Starter</span>
-</pre></div>
-</div>
-<dl class="py class">
-<dt class="sig sig-object py" id="jarvis_ui.executables.starter.Activator">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">Activator</span></span><a class="headerlink" href="#jarvis_ui.executables.starter.Activator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Awaits for the keyword <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> and triggers <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when heard.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Activator</span>
-</pre></div>
-</div>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Creates an input audio stream from a microphone, monitors it, and detects the specified wake word.</p></li>
-<li><p>After processing the phrase, the converted text is sent as response to the API.</p></li>
-</ul>
-</div>
-<p>Initiates Porcupine object for hot word detection.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Instantiates an instance of Porcupine object and monitors audio stream for occurrences of keywords.</p></li>
-<li><p>A higher sensitivity results in fewer misses at the cost of increasing the false alarm rate.</p></li>
-<li><p>sensitivity: Tolerance/Sensitivity level. Takes argument or env var <code class="docutils literal notranslate"><span class="pre">sensitivity</span></code> or defaults to <code class="docutils literal notranslate"><span class="pre">0.5</span></code></p></li>
-</ul>
-</div>
-<p class="rubric">References</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://people.csail.mit.edu/hubert/pyaudio/docs/#pyaudio.Stream.read">Audio Overflow</a> handling.</p></li>
-</ul>
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis_ui.executables.starter.Activator.executor">
-<span class="sig-name descname"><span class="pre">executor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.executables.starter.Activator.executor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Closes the audio stream and calls the processor.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis_ui.executables.starter.Activator.open_stream">
-<span class="sig-name descname"><span class="pre">open_stream</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Stream</span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.Activator.open_stream" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initializes an audio stream.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>PyAudio stream.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Stream</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="jarvis_ui.executables.starter.Activator.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.Activator.start" title="Permalink to this definition">¶</a></dt>
-<dd><p>Runs <code class="docutils literal notranslate"><span class="pre">audio_stream</span></code> in a forever loop and calls <code class="docutils literal notranslate"><span class="pre">initiator</span></code> when the phrase <code class="docutils literal notranslate"><span class="pre">Jarvis</span></code> is heard.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.executables.starter.heart_beat">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">heart_beat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DictProxy</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.heart_beat" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initiate health check with the server.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>status_manager</strong> – Shared multiprocessing dict to update in case of failed health check.</p>
-</dd>
-</dl>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Heart beat should be set no lesser than 5 seconds to avoid throttling and no longer than an hour.</p></li>
-<li><p>Maintains a consecutive failure threshold of 5, as a single failed health check doesn’t warrant a restart.</p></li>
-</ul>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.executables.starter.processor">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">processor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.processor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Processes the request after wake word is detected.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Returns a <code class="docutils literal notranslate"><span class="pre">True</span></code> flag if a manual stop is requested.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-</dl>
 </dd></dl>
 
 </section>
@@ -613,98 +694,44 @@
 </dd></dl>
 
 </section>
-<section id="module-jarvis_ui.modules.exceptions">
-<span id="exceptions"></span><h1>Exceptions<a class="headerlink" href="#module-jarvis_ui.modules.exceptions" title="Permalink to this heading">¶</a></h1>
-<dl class="py exception">
-<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.InvalidEnvVars">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidEnvVars</span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.InvalidEnvVars" title="Permalink to this definition">¶</a></dt>
-<dd><p>Custom <code class="docutils literal notranslate"><span class="pre">InvalidEnvVars</span></code> raised when invalid env vars are passed.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">InvalidEnvVars</span>
+<section id="module-jarvis_ui.modules.timer">
+<span id="repeated-timer"></span><h1>Repeated Timer<a class="headerlink" href="#module-jarvis_ui.modules.timer" title="Permalink to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.timer.</span></span><span class="sig-name descname"><span class="pre">RepeatedTimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates RepeatedTimer object to kick off the threading.Timer object with custom intervals.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RepeatedTimer</span>
 </pre></div>
 </div>
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.SegmentationError">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">SegmentationError</span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.SegmentationError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Custom <code class="docutils literal notranslate"><span class="pre">SegmentationError</span></code> raised when the code exits with SIGSEGV.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">SegmentationError</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py exception">
-<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.UnsupportedOS">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">UnsupportedOS</span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.UnsupportedOS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Custom <code class="docutils literal notranslate"><span class="pre">OSError</span></code> raised when initiated in an unsupported operating system.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">UnsupportedOS</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.no_alsa_err">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">no_alsa_err</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span></span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.no_alsa_err" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wrapper to suppress ALSA error messages when <code class="docutils literal notranslate"><span class="pre">PyAudio</span></code> module is called.</p>
-<p class="rubric">Notes</p>
-<ul class="simple">
-<li><p>This happens specifically for Linux based operating systems.</p></li>
-<li><p>There are usually multiple sound APIs to choose from but not all of them might be configured correctly.</p></li>
-<li><p>PyAudio goes through “ALSA”, “PulseAudio” and “Jack” looking for audio hardware and that triggers warnings.</p></li>
-<li><p>None of the options below seemed to work in all given conditions, so the approach taken was to hide them.</p></li>
-</ul>
-<dl class="simple">
-<dt>Options:</dt><dd><ul class="simple">
-<li><p>Comment off the ALSA devices where the error is triggered.</p></li>
-<li><p>Set energy threshold to the output from <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">speech_recognition</span></code></p></li>
-<li><p>Setting dynamic energy threshold to <code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">References</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/Uberi/speech_recognition/issues/100">https://github.com/Uberi/speech_recognition/issues/100</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Uberi/speech_recognition/issues/182">https://github.com/Uberi/speech_recognition/issues/182</a></p></li>
-<li><p><a class="reference external" href="https://github.com/Uberi/speech_recognition/issues/191">https://github.com/Uberi/speech_recognition/issues/191</a></p></li>
-<li><p><a class="reference external" href="https://forums.raspberrypi.com/viewtopic.php?t=136974">https://forums.raspberrypi.com/viewtopic.php?t=136974</a></p></li>
-</ul>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.py_error_handler">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">py_error_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ByteString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ByteString</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ByteString</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.py_error_handler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles errors from pyaudio module especially for Linux based operating systems.</p>
-</dd></dl>
-
-</section>
-<section id="module-jarvis_ui.executables.display">
-<span id="display"></span><h1>Display<a class="headerlink" href="#module-jarvis_ui.executables.display" title="Permalink to this heading">¶</a></h1>
-<p>OnScreen display functions for the UI.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Display</span>
-</pre></div>
-</div>
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.executables.display.flush_screen">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.display.</span></span><span class="sig-name descname"><span class="pre">flush_screen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.display.flush_screen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Flushes the screen output.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<ul class="simple">
-<li><p>Writes white spaces to the window size in a terminal.</p></li>
-<li><p>Writes recursive empty text in IDE to flush screen.</p></li>
-</ul>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.executables.display.write_screen">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.display.</span></span><span class="sig-name descname"><span class="pre">write_screen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.display.write_screen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write text to a screen that can be cleared later.</p>
+<p>Repeats the <code class="docutils literal notranslate"><span class="pre">Timer</span></code> object from threading.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text</strong> – Text to be written on screen..</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interval</strong> – Interval in seconds.</p></li>
+<li><p><strong>function</strong> – Function to trigger with intervals.</p></li>
+<li><p><strong>args</strong> – Arguments for the function.</p></li>
+<li><p><strong>kwargs</strong> – Keyword arguments for the function.</p></li>
+</ul>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer.cancel">
+<span class="sig-name descname"><span class="pre">cancel</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer.cancel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initiate cancellation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trigger target function if timer isn’t running already.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jarvis_ui.modules.timer.RepeatedTimer.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#jarvis_ui.modules.timer.RepeatedTimer.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the timer and cancel all futures.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -729,17 +756,20 @@
     <ul>
 <li><a class="reference internal" href="#">Welcome to Jarvis UI’s documentation!</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.main">Jarvis</a></li>
+<li><a class="reference internal" href="#executables">Executables</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.api_handler">API Handler</a></li>
-<li><a class="reference internal" href="#config">Config</a></li>
+<li><a class="reference internal" href="#module-jarvis_ui.executables.display">Display</a></li>
+<li><a class="reference internal" href="#module-jarvis_ui.executables.helper">Helper</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.listener">Listener</a></li>
-<li><a class="reference internal" href="#module-jarvis_ui.modules.logger">Logger</a></li>
-<li><a class="reference internal" href="#models">Models</a></li>
-<li><a class="reference internal" href="#module-jarvis_ui.modules.timer">Repeated Timer</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.speaker">Speaker</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.starter">Starter</a></li>
-<li><a class="reference internal" href="#module-jarvis_ui.modules.peripherals">Peripherals</a></li>
+<li><a class="reference internal" href="#modules">Modules</a></li>
+<li><a class="reference internal" href="#config">Config</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.modules.exceptions">Exceptions</a></li>
-<li><a class="reference internal" href="#module-jarvis_ui.executables.display">Display</a></li>
+<li><a class="reference internal" href="#module-jarvis_ui.modules.logger">Logger</a></li>
+<li><a class="reference internal" href="#models">Models</a></li>
+<li><a class="reference internal" href="#module-jarvis_ui.modules.peripherals">Peripherals</a></li>
+<li><a class="reference internal" href="#module-jarvis_ui.modules.timer">Repeated Timer</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 

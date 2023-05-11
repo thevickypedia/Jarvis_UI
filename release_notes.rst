@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+0.6.3 (05/10/2023)
+------------------
+- Support self restart on Linux OS
+- Move helper functions to dedicated module
+- Rearrange runbook and README.md
+
 0.6.2 (05/10/2023)
 ------------------
 - Improvements in audio quality for static responses

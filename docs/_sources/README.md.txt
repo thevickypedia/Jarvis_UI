@@ -24,11 +24,12 @@ if __name__ == '__main__':
     jarvis_ui.start()
 ```
 
-### Mandatory Env Vars
+### Environment Variables
+#### Mandatory
 - **REQUEST_URL**: URL to which the API call has to be made. Can be `localhost` or a `tunneled` URL behind a reverse proxy/CDN.
 - **TOKEN**: Authentication token.
 
-### Optional Env Vars
+#### Optional
 - **HEART_BEAT**: Defaults to `None` - _If # of seconds is set, background health check with the server will be enabled_
 - **DEBUG**: Defaults to `False` - _Enable debug level logging_
 <br><br>
@@ -68,13 +69,13 @@ Sample settings (formatted as JSON object)
 
 Refer Jarvis' [README](https://github.com/thevickypedia/Jarvis/blob/master/README.md) for more information on setting up the backend server.
 
-#### Coding Standards
+### Coding Standards
 Docstring format: [`Google`](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) <br>
 Styling conventions: [`PEP 8`](https://www.python.org/dev/peps/pep-0008/) <br>
 Clean code with pre-commit hooks: [`flake8`](https://flake8.pycqa.org/en/latest/) and 
 [`isort`](https://pycqa.github.io/isort/)
 
-#### [Release Notes](https://github.com/thevickypedia/Jarvis_UI/blob/main/release_notes.rst)
+### [Release Notes](https://github.com/thevickypedia/Jarvis_UI/blob/main/release_notes.rst)
 **Requirement**
 ```shell
 python -m pip install changelog-generator
@@ -85,7 +86,7 @@ python -m pip install changelog-generator
 changelog reverse -f release_notes.rst -t 'Release Notes'
 ```
 
-#### Linting
+### Linting
 `PreCommit` will ensure linting, and the doc creation are run on every commit.
 
 **Requirement**
@@ -100,12 +101,12 @@ pip install --no-cache sphinx==5.1.1 pre-commit recommonmark
 pre-commit run --all-files
 ```
 
-#### Pypi Package
+### Pypi Package
 [![pypi-module](https://img.shields.io/badge/Software%20Repository-pypi-1f425f.svg)](https://packaging.python.org/tutorials/packaging-projects/)
 
 [https://pypi.org/project/jarvis-ui/](https://pypi.org/project/jarvis-ui/)
 
-#### Runbook
+### Runbook
 [![made-with-sphinx-doc](https://img.shields.io/badge/Code%20Docs-Sphinx-1f425f.svg)](https://www.sphinx-doc.org/en/master/man/sphinx-autogen.html)
 
 [https://thevickypedia.github.io/Jarvis_UI/](https://thevickypedia.github.io/Jarvis_UI/)

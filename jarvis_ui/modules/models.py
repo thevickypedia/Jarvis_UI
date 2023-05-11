@@ -51,7 +51,6 @@ class Settings(BaseSettings):
             f"\n{''.join('*' for _ in range(80))}\n"
         )
     legacy: bool = True if os == "Darwin" and parser(platform.mac_ver()[0]) < parser('10.14') else False
-    bot: str = "jarvis"
     if sys.stdin.isatty():
         interactive = True
     else:
@@ -174,7 +173,7 @@ class EnvConfig(BaseSettings):
     if settings.legacy:
         wake_words: list = Field(default=['alexa'], env="WAKE_WORDS")
     else:
-        wake_words: list = Field(default=[settings.bot], env="WAKE_WORDS")
+        wake_words: list = Field(default=['jarvis'], env="WAKE_WORDS")
     native_audio: bool = Field(default=False, env="NATIVE_AUDIO")
 
     class Config:

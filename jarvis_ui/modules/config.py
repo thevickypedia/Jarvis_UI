@@ -33,7 +33,7 @@ def swapper() -> NoReturn:
             public_url['detail'] += "/"
         if public_url['detail'] == env.request_url:
             return
-        logger.info(f"Switching {env.request_url} to {public_url['detail']}")
+        logger.info("Switching %s to %s", env.request_url, public_url['detail'])
         env.request_url = public_url['detail']
 
 
@@ -127,8 +127,8 @@ class Config(BaseConfig):
         logger.warning("Failed to load the audio driver. Resolving to use SpeechSynthesis")
 
 
-logger.info(f"Current Process: {current_process().name}")
-if current_process().name != "MainProcess":
+logger.info("Current Process: %s", current_process().name)
+if current_process().name != "MainProcess" or settings.operating_system == "Linux":
     config = Config()  # Run validations only on SyncManager and child process
 else:
     config = None

@@ -19,12 +19,54 @@ Jarvis
    :members:
    :undoc-members:
 
+Executables
+===========
+
 API Handler
 ===========
 
 .. automodule:: jarvis_ui.executables.api_handler
    :members:
    :undoc-members:
+
+
+Display
+=======
+
+.. automodule:: jarvis_ui.executables.display
+   :members:
+   :undoc-members:
+
+Helper
+======
+
+.. automodule:: jarvis_ui.executables.helper
+   :members:
+   :undoc-members:
+
+Listener
+========
+
+.. automodule:: jarvis_ui.executables.listener
+   :members:
+   :undoc-members:
+
+Speaker
+=======
+
+.. automodule:: jarvis_ui.executables.speaker
+   :members:
+   :undoc-members:
+
+Starter
+=======
+
+.. automodule:: jarvis_ui.executables.starter
+   :members:
+   :undoc-members:
+
+Modules
+=======
 
 Config
 ======
@@ -33,10 +75,10 @@ Config
    :members:
    :exclude-members:
 
-Listener
-========
+Exceptions
+==========
 
-.. automodule:: jarvis_ui.executables.listener
+.. automodule:: jarvis_ui.modules.exceptions
    :members:
    :undoc-members:
 
@@ -66,27 +108,6 @@ Models
    :members:
    :undoc-members:
 
-Repeated Timer
-==============
-
-.. automodule:: jarvis_ui.modules.timer
-   :members:
-   :undoc-members:
-
-Speaker
-=======
-
-.. automodule:: jarvis_ui.executables.speaker
-   :members:
-   :undoc-members:
-
-Starter
-=======
-
-.. automodule:: jarvis_ui.executables.starter
-   :members:
-   :undoc-members:
-
 Peripherals
 ===========
 
@@ -94,17 +115,10 @@ Peripherals
    :members:
    :undoc-members:
 
-Exceptions
-==========
+Repeated Timer
+==============
 
-.. automodule:: jarvis_ui.modules.exceptions
-   :members:
-   :undoc-members:
-
-Display
-=======
-
-.. automodule:: jarvis_ui.executables.display
+.. automodule:: jarvis_ui.modules.timer
    :members:
    :undoc-members:
 
