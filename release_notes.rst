@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+0.6.5 (07/12/2023)
+------------------
+- Await restarts by heart beat to avoid interruption
+- Respond to the phrase even after a restart
+
 0.6.4 (05/10/2023)
 ------------------
 - Fix startup errors on Linux OS

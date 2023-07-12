@@ -25,57 +25,96 @@ from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env, fileio, settings
 
 
-def processor() -> Union[str, None]:
-    """Processes the request after wake word is detected.
+def process_request(phrase: str) -> Union[str, NoReturn]:
+    """Process request from the user.
+
+    Args:
+        phrase: Takes the phrase spoken as an argument.
 
     Returns:
-        bool:
-        Returns a ``True`` flag if a manual stop is requested.
+        str:
+        Returns the appropriate action to be taken.
     """
-    if phrase := listener.listen():
-        logger.info("Request: %s", phrase)
-        display.write_screen(f"Request: {phrase}")
-        if "restart" in phrase.lower():
-            logger.info("User requested to restart.")
-            playsound(sound=fileio.restart)
-            display.write_screen("Restarting...")
-            return "RESTART"
-        if "stop running" in phrase.lower():
-            logger.info("User requested to stop.")
-            playsound(sound=fileio.shutdown)
-            display.write_screen("Shutting down")
-            return "STOP"
-        if not config.keywords:
-            logger.warning("keywords are not loaded yet, restarting")
-            playsound(sound=fileio.connection_restart)
-            display.write_screen("Trying to re-establish connection with Server...")
-            return "RESTART"
-        if response := make_request(path='offline-communicator',
-                                    data={'command': phrase, 'native_audio': env.native_audio,
-                                          'speech_timeout': env.speech_timeout}):
-            if response is True:
-                logger.info("Response received as audio.")
-                display.write_screen("Response received as audio.")
-                # Because Windows runs into PermissionError if audio file is open when removing it
-                if settings.operating_system == "Windows":
-                    player = Process(target=playsound, kwargs={'sound': fileio.speech_wav_file})
-                    player.start()
-                    player.join()
-                    if player.is_alive():
-                        player.terminate()
-                        player.kill()
-                    Timer(interval=3, function=os.remove, args=(fileio.speech_wav_file,)).start()
-                else:
-                    playsound(sound=fileio.speech_wav_file)
-                    os.remove(fileio.speech_wav_file)
-                return
-            response = response.get('detail', '')
-            logger.info("Response: %s", response)
-            display.write_screen(f"Response: {response}")
-            speaker.speak(text=response)
+    logger.info("Request: %s", phrase)
+    display.write_screen(f"Request: {phrase}")
+    if "restart" in phrase.lower():
+        logger.info("User requested to restart.")
+        playsound(sound=fileio.restart)
+        display.write_screen("Restarting...")
+        return "RESTART"
+    if "stop running" in phrase.lower():
+        logger.info("User requested to stop.")
+        playsound(sound=fileio.shutdown)
+        display.write_screen("Shutting down")
+        return "STOP"
+    if not config.keywords:
+        logger.warning("keywords are not loaded yet, restarting")
+        if os.path.isfile("failed_command"):
+            logger.critical("Consecutive failure")
+            os.remove("failed_command")
         else:
-            playsound(sound=fileio.failed)
-            return "RESTART"
+            with open("failed_command", "w") as file:
+                file.write(phrase)
+            playsound(sound=fileio.connection_restart)
+        display.write_screen("Trying to re-establish connection with Server...")
+        return "RESTART"
+    if os.path.isfile("failed_command"):
+        logger.info("Recovered after a recent failure, deleting placeholder file.")
+        os.remove("failed_command")
+    if response := make_request(path='offline-communicator',
+                                data={'command': phrase, 'native_audio': env.native_audio,
+                                      'speech_timeout': env.speech_timeout}):
+        process_response(response)
+    else:
+        playsound(sound=fileio.failed)
+        return "RESTART"
+
+
+def process_response(response: Union[dict, bool]) -> NoReturn:
+    """Processes response from the server.
+
+    Args:
+        response: Takes either a boolean flag or a dictionary from the server as an argument.
+    """
+    if response is True:
+        logger.info("Response received as audio.")
+        display.write_screen("Response received as audio.")
+        # Because Windows runs into PermissionError if audio file is open when file is removed
+        if settings.operating_system == "Windows":
+            player = Process(target=playsound, kwargs={'sound': fileio.speech_wav_file})
+            player.start()
+            player.join()
+            if player.is_alive():
+                player.terminate()
+                player.kill()
+            Timer(interval=3, function=os.remove, args=(fileio.speech_wav_file,)).start()
+        else:
+            playsound(sound=fileio.speech_wav_file)
+            os.remove(fileio.speech_wav_file)
+        return
+    response = response.get('detail', '')
+    logger.info("Response: %s", response)
+    display.write_screen(f"Response: {response}")
+    speaker.speak(text=response)
+
+
+def processor(phrase: str = None, status_manager: DictProxy = None) -> NoReturn:
+    """Handles request and response.
+
+    Args:
+        phrase: Takes existing phrase as an argument in case a previous failure is pending tobe addressed.
+        status_manager: Multiprocessing dictionary to set restarts.
+    """
+    if phrase := (phrase or listener.listen()):
+        processed = process_request(phrase)
+        if processed == "STOP":
+            raise KeyboardInterrupt
+        if processed == "RESTART":
+            if settings.operating_system == "Linux":
+                linux_restart()
+            status_manager["LOCKED"] = None
+            while True:
+                pass  # To ensure the listener doesn't end so that, the main process can kill and restart
 
 
 class Activator:
@@ -156,16 +195,11 @@ class Activator:
             logger.debug("Restart locked")
         playsound(sound=fileio.acknowledgement, block=False)
         self.py_audio.close(stream=self.audio_stream)
-        processed = processor()
-        if processed == "STOP":
+        try:
+            processor(status_manager=status_manager)
+        except KeyboardInterrupt:
             self.audio_stream = None
             raise KeyboardInterrupt
-        if processed == "RESTART":
-            if settings.operating_system == "Linux":
-                linux_restart()
-            status_manager["LOCKED"] = None
-            while True:
-                pass  # To ensure the listener doesn't end so that, the main process can kill and restart
         if status_manager:
             status_manager["LOCKED"] = False
             logger.debug("Restart released")
@@ -175,6 +209,10 @@ class Activator:
     def start(self, status_manager: DictProxy = None) -> NoReturn:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info("Starting wake word detector with sensitivity: %s", env.sensitivity)
+        if os.path.isfile("failed_command"):
+            with open("failed_command") as file:
+                existing = file.read().strip()
+            processor(phrase=existing, status_manager=status_manager)
         display.write_screen(self.label)
         while True:
             result = self.detector.process(

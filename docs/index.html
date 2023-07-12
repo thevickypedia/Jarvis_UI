@@ -310,15 +310,43 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.executables.starter.processor">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">processor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.processor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Processes the request after wake word is detected.</p>
+<dt class="sig sig-object py" id="jarvis_ui.executables.starter.process_request">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">process_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">NoReturn</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.process_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process request from the user.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Returns a <code class="docutils literal notranslate"><span class="pre">True</span></code> flag if a manual stop is requested.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phrase</strong> – Takes the phrase spoken as an argument.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the appropriate action to be taken.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.starter.process_response">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">process_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.process_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes response from the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>response</strong> – Takes either a boolean flag or a dictionary from the server as an argument.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.starter.processor">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">processor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DictProxy</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">NoReturn</span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.processor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles request and response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phrase</strong> – Takes existing phrase as an argument in case a previous failure is pending tobe addressed.</p></li>
+<li><p><strong>status_manager</strong> – Multiprocessing dictionary to set restarts.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

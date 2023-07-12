@@ -45,10 +45,13 @@ def heart_beat(status_manager: DictProxy = None) -> NoReturn:
             if FAILED_HEALTH_CHECK['count']:
                 logger.info("Resetting failure count")
                 FAILED_HEALTH_CHECK['count'] = 0
-            logger.info(response.json())
             return
     FAILED_HEALTH_CHECK['count'] += 1
     if FAILED_HEALTH_CHECK['count'] >= 5:
+        while True:
+            # Awaits any ongoing request/response to go through before restarting
+            if not status_manager["LOCKED"]:
+                break
         logger.critical("Heart beat failed for 5 times in row, restarting...")
         if settings.operating_system == "Linux":
             linux_restart()
