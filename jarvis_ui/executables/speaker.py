@@ -5,12 +5,10 @@
 
 """
 
-from typing import NoReturn
-
 from jarvis_ui.modules.models import audio_driver
 
 
-def speak(text: str) -> NoReturn:
+def speak(text: str) -> None:
     """Speak the received text using audio driver.
 
     Args:

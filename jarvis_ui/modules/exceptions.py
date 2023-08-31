@@ -1,6 +1,6 @@
 import ctypes
 from contextlib import contextmanager
-from typing import ByteString, Iterable, NoReturn
+from typing import ByteString, Iterable
 
 ALSA_ERROR_HANDLER = ctypes.CFUNCTYPE(None,
                                       ctypes.c_char_p,
@@ -11,7 +11,7 @@ ALSA_ERROR_HANDLER = ctypes.CFUNCTYPE(None,
 
 
 # noinspection PyUnusedLocal
-def py_error_handler(filename: ByteString, line: int, function: ByteString, err: int, fmt: ByteString) -> NoReturn:
+def py_error_handler(filename: ByteString, line: int, function: ByteString, err: int, fmt: ByteString) -> None:
     """Handles errors from pyaudio module especially for Linux based operating systems."""
     pass
 

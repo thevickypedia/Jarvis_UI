@@ -1,7 +1,6 @@
 import os
 import sys
 from multiprocessing.managers import DictProxy  # noqa
-from typing import NoReturn
 
 import requests
 
@@ -11,7 +10,7 @@ from jarvis_ui.modules.models import env, settings
 FAILED_HEALTH_CHECK = {'count': 0}
 
 
-def linux_restart() -> NoReturn:
+def linux_restart() -> None:
     """Restarts the base script on Linux OS.
 
     See Also:
@@ -26,7 +25,7 @@ def linux_restart() -> NoReturn:
     raise KeyboardInterrupt
 
 
-def heart_beat(status_manager: DictProxy = None) -> NoReturn:
+def heart_beat(status_manager: DictProxy = None) -> None:
     """Initiate health check with the server.
 
     Args:

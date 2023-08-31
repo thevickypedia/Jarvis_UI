@@ -7,12 +7,12 @@
 
 import os
 import sys
-from typing import Any, NoReturn
+from typing import Any
 
 from jarvis_ui.modules import models
 
 
-def write_screen(text: Any) -> NoReturn:
+def write_screen(text: Any) -> None:
     """Write text to a screen that can be cleared later.
 
     Args:
@@ -22,7 +22,7 @@ def write_screen(text: Any) -> NoReturn:
     sys.stdout.write(f"\r{text}")
 
 
-def flush_screen() -> NoReturn:
+def flush_screen() -> None:
     """Flushes the screen output.
 
     See Also:

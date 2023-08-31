@@ -7,7 +7,7 @@ import os
 import platform
 import warnings
 from multiprocessing import current_process
-from typing import Callable, List, NoReturn
+from typing import Callable, List
 
 import pvporcupine
 from pydantic import BaseConfig, PositiveInt
@@ -21,7 +21,7 @@ from jarvis_ui.modules.models import audio_driver, env, fileio, settings
 add_ss_extn: Callable = lambda filepath: os.path.splitext(filepath)[0] + "_ss" + os.path.splitext(filepath)[1]
 
 
-def swapper() -> NoReturn:
+def swapper() -> None:
     """Swaps any request URL with the public URL if returned by Jarvis.
 
     Notes:

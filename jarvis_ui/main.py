@@ -2,12 +2,11 @@ import pathlib
 import time
 from multiprocessing import Manager, Process
 from multiprocessing.managers import DictProxy  # noqa
-from typing import NoReturn
 
 from jarvis_ui.modules.logger import logger
 
 
-def initiator(status_manager: DictProxy = None) -> NoReturn:
+def initiator(status_manager: DictProxy = None) -> None:
     """Starts main process to activate Jarvis and process requests via API calls."""
     from jarvis_ui.executables.helper import heart_beat
     from jarvis_ui.executables.starter import Activator
@@ -19,17 +18,19 @@ def initiator(status_manager: DictProxy = None) -> NoReturn:
         timer.start()
     else:
         timer = None
+    activator = Activator()
     try:
         if status_manager:
             status_manager["LOCKED"] = False
-        Activator().start(status_manager=status_manager)
+        activator.start(status_manager=status_manager)
     except KeyboardInterrupt:
         if timer:
             timer.stop()
-        return
+    finally:
+        activator.at_exit()
 
 
-def terminator(process: Process) -> NoReturn:
+def terminator(process: Process) -> None:
     """Terminates the process.
 
     Args:
@@ -49,7 +50,7 @@ def terminator(process: Process) -> NoReturn:
             logger.error(error)
 
 
-def start() -> NoReturn:
+def start() -> None:
     """Initiates Jarvis as a child process."""
     # Import within a function to be called repeatedly
     from jarvis_ui.modules.models import env, settings  # noqa: F401

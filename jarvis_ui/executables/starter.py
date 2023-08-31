@@ -70,7 +70,7 @@ def process_request(phrase: str) -> Union[str, NoReturn]:
         return "RESTART"
 
 
-def process_response(response: Union[dict, bool]) -> NoReturn:
+def process_response(response: Union[dict, bool]) -> None:
     """Processes response from the server.
 
     Args:
@@ -98,7 +98,7 @@ def process_response(response: Union[dict, bool]) -> NoReturn:
     speaker.speak(text=response)
 
 
-def processor(phrase: str = None, status_manager: DictProxy = None) -> NoReturn:
+def processor(phrase: str = None, status_manager: DictProxy = None) -> None:
     """Handles request and response.
 
     Args:
@@ -158,7 +158,7 @@ class Activator:
                            zip(env.wake_words, env.sensitivity)])
         self.label = f"Awaiting: [{label}]"
 
-    def __del__(self) -> NoReturn:
+    def at_exit(self) -> None:
         """Invoked when the run loop is exited or manual interrupt.
 
         See Also:
@@ -206,7 +206,7 @@ class Activator:
         self.audio_stream = self.open_stream()
         display.write_screen(self.label)
 
-    def start(self, status_manager: DictProxy = None) -> NoReturn:
+    def start(self, status_manager: DictProxy = None) -> None:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
         logger.info("Starting wake word detector with sensitivity: %s", env.sensitivity)
         if os.path.isfile("failed_command"):

@@ -13,7 +13,7 @@ from datetime import datetime
 from enum import Enum
 from multiprocessing import current_process
 from threading import Thread
-from typing import Dict, List, NoReturn, Union
+from typing import Dict, List, Union
 
 import pyttsx3
 from packaging.version import parse as parser
@@ -63,7 +63,7 @@ if settings.operating_system.startswith('Windows'):
     settings.operating_system = "Windows"
 
 
-def import_module() -> NoReturn:
+def import_module() -> None:
     """Instantiates pyttsx3 after importing ``nsss`` drivers beforehand."""
     if settings.operating_system == "Darwin":
         importlib.import_module("pyttsx3.drivers.nsss")
