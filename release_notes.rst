@@ -1,6 +1,12 @@
 Release Notes
 =============
 
+v2.2 (09/09/2023)
+-----------------
+- Includes stability and performance improvements
+- Improved static audio responses specific to the operating system
+- Includes a feature to adjust voice pitch for Linux users
+
 v2.1 (08/30/2023)
 -----------------
 - Improves overall stability

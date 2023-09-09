@@ -107,6 +107,7 @@ class EnvConfig(BaseSettings):
     # Built-in speaker config (Unused if speech synthesis is used)
     voice_name: str = Field(default=None)
     voice_rate: Union[PositiveInt, PositiveFloat] = Field(default=None)
+    voice_pitch: Union[PositiveInt, PositiveFloat] = Field(default=None)
 
     voice_timeout: Union[float, PositiveInt] = Field(default=3)
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=5)

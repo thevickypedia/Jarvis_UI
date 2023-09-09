@@ -45,6 +45,10 @@ class Config(BaseConfig):
         If the voice name is not present for the OperatingSystem.
     """
 
+    if env.voice_pitch and settings.operating_system in ("Windows", "Darwin"):
+        warnings.warn(
+            "Voice pitch adjustment is currently supported only in Linux operating system."
+        )
     if env.request_url[-1] != "/":
         env.request_url += "/"
 

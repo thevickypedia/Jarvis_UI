@@ -99,6 +99,8 @@ def instantiate_audio_driver() -> pyttsx3.Engine:
                 driver.setProperty("voice", voices[ind_d].id)
                 if env.voice_rate:
                     driver.setProperty("rate", env.voice_rate)
+                if env.voice_pitch:
+                    driver.setProperty("pitch", env.voice_pitch)
                 break
         else:
             logger.info("Using default voice model.")
