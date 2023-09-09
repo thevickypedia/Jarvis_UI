@@ -57,13 +57,6 @@ if settings.operating_system.startswith('Windows'):
     settings.operating_system = "Windows"
 
 
-def dynamic_rate() -> int:
-    """Speech rate based on the Operating System."""
-    if settings.operating_system == "Linux":
-        return 1
-    return 200
-
-
 class Sensitivity(float or PositiveInt, Enum):
     """Allowed values for sensitivity.
 
@@ -113,7 +106,7 @@ class EnvConfig(BaseSettings):
 
     # Built-in speaker config (Unused if speech synthesis is used)
     voice_name: str = Field(default=None)
-    voice_rate: Union[PositiveInt, PositiveFloat] = Field(default=dynamic_rate())
+    voice_rate: Union[PositiveInt, PositiveFloat] = Field(default=None)
 
     voice_timeout: Union[float, PositiveInt] = Field(default=3)
     voice_phrase_limit: Union[float, PositiveInt] = Field(default=5)
