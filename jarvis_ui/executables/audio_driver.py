@@ -76,7 +76,10 @@ def instantiate_audio_driver() -> pyttsx3.Engine:
         Returns instance of audio engine.
     """
     try:
-        driver = get_driver()
+        if settings.operating_system == "Windows":
+            driver = pyttsx3.init()
+        else:
+            driver = get_driver()
         voices = driver.getProperty("voices")  # gets the list of voices available
         voice_names = [__voice.name for __voice in voices]
         if not env.voice_name:

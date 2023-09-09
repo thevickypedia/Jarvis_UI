@@ -1,7 +1,7 @@
 packaging==23.1
 SpeechRecognition==3.8.1  # Do not upgrade, no functional upgrade in latest version
-py3-tts==3.1
 pydantic[dotenv,email]==1.10.7
-requests
-PyYAML
 pynotification
+requests
+py3-tts
+PyYAML
