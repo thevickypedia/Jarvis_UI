@@ -47,27 +47,19 @@ if __name__ == '__main__':
 - **VOICE_PHRASE_LIMIT**: Defaults to `None` - _Timeout for phrase once listener is activated - Listener will be deactivated after this limit_
 
 **Custom settings for speech recognition**
-
-These are customized according to the author's voice pitch.
-Please use [test_listener.py](https://github.com/thevickypedia/Jarvis_UI/blob/main/test_listener.py) to figure out the suitable values in a trial and error method.
-
-> These settings are added (optionally), to avoid the hard coded `VOICE_PHRASE_LIMIT`
-> <br>
-> Cons in using hard coded `VOICE_PHRASE_LIMIT`:
->   - Disables the listener after the set limit even when the speaker is actively talking.
->   - Listener will be active until the set limit even after the speaker has stopped talking.
-
-Sample settings (formatted as JSON object)
 - **RECOGNIZER_SETTINGS**: `'{"energy_threshold": 1100, "dynamic_energy_threshold": false, "pause_threshold": 1, "phrase_threshold": 0.1}'`
 
+The default values for **RECOGNIZER_SETTINGS** are customized according to the author's voice pitch.
+Please use [test_listener.py](https://github.com/thevickypedia/Jarvis_UI/blob/main/test_listener.py) to figure out the suitable values in a trial and error method.
+
 **Description**
-- **energy_threshold**: Minimum audio energy to consider for recording. Greater the value, louder the speech should be.
-- **dynamic_energy_threshold**: Change considerable audio energy threshold dynamically.
+- **energy_threshold**: Minimum audio energy to consider for recording. Greater the value, louder the voice should be.
+- **dynamic_energy_threshold**: Change considerable audio **energy_threshold** dynamically.
 - **pause_threshold**: Seconds of non-speaking audio before a phrase is considered complete.
 - **phrase_threshold**: Minimum seconds of speaking audio before it can be considered a phrase - values below this are ignored. This helps to filter out clicks and pops.
 - **non_speaking_duration**: Seconds of non-speaking audio to keep on both sides of the recording.
 
-Refer Jarvis' [README](https://github.com/thevickypedia/Jarvis/blob/master/README.md) for more information on setting up the backend server.
+:bulb: &nbsp; **Refer Jarvis' [README](https://github.com/thevickypedia/Jarvis/blob/master/README.md) for more information on setting up the backend server.**
 
 ### Coding Standards
 Docstring format: [`Google`](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) <br>

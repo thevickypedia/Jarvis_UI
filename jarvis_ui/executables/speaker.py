@@ -5,7 +5,9 @@
 
 """
 
-from jarvis_ui.modules.models import audio_driver
+from jarvis_ui.executables import audio_driver
+
+driver = audio_driver.instantiate_audio_driver()
 
 
 def speak(text: str) -> None:
@@ -17,5 +19,5 @@ def speak(text: str) -> None:
     text = text.replace('\n', '\t').strip()
     if not text.endswith('.') or not text.endswith('!'):
         text = text + '!'
-    audio_driver.say(text=text)
-    audio_driver.runAndWait()
+    driver.say(text=text)
+    driver.runAndWait()

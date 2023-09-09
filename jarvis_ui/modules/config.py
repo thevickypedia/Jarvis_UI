@@ -7,16 +7,14 @@ import os
 import platform
 import warnings
 from multiprocessing import current_process
-from typing import Callable, List
+from typing import Callable
 
 import pvporcupine
 from pydantic import BaseConfig, PositiveInt
-from pyttsx3.voice import Voice
 
 from jarvis_ui.executables.api_handler import make_request
-from jarvis_ui.modules.exceptions import InvalidEnvVars
 from jarvis_ui.modules.logger import logger
-from jarvis_ui.modules.models import audio_driver, env, fileio, settings
+from jarvis_ui.modules.models import env, settings
 
 add_ss_extn: Callable = lambda filepath: os.path.splitext(filepath)[0] + "_ss" + os.path.splitext(filepath)[1]
 
@@ -47,9 +45,6 @@ class Config(BaseConfig):
         If the voice name is not present for the OperatingSystem.
     """
 
-    if not env.recognizer_settings and not env.voice_phrase_limit:
-        env.recognizer_settings = env.recognizer_settings_default  # Default override when phrase limit is not available
-
     if env.request_url[-1] != "/":
         env.request_url += "/"
 
@@ -71,16 +66,6 @@ class Config(BaseConfig):
         )
         env.speech_timeout = 0
 
-    if settings.operating_system != "Darwin" and not env.native_audio:
-        env.speech_timeout = 10
-
-    if env.speech_timeout and not env.native_audio:
-        fileio.failed = add_ss_extn(fileio.failed)
-        fileio.restart = add_ss_extn(fileio.restart)
-        fileio.shutdown = add_ss_extn(fileio.shutdown)
-        fileio.unprocessable = add_ss_extn(fileio.unprocessable)
-        fileio.connection_restart = add_ss_extn(fileio.connection_restart)
-
     if settings.legacy:
         pvporcupine.KEYWORD_PATHS = {}
         pvporcupine.MODEL_PATH = os.path.join(os.path.dirname(pvporcupine.__file__),
@@ -100,31 +85,6 @@ class Config(BaseConfig):
                 f"Detecting '{keyword}' is unsupported!\n"
                 f"Available keywords are: {', '.join(list(pvporcupine.KEYWORD_PATHS.keys()))}"
             )
-
-    if audio_driver:
-        voices: List[Voice] = audio_driver.getProperty("voices")  # gets the list of voices available
-        voice_names = [__voice.name for __voice in voices]
-        if not env.voice_name:
-            if settings.operating_system == "Darwin":
-                env.voice_name = "Daniel"
-            elif settings.operating_system == "Windows":
-                env.voice_name = "David"
-            elif settings.operating_system == "Linux":
-                env.voice_name = "english-us"
-        elif env.voice_name not in voice_names:
-            raise InvalidEnvVars(
-                f"{env.voice_name!r} is not available.\nAvailable voices are: {', '.join(voice_names)}"
-            )
-        for ind_d, voice in enumerate(voices):  # noqa
-            if voice.name == env.voice_name:
-                logger.debug(voice.__dict__)
-                audio_driver.setProperty("voice", voices[ind_d].id)
-                audio_driver.setProperty("rate", env.voice_rate)
-                break
-        else:
-            logger.info("Using default voice model.")
-    else:
-        logger.warning("Failed to load the audio driver. Resolving to use SpeechSynthesis")
 
 
 logger.info("Current Process: %s", current_process().name)

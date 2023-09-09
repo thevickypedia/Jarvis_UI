@@ -93,30 +93,20 @@
 <li><p><strong>VOICE_PHRASE_LIMIT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Timeout for phrase once listener is activated - Listener will be deactivated after this limit</em></p></li>
 </ul>
 <p><strong>Custom settings for speech recognition</strong></p>
-<p>These are customized according to the author’s voice pitch.
-Please use <a class="reference external" href="https://github.com/thevickypedia/Jarvis_UI/blob/main/test_listener.py">test_listener.py</a> to figure out the suitable values in a trial and error method.</p>
-<blockquote>
-<div><p>These settings are added (optionally), to avoid the hard coded <code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>
-<br>
-Cons in using hard coded <code class="docutils literal notranslate"><span class="pre">VOICE_PHRASE_LIMIT</span></code>:</p>
-<ul class="simple">
-<li><p>Disables the listener after the set limit even when the speaker is actively talking.</p></li>
-<li><p>Listener will be active until the set limit even after the speaker has stopped talking.</p></li>
-</ul>
-</div></blockquote>
-<p>Sample settings (formatted as JSON object)</p>
 <ul class="simple">
 <li><p><strong>RECOGNIZER_SETTINGS</strong>: <code class="docutils literal notranslate"><span class="pre">'{&quot;energy_threshold&quot;:</span> <span class="pre">1100,</span> <span class="pre">&quot;dynamic_energy_threshold&quot;:</span> <span class="pre">false,</span> <span class="pre">&quot;pause_threshold&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;phrase_threshold&quot;:</span> <span class="pre">0.1}'</span></code></p></li>
 </ul>
+<p>The default values for <strong>RECOGNIZER_SETTINGS</strong> are customized according to the author’s voice pitch.
+Please use <a class="reference external" href="https://github.com/thevickypedia/Jarvis_UI/blob/main/test_listener.py">test_listener.py</a> to figure out the suitable values in a trial and error method.</p>
 <p><strong>Description</strong></p>
 <ul class="simple">
-<li><p><strong>energy_threshold</strong>: Minimum audio energy to consider for recording. Greater the value, louder the speech should be.</p></li>
-<li><p><strong>dynamic_energy_threshold</strong>: Change considerable audio energy threshold dynamically.</p></li>
+<li><p><strong>energy_threshold</strong>: Minimum audio energy to consider for recording. Greater the value, louder the voice should be.</p></li>
+<li><p><strong>dynamic_energy_threshold</strong>: Change considerable audio <strong>energy_threshold</strong> dynamically.</p></li>
 <li><p><strong>pause_threshold</strong>: Seconds of non-speaking audio before a phrase is considered complete.</p></li>
 <li><p><strong>phrase_threshold</strong>: Minimum seconds of speaking audio before it can be considered a phrase - values below this are ignored. This helps to filter out clicks and pops.</p></li>
 <li><p><strong>non_speaking_duration</strong>: Seconds of non-speaking audio to keep on both sides of the recording.</p></li>
 </ul>
-<p>Refer Jarvis’ <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/README.md">README</a> for more information on setting up the backend server.</p>
+<p>:bulb:   <strong>Refer Jarvis’ <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/README.md">README</a> for more information on setting up the backend server.</strong></p>
 </section>
 </section>
 <section id="coding-standards">

@@ -11,7 +11,7 @@ import struct
 from multiprocessing import Process
 from multiprocessing.managers import DictProxy  # noqa
 from threading import Timer
-from typing import NoReturn, Union
+from typing import Union
 
 import pvporcupine
 from playsound import playsound
@@ -24,8 +24,10 @@ from jarvis_ui.modules.config import config
 from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env, fileio, settings
 
+assert speaker.driver or env.speech_timeout, "Cannot proceed without both audio drivers and speech timeout."
 
-def process_request(phrase: str) -> Union[str, NoReturn]:
+
+def process_request(phrase: str) -> Union[str, None]:
     """Process request from the user.
 
     Args:

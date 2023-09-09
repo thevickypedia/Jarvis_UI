@@ -18,13 +18,11 @@ from jarvis_ui.modules.models import env
 recognizer = Recognizer()  # initiates recognizer object
 microphone = Microphone()  # initiates microphone object
 
-if env.recognizer_settings:
-    recognizer.energy_threshold = env.recognizer_settings.energy_threshold
-    recognizer.pause_threshold = env.recognizer_settings.pause_threshold
-    recognizer.phrase_threshold = env.recognizer_settings.phrase_threshold
-    recognizer.dynamic_energy_threshold = env.recognizer_settings.dynamic_energy_threshold
-    recognizer.non_speaking_duration = env.recognizer_settings.non_speaking_duration
-    env.voice_phrase_limit = 7  # Override voice phrase limit when recognizer settings are available
+recognizer.energy_threshold = env.recognizer_settings.energy_threshold
+recognizer.pause_threshold = env.recognizer_settings.pause_threshold
+recognizer.phrase_threshold = env.recognizer_settings.phrase_threshold
+recognizer.dynamic_energy_threshold = env.recognizer_settings.dynamic_energy_threshold
+recognizer.non_speaking_duration = env.recognizer_settings.non_speaking_duration
 
 
 def listen() -> Union[str, None]:
