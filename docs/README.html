@@ -66,7 +66,19 @@
 </section>
 <section id="environment-variables">
 <h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading">¶</a></h2>
-<section id="mandatory">
+<p>Env vars are loaded from a <code class="docutils literal notranslate"><span class="pre">.env</span></code> file and validated using <code class="docutils literal notranslate"><span class="pre">pydantic</span></code></p>
+<details>
+<summary><strong><i>To use custom .env files</i></strong></summary><p>If the filename is anything other than <code class="docutils literal notranslate"><span class="pre">.env</span></code>, set the filename as an env var <code class="docutils literal notranslate"><span class="pre">env_file</span></code> before importing <code class="docutils literal notranslate"><span class="pre">jarvis_ui</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;env_file&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;jarvis_ui.env&quot;</span>
+
+<span class="kn">import</span> <span class="nn">jarvis_ui</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">jarvis_ui</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+</div>
+</details><section id="mandatory">
 <h3>Mandatory<a class="headerlink" href="#mandatory" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><strong>REQUEST_URL</strong>: URL to which the API call has to be made. Can be <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or a <code class="docutils literal notranslate"><span class="pre">tunneled</span></code> URL behind a reverse proxy/CDN.</p></li>
@@ -76,7 +88,7 @@
 <section id="optional">
 <h3>Optional<a class="headerlink" href="#optional" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
-<li><p><strong>HEART_BEAT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>If # of seconds is set, background health check with the server will be enabled</em></p></li>
+<li><p><strong>HEART_BEAT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Interval in seconds to trigger background healthcheck on the server with automatic restart</em></p></li>
 <li><p><strong>DEBUG</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code> - <em>Enable debug level logging</em>
 <br><br></p></li>
 <li><p><strong>SPEECH_TIMEOUT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code> for macOS, <code class="docutils literal notranslate"><span class="pre">10</span></code> for Windows - <em>Timeout for speech synthesis</em>
@@ -90,15 +102,15 @@
 <li><p><strong>VOICE_RATE</strong>: Defaults to the value in <code class="docutils literal notranslate"><span class="pre">py3-tts</span></code> module - <em>Speed/rate at which the text should be spoken</em></p></li>
 <li><p><strong>VOICE_PITCH</strong>: Defaults to the value in <code class="docutils literal notranslate"><span class="pre">py3-tts</span></code> module - <em>Currently available only for Linux OS</em>
 <br><br></p></li>
-<li><p><strong>VOICE_TIMEOUT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">3</span></code> - <em>Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit</em></p></li>
-<li><p><strong>VOICE_PHRASE_LIMIT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code> - <em>Timeout for phrase once listener is activated - Listener will be deactivated after this limit</em></p></li>
+<li><p><strong>LISTENER_TIMEOUT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">2</span></code> - <em>Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit</em></p></li>
+<li><p><strong>LISTENER_PHRASE_LIMIT</strong>: Defaults to <code class="docutils literal notranslate"><span class="pre">5</span></code> - <em>Timeout for phrase once listener is activated - Listener will be deactivated after this limit</em></p></li>
+<li><p><strong>RECOGNIZER_SETTINGS</strong>: JSON object of customized speech recognition settings.</p></li>
 </ul>
-<p><strong>Custom settings for speech recognition</strong></p>
-<ul class="simple">
-<li><p><strong>RECOGNIZER_SETTINGS</strong>: <code class="docutils literal notranslate"><span class="pre">'{&quot;energy_threshold&quot;:</span> <span class="pre">1100,</span> <span class="pre">&quot;dynamic_energy_threshold&quot;:</span> <span class="pre">false,</span> <span class="pre">&quot;pause_threshold&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;phrase_threshold&quot;:</span> <span class="pre">0.1}'</span></code></p></li>
-</ul>
-<p>The default values for <strong>RECOGNIZER_SETTINGS</strong> are customized according to the author’s voice pitch.
+<details>
+<summary><strong>Custom settings for speech recognition</strong></summary><p>The default values for <strong>RECOGNIZER_SETTINGS</strong> are customized according to the author’s voice pitch.
 Please use <a class="reference external" href="https://github.com/thevickypedia/Jarvis_UI/blob/main/test_listener.py">test_listener.py</a> to figure out the suitable values in a trial and error method.</p>
+<p>Sample settings (formatted as JSON object)<br></p>
+<p><strong>RECOGNIZER_SETTINGS</strong>: <code class="docutils literal notranslate"><span class="pre">'{&quot;energy_threshold&quot;:</span> <span class="pre">1100,</span> <span class="pre">&quot;dynamic_energy_threshold&quot;:</span> <span class="pre">false,</span> <span class="pre">&quot;pause_threshold&quot;:</span> <span class="pre">1,</span> <span class="pre">&quot;phrase_threshold&quot;:</span> <span class="pre">0.1}'</span></code></p>
 <p><strong>Description</strong></p>
 <ul class="simple">
 <li><p><strong>energy_threshold</strong>: Minimum audio energy to consider for recording. Greater the value, louder the voice should be.</p></li>
@@ -107,6 +119,7 @@ Please use <a class="reference external" href="https://github.com/thevickypedia/
 <li><p><strong>phrase_threshold</strong>: Minimum seconds of speaking audio before it can be considered a phrase - values below this are ignored. This helps to filter out clicks and pops.</p></li>
 <li><p><strong>non_speaking_duration</strong>: Seconds of non-speaking audio to keep on both sides of the recording.</p></li>
 </ul>
+</details><hr class="docutils" />
 <p>:bulb:   <strong>Refer Jarvis’ <a class="reference external" href="https://github.com/thevickypedia/Jarvis/blob/master/README.md">README</a> for more information on setting up the backend server.</strong></p>
 </section>
 </section>

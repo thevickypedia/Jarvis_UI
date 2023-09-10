@@ -25,12 +25,30 @@ if __name__ == '__main__':
 ```
 
 ### Environment Variables
+Env vars are loaded from a `.env` file and validated using `pydantic`
+<details>
+<summary><strong><i>To use custom .env files</i></strong></summary>
+
+If the filename is anything other than `.env`, set the filename as an env var `env_file` before importing `jarvis_ui`
+
+```python
+import os
+os.environ['env_file'] = "jarvis_ui.env"
+
+import jarvis_ui
+
+if __name__ == '__main__':
+    jarvis_ui.start()
+```
+
+</details>
+
 #### Mandatory
 - **REQUEST_URL**: URL to which the API call has to be made. Can be `localhost` or a `tunneled` URL behind a reverse proxy/CDN.
 - **TOKEN**: Authentication token.
 
 #### Optional
-- **HEART_BEAT**: Defaults to `None` - _If # of seconds is set, background health check with the server will be enabled_
+- **HEART_BEAT**: Defaults to `None` - _Interval in seconds to trigger background healthcheck on the server with automatic restart_
 - **DEBUG**: Defaults to `False` - _Enable debug level logging_
 <br><br>
 - **SPEECH_TIMEOUT**: Defaults to `0` for macOS, `10` for Windows - _Timeout for speech synthesis_
@@ -44,14 +62,19 @@ if __name__ == '__main__':
 - **VOICE_RATE**: Defaults to the value in `py3-tts` module - _Speed/rate at which the text should be spoken_
 - **VOICE_PITCH**: Defaults to the value in `py3-tts` module - _Currently available only for Linux OS_
 <br><br>
-- **VOICE_TIMEOUT**: Defaults to `3` - _Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit_
-- **VOICE_PHRASE_LIMIT**: Defaults to `None` - _Timeout for phrase once listener is activated - Listener will be deactivated after this limit_
+- **LISTENER_TIMEOUT**: Defaults to `2` - _Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit_
+- **LISTENER_PHRASE_LIMIT**: Defaults to `5` - _Timeout for phrase once listener is activated - Listener will be deactivated after this limit_
+- **RECOGNIZER_SETTINGS**: JSON object of customized speech recognition settings.
 
-**Custom settings for speech recognition**
-- **RECOGNIZER_SETTINGS**: `'{"energy_threshold": 1100, "dynamic_energy_threshold": false, "pause_threshold": 1, "phrase_threshold": 0.1}'`
+<details>
+<summary><strong>Custom settings for speech recognition</strong></summary>
 
 The default values for **RECOGNIZER_SETTINGS** are customized according to the author's voice pitch.
 Please use [test_listener.py](https://github.com/thevickypedia/Jarvis_UI/blob/main/test_listener.py) to figure out the suitable values in a trial and error method.
+
+Sample settings (formatted as JSON object)<br>
+
+**RECOGNIZER_SETTINGS**: `'{"energy_threshold": 1100, "dynamic_energy_threshold": false, "pause_threshold": 1, "phrase_threshold": 0.1}'`
 
 **Description**
 - **energy_threshold**: Minimum audio energy to consider for recording. Greater the value, louder the voice should be.
@@ -59,6 +82,10 @@ Please use [test_listener.py](https://github.com/thevickypedia/Jarvis_UI/blob/ma
 - **pause_threshold**: Seconds of non-speaking audio before a phrase is considered complete.
 - **phrase_threshold**: Minimum seconds of speaking audio before it can be considered a phrase - values below this are ignored. This helps to filter out clicks and pops.
 - **non_speaking_duration**: Seconds of non-speaking audio to keep on both sides of the recording.
+
+</details>
+
+---
 
 :bulb: &nbsp; **Refer Jarvis' [README](https://github.com/thevickypedia/Jarvis/blob/master/README.md) for more information on setting up the backend server.**
 

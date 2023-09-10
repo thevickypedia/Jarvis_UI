@@ -214,17 +214,20 @@
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="jarvis_ui.executables.listener.listen">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.listener.</span></span><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.listener.listen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to activate listener, this function will be called by most upcoming functions to listen to user input.</p>
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.listener.</span></span><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PositiveInt</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveFloat</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phrase_time_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PositiveInt</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveFloat</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.listener.listen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to activate listener and get the user input.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p>Returns recognized statement from the microphone.</p></li>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>timeout</strong> – Time in seconds to wait for a phrase/sound to begin.</p></li>
+<li><p><strong>phrase_time_limit</strong> – Time in seconds to await user input. Anything spoken beyond this limit will be excluded.</p></li>
 </ul>
-</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>str</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the recognized statement listened via microphone.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -506,7 +509,7 @@
 <dd><p>Environment variables configuration.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.Config.env_file">
-<span class="sig-name descname"><span class="pre">env_file</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'.env'</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.Config.env_file" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">env_file</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ui.env'</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.Config.env_file" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -524,6 +527,16 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.heart_beat">
 <span class="sig-name descname"><span class="pre">heart_beat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.heart_beat" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.listener_phrase_limit">
+<span class="sig-name descname"><span class="pre">listener_phrase_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.listener_phrase_limit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.listener_timeout">
+<span class="sig-name descname"><span class="pre">listener_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.listener_timeout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -573,11 +586,6 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.voice_phrase_limit">
-<span class="sig-name descname"><span class="pre">voice_phrase_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.voice_phrase_limit" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.voice_pitch">
 <span class="sig-name descname"><span class="pre">voice_pitch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PositiveInt</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveFloat</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.voice_pitch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -585,11 +593,6 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.voice_rate">
 <span class="sig-name descname"><span class="pre">voice_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PositiveInt</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveFloat</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.voice_rate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.voice_timeout">
-<span class="sig-name descname"><span class="pre">voice_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.voice_timeout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

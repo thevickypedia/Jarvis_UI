@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v2.3 (09/10/2023)
+-----------------
+- Includes a new feature to use custom ``.env`` files
+- Minor configuration updates
+
 v2.2 (09/09/2023)
 -----------------
 - Includes stability and performance improvements

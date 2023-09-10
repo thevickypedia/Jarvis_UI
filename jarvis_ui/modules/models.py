@@ -109,8 +109,8 @@ class EnvConfig(BaseSettings):
     voice_rate: Union[PositiveInt, PositiveFloat] = Field(default=None)
     voice_pitch: Union[PositiveInt, PositiveFloat] = Field(default=None)
 
-    voice_timeout: Union[float, PositiveInt] = Field(default=3)
-    voice_phrase_limit: Union[float, PositiveInt] = Field(default=5)
+    listener_timeout: Union[float, PositiveInt] = Field(default=2)
+    listener_phrase_limit: Union[float, PositiveInt] = Field(default=5)
     if settings.legacy:
         wake_words: list = Field(default=['alexa'])
     else:
@@ -121,7 +121,7 @@ class EnvConfig(BaseSettings):
         """Environment variables configuration."""
 
         env_prefix = ""
-        env_file = ".env"
+        env_file = os.environ.get("env_file", os.environ.get("ENV_FILE", ".env"))
 
     # noinspection PyMethodParameters
     @validator("microphone_index", pre=True, allow_reuse=True)

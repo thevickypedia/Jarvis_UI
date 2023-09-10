@@ -4,7 +4,7 @@ __pycache__
 _build
 venv
 logs
-.env
+*.env
 speech_synthesis.wav
 temp*.py
 dist

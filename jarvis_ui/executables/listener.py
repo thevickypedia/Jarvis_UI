@@ -8,6 +8,7 @@
 from typing import Union
 
 import requests
+from pydantic import PositiveFloat, PositiveInt
 from speech_recognition import (Microphone, Recognizer, RequestError,
                                 UnknownValueError, WaitTimeoutError)
 
@@ -25,19 +26,23 @@ recognizer.dynamic_energy_threshold = env.recognizer_settings.dynamic_energy_thr
 recognizer.non_speaking_duration = env.recognizer_settings.non_speaking_duration
 
 
-def listen() -> Union[str, None]:
-    """Function to activate listener, this function will be called by most upcoming functions to listen to user input.
+def listen(timeout: Union[PositiveInt, PositiveFloat] = env.listener_timeout,
+           phrase_time_limit: Union[PositiveInt, PositiveFloat] = env.listener_phrase_limit) -> Union[str, None]:
+    """Function to activate listener and get the user input.
+
+    Args:
+        timeout: Time in seconds to wait for a phrase/sound to begin.
+        phrase_time_limit: Time in seconds to await user input. Anything spoken beyond this limit will be excluded.
 
     Returns:
         str:
-         - Returns recognized statement from the microphone.
+        Returns the recognized statement listened via microphone.
     """
     return_val = None
     with microphone as source:
-        display.write_screen("Listener activated..")
+        display.write_screen(f"Listener activated [{timeout}: {phrase_time_limit}]")
         try:
-            listened = recognizer.listen(source=source, timeout=env.voice_timeout,
-                                         phrase_time_limit=env.voice_phrase_limit)
+            listened = recognizer.listen(source=source, timeout=timeout, phrase_time_limit=phrase_time_limit)
             return_val = recognizer.recognize_google(audio_data=listened)
         except (UnknownValueError, WaitTimeoutError, RequestError) as error:
             logger.debug(error)
