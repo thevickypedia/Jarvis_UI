@@ -1,37 +1,72 @@
+fail_fast: true
+exclude: ^docs/
 repos:
-  -
-    repo: https://github.com/PyCQA/flake8
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-byte-order-marker
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-shebang-scripts-are-executable
+      - id: pretty-format-json
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-toml
+      - id: check-vcs-permalinks
+      - id: check-xml
+      - id: check-yaml
+      - id: debug-statements
+      - id: destroyed-symlinks
+      - id: detect-aws-credentials
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: file-contents-sorter
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+      - id: name-tests-test
+      - id: requirements-txt-fixer
+      - id: sort-simple-yaml
+      - id: trailing-whitespace
+
+  - repo: https://github.com/PyCQA/flake8
     rev: '6.1.0'
     hooks:
-      -
-        id: flake8
+      - id: flake8
         additional_dependencies:
           - flake8-docstrings
           - flake8-sfs
-        args: [--max-line-length=120, --extend-ignore=SFS3 D107 SFS301 D100 D104 D401 SFS101 SFS201]
+        args: [ --max-line-length=120, --extend-ignore=SFS3 D107 SFS301 D100 D104 D401 SFS101 SFS201 ]
 
-  -
-    repo: https://github.com/PyCQA/isort
+  - repo: https://github.com/psf/black
+    rev: 23.9.1
+    hooks:
+      - id: black
+
+  - repo: https://github.com/PyCQA/isort
     rev: '5.12.0'
     hooks:
-      -
-        id: isort
+      - id: isort
+        name: isort (python)
+        args: [ --profile, black ]
 
-#  - repo: local
-#    hooks:
-#      -
-#        id: pytest
-#        name: pytest
-#        entry: cd tests pytest
-#        language: system
-#        pass_filenames: false
-#        always_run: true
-#
-  -
-    repo: local
+  #  - repo: local
+  #    hooks:
+  #      -
+  #        id: pytest
+  #        name: pytest
+  #        entry: cd tests pytest
+  #        language: system
+  #        pass_filenames: false
+  #        always_run: true
+  #
+  - repo: local
     hooks:
-      -
-        id: docs
+      - id: docs
         name: docs
         entry: /bin/bash gen_docs.sh
         language: system

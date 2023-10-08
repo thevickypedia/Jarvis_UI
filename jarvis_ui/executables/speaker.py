@@ -16,8 +16,8 @@ def speak(text: str) -> None:
     Args:
         text: Takes the text that has to be spoken as an argument.
     """
-    text = text.replace('\n', '\t').strip()
-    if not text.endswith('.') or not text.endswith('!'):
-        text = text + '!'
+    text = text.replace("\n", "\t").strip()
+    if not text.endswith(".") or not text.endswith("!"):
+        text = text + "!"
     driver.say(text=text)
     driver.runAndWait()

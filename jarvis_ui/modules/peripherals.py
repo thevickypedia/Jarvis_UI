@@ -23,8 +23,8 @@ class ChannelType(str, Enum):
 
     """
 
-    input_channels: str = 'maxInputChannels'
-    output_channels: str = 'maxOutputChannels'
+    input_channels: str = "maxInputChannels"
+    output_channels: str = "maxOutputChannels"
 
 
 channel_type = ChannelType
@@ -46,6 +46,14 @@ def get_audio_devices(channels: str) -> Iterable[Dict[str, Union[str, int, float
             yield device_info
 
 
-if __name__ == '__main__':
-    print(json.dumps(list(get_audio_devices(channels=channel_type.input_channels)), indent=2))
-    print(json.dumps(list(get_audio_devices(channels=channel_type.output_channels)), indent=2))
+if __name__ == "__main__":
+    print(
+        json.dumps(
+            list(get_audio_devices(channels=channel_type.input_channels)), indent=2
+        )
+    )
+    print(
+        json.dumps(
+            list(get_audio_devices(channels=channel_type.output_channels)), indent=2
+        )
+    )

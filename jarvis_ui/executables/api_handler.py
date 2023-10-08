@@ -49,10 +49,12 @@ class BearerAuth(AuthBase):
 
 session = requests.Session()
 session.auth = BearerAuth(token=env.token)
-session.headers['Accept'] = 'application/json'
+session.headers["Accept"] = "application/json"
 
 
-def make_request(path: str, data: dict = None, method: str = 'POST') -> Union[dict, bool]:
+def make_request(
+    path: str, data: dict = None, method: str = "POST"
+) -> Union[dict, bool]:
     """Makes a requests call to the API running on the backend to execute a said task.
 
     Args:
@@ -65,10 +67,9 @@ def make_request(path: str, data: dict = None, method: str = 'POST') -> Union[di
         Returns the JSON response if request was successful.
     """
     try:
-        if method == 'POST':
-            response = session.post(url=env.request_url + path, json=data, timeout=(3, 30))
-        else:
-            response = session.get(url=env.request_url + path, json=data, timeout=(3, 30))
+        response = session.request(
+            method, env.server_url + path, json=data, timeout=(3, 30)
+        )
     except requests.RequestException as error:
         logger.error(error)
         return False
@@ -78,6 +79,7 @@ def make_request(path: str, data: dict = None, method: str = 'POST') -> Union[di
     if response.headers.get("Content-Type", "NO MATCH") == "application/octet-stream":
         with open(file=fileio.speech_wav_file, mode="wb") as file:
             file.write(response.content)
+            file.flush()
         return True
     try:
         return response.json()

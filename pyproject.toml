@@ -3,7 +3,7 @@ name = "jarvis-ui"
 dynamic = ["version", "dependencies"]
 description = "Jarvis UI to perform voice commands via API calls"
 readme = "README.md"
-authors = [{ name = "Vignesh Sivanandha Rao", email = "svignesh1793@gmail.com" }]
+authors = [{ name = "Vignesh Rao", email = "svignesh1793@gmail.com" }]
 license = { file = "LICENSE" }
 classifiers = [
     "Development Status :: 5 - Production/Stable",

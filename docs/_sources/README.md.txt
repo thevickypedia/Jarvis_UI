@@ -29,7 +29,7 @@ Env vars are loaded from a `.env` file and validated using `pydantic`
 <details>
 <summary><strong><i>To use custom .env files</i></strong></summary>
 
-If the filename is anything other than `.env`, set the filename as an env var `env_file` before importing `jarvis_ui`
+To use a custom `.env` file, set the filename to the env var `env_file` before importing `jarvis_ui` module.
 
 ```python
 import os
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 </details>
 
 #### Mandatory
-- **REQUEST_URL**: URL to which the API call has to be made. Can be `localhost` or a `tunneled` URL behind a reverse proxy/CDN.
+- **SERVER_URL**: Endpoint URL to which the API call has to be made. Can be `localhost` or a `tunneled` URL behind a reverse proxy/CDN.
 - **TOKEN**: Authentication token.
 
 #### Optional
@@ -92,7 +92,7 @@ Sample settings (formatted as JSON object)<br>
 ### Coding Standards
 Docstring format: [`Google`](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) <br>
 Styling conventions: [`PEP 8`](https://www.python.org/dev/peps/pep-0008/) <br>
-Clean code with pre-commit hooks: [`flake8`](https://flake8.pycqa.org/en/latest/) and 
+Clean code with pre-commit hooks: [`flake8`](https://flake8.pycqa.org/en/latest/) and
 [`isort`](https://pycqa.github.io/isort/)
 
 ### [Release Notes](https://github.com/thevickypedia/Jarvis_UI/blob/main/release_notes.rst)
@@ -133,6 +133,6 @@ pre-commit run --all-files
 
 ### License & copyright
 
-&copy; Vignesh Sivanandha Rao
+&copy; Vignesh Rao
 
 Licensed under the [MIT License](https://github.com/thevickypedia/Jarvis_UI/blob/main/LICENSE)

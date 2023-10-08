@@ -214,7 +214,7 @@
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="jarvis_ui.executables.listener.listen">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.listener.</span></span><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PositiveInt</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveFloat</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phrase_time_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PositiveInt</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveFloat</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.listener.listen" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.listener.</span></span><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phrase_time_limit</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.listener.listen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to activate listener and get the user input.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -404,15 +404,6 @@
 </dd></dl>
 
 <dl class="py exception">
-<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.SegmentationError">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">SegmentationError</span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.SegmentationError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Custom <code class="docutils literal notranslate"><span class="pre">SegmentationError</span></code> raised when the code exits with SIGSEGV.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">SegmentationError</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py exception">
 <dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.UnsupportedOS">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">UnsupportedOS</span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.UnsupportedOS" title="Permalink to this definition">¶</a></dt>
 <dd><p>Custom <code class="docutils literal notranslate"><span class="pre">OSError</span></code> raised when initiated in an unsupported operating system.</p>
@@ -502,14 +493,17 @@
 </pre></div>
 </div>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
-<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
+<p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><cite>__init__</cite> uses <cite>__pydantic_self__</cite> instead of the more common <cite>self</cite> for the first arg to
+allow <cite>self</cite> as a field name.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.Config">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.Config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Environment variables configuration.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.Config.env_file">
-<span class="sig-name descname"><span class="pre">env_file</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ui.env'</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.Config.env_file" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">env_file</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'.env'</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.Config.env_file" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -526,23 +520,37 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.heart_beat">
-<span class="sig-name descname"><span class="pre">heart_beat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.heart_beat" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">heart_beat</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.heart_beat" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.listener_phrase_limit">
-<span class="sig-name descname"><span class="pre">listener_phrase_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.listener_phrase_limit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">listener_phrase_limit</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.listener_phrase_limit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.listener_timeout">
-<span class="sig-name descname"><span class="pre">listener_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.listener_timeout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">listener_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.listener_timeout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.microphone_index">
-<span class="sig-name descname"><span class="pre">microphone_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.microphone_index" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">microphone_index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.microphone_index" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">SettingsConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'case_sensitive':</span> <span class="pre">False,</span> <span class="pre">'env_file':</span> <span class="pre">'.env',</span> <span class="pre">'env_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'env_nested_delimiter':</span> <span class="pre">None,</span> <span class="pre">'env_prefix':</span> <span class="pre">'',</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">('model_',</span> <span class="pre">'settings_'),</span> <span class="pre">'secrets_dir':</span> <span class="pre">None,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.model_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'debug':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'heart_beat':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">metadata=[Ge(ge=5),</span> <span class="pre">Le(le=3600)]),</span> <span class="pre">'listener_phrase_limit':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt]],</span> <span class="pre">required=False,</span> <span class="pre">default=5),</span> <span class="pre">'listener_timeout':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt]],</span> <span class="pre">required=False,</span> <span class="pre">default=2),</span> <span class="pre">'microphone_index':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt],</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">metadata=[Ge(ge=0)]),</span> <span class="pre">'native_audio':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'recognizer_settings':</span> <span class="pre">FieldInfo(annotation=RecognizerSettings,</span> <span class="pre">required=False,</span> <span class="pre">default=RecognizerSettings(energy_threshold=1100,</span> <span class="pre">pause_threshold=1,</span> <span class="pre">phrase_threshold=0.1,</span> <span class="pre">dynamic_energy_threshold=False,</span> <span class="pre">non_speaking_duration=1)),</span> <span class="pre">'sensitivity':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[int,</span> <span class="pre">Gt],</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt],</span> <span class="pre">List[Annotated[int,</span> <span class="pre">Gt]],</span> <span class="pre">List[Annotated[float,</span> <span class="pre">Gt]]],</span> <span class="pre">required=False,</span> <span class="pre">default=0.5,</span> <span class="pre">metadata=[Ge(ge=0),</span> <span class="pre">Le(le=1)]),</span> <span class="pre">'server_url':</span> <span class="pre">FieldInfo(annotation=Url,</span> <span class="pre">required=True,</span> <span class="pre">metadata=[UrlConstraints(max_length=2083,</span> <span class="pre">allowed_schemes=['http',</span> <span class="pre">'https'],</span> <span class="pre">host_required=None,</span> <span class="pre">default_host=None,</span> <span class="pre">default_port=None,</span> <span class="pre">default_path=None)]),</span> <span class="pre">'speech_timeout':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt],</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt]],</span> <span class="pre">required=False,</span> <span class="pre">default=0),</span> <span class="pre">'token':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=True),</span> <span class="pre">'voice_name':</span> <span class="pre">FieldInfo(annotation=Union[str,</span> <span class="pre">NoneType],</span> <span class="pre">required=False),</span> <span class="pre">'voice_pitch':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[int,</span> <span class="pre">Gt],</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt],</span> <span class="pre">NoneType],</span> <span class="pre">required=False),</span> <span class="pre">'voice_rate':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[int,</span> <span class="pre">Gt],</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt],</span> <span class="pre">NoneType],</span> <span class="pre">required=False),</span> <span class="pre">'wake_words':</span> <span class="pre">FieldInfo(annotation=List[str],</span> <span class="pre">required=False,</span> <span class="pre">default=['jarvis'])}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.model_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.native_audio">
@@ -551,7 +559,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.parse_microphone_index">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_microphone_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.parse_microphone_index" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_microphone_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.parse_microphone_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validates microphone index.</p>
 </dd></dl>
 
@@ -561,18 +569,18 @@
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.request_url">
-<span class="sig-name descname"><span class="pre">request_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">HttpUrl</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.request_url" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.sensitivity">
+<span class="sig-name descname"><span class="pre">sensitivity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.sensitivity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.sensitivity">
-<span class="sig-name descname"><span class="pre">sensitivity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#jarvis_ui.modules.models.Sensitivity" title="jarvis_ui.modules.models.Sensitivity"><span class="pre">Sensitivity</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#jarvis_ui.modules.models.Sensitivity" title="jarvis_ui.modules.models.Sensitivity"><span class="pre">Sensitivity</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.sensitivity" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.server_url">
+<span class="sig-name descname"><span class="pre">server_url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Url</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.server_url" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.speech_timeout">
-<span class="sig-name descname"><span class="pre">speech_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.speech_timeout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">speech_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.speech_timeout" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -582,22 +590,22 @@
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.voice_name">
-<span class="sig-name descname"><span class="pre">voice_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.voice_name" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">voice_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.voice_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.voice_pitch">
-<span class="sig-name descname"><span class="pre">voice_pitch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PositiveInt</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveFloat</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.voice_pitch" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">voice_pitch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.voice_pitch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.voice_rate">
-<span class="sig-name descname"><span class="pre">voice_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PositiveInt</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveFloat</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.voice_rate" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">voice_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.voice_rate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.wake_words">
-<span class="sig-name descname"><span class="pre">wake_words</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.wake_words" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">wake_words</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.wake_words" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -610,40 +618,67 @@
 </pre></div>
 </div>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
-<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
+<p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><cite>__init__</cite> uses <cite>__pydantic_self__</cite> instead of the more common <cite>self</cite> for the first arg to
+allow <cite>self</cite> as a field name.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.acknowledgement">
-<span class="sig-name descname"><span class="pre">acknowledgement</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.acknowledgement" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">acknowledgement</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.acknowledgement" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.base_log_file">
-<span class="sig-name descname"><span class="pre">base_log_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">FilePath</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.base_log_file" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">base_log_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.base_log_file" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.connection_restart">
-<span class="sig-name descname"><span class="pre">connection_restart</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.connection_restart" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">connection_restart</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.connection_restart" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.extn_">
+<span class="sig-name descname"><span class="pre">extn_</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.extn_" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.failed">
-<span class="sig-name descname"><span class="pre">failed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.failed" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">failed</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.failed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">SettingsConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'case_sensitive':</span> <span class="pre">False,</span> <span class="pre">'env_file':</span> <span class="pre">None,</span> <span class="pre">'env_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'env_nested_delimiter':</span> <span class="pre">None,</span> <span class="pre">'env_prefix':</span> <span class="pre">'',</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">('model_',</span> <span class="pre">'settings_'),</span> <span class="pre">'secrets_dir':</span> <span class="pre">None,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.model_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'acknowledgement':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/acknowledgement.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'base_log_file':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[Path,</span> <span class="pre">PathType],</span> <span class="pre">str],</span> <span class="pre">required=False,</span> <span class="pre">default='logs/jarvis_08-10-2023.log'),</span> <span class="pre">'connection_restart':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/connection_restart_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'extn_':</span> <span class="pre">FieldInfo(annotation=Dict[str,</span> <span class="pre">str],</span> <span class="pre">required=False,</span> <span class="pre">default={'Darwin':</span> <span class="pre">'mac',</span> <span class="pre">'Windows':</span> <span class="pre">'win',</span> <span class="pre">'Linux':</span> <span class="pre">'ss'}),</span> <span class="pre">'failed':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/failed_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'path':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators'),</span> <span class="pre">'restart':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/restart_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'shutdown':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/shutdown_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'speech_wav_file':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[Path,</span> <span class="pre">PathType],</span> <span class="pre">str],</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/speech-synthesis.wav')}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.model_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.path">
+<span class="sig-name descname"><span class="pre">path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.path" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.restart">
-<span class="sig-name descname"><span class="pre">restart</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.restart" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">restart</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.restart" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.shutdown">
-<span class="sig-name descname"><span class="pre">shutdown</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">FilePath</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.shutdown" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">shutdown</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.shutdown" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.speech_wav_file">
-<span class="sig-name descname"><span class="pre">speech_wav_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">FilePath</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.speech_wav_file" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">speech_wav_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Path</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.speech_wav_file" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -664,11 +699,33 @@
 </dd>
 </dl>
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
-<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p>
+<p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
+validated to form a valid model.</p>
+<p><cite>__init__</cite> uses <cite>__pydantic_self__</cite> instead of the more common <cite>self</cite> for the first arg to
+allow <cite>self</cite> as a field name.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.Settings.interactive">
+<span class="sig-name descname"><span class="pre">interactive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#jarvis_ui.modules.models.Settings.interactive" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.Settings.legacy">
 <span class="sig-name descname"><span class="pre">legacy</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#jarvis_ui.modules.models.Settings.legacy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.Settings.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">SettingsConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'case_sensitive':</span> <span class="pre">False,</span> <span class="pre">'env_file':</span> <span class="pre">None,</span> <span class="pre">'env_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'env_nested_delimiter':</span> <span class="pre">None,</span> <span class="pre">'env_prefix':</span> <span class="pre">'',</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">('model_',</span> <span class="pre">'settings_'),</span> <span class="pre">'secrets_dir':</span> <span class="pre">None,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.Settings.model_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.Settings.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'interactive':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'legacy':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'operating_system':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=False,</span> <span class="pre">default='Darwin')}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.Settings.model_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.Settings.operating_system">
@@ -686,7 +743,7 @@
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.Sensitivity.sensitivity">
-<span class="sig-name descname"><span class="pre">sensitivity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PositiveInt</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.Sensitivity.sensitivity" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sensitivity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.Sensitivity.sensitivity" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -857,7 +914,7 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2022, Vignesh Sivanandha Rao.
+        &#169; Copyright 2022, Vignesh Rao.
       Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1.
     </div>
   </body>

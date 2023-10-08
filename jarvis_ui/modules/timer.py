@@ -9,7 +9,13 @@ class RepeatedTimer:
 
     """
 
-    def __init__(self, interval: int, function: Callable, args: Tuple = None, kwargs: Dict[str, Any] = None):
+    def __init__(
+        self,
+        interval: int,
+        function: Callable,
+        args: Tuple = None,
+        kwargs: Dict[str, Any] = None,
+    ):
         """Repeats the ``Timer`` object from threading.
 
         Args:
@@ -21,8 +27,8 @@ class RepeatedTimer:
         self._timer = None
         self.interval = interval
         self.function = function
-        self.args = args or tuple()
-        self.kwargs = kwargs or dict()
+        self.args = args or ()
+        self.kwargs = kwargs or {}
         self.is_running = False
 
     def _run(self):

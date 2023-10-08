@@ -8,7 +8,7 @@ import requests
 from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env, settings
 
-FAILED_HEALTH_CHECK = {'count': 0}
+FAILED_HEALTH_CHECK = {"count": 0}
 
 
 def linux_restart() -> NoReturn:
@@ -22,7 +22,7 @@ def linux_restart() -> NoReturn:
     Raises:
         - KeyboardInterrupt: To stop the current process to avoid recursion.
     """
-    os.execv(sys.executable, ['python'] + sys.argv)
+    os.execv(sys.executable, ["python"] + sys.argv)
     raise KeyboardInterrupt
 
 
@@ -37,17 +37,17 @@ def heart_beat(status_manager: DictProxy = None) -> None:
         - Maintains a consecutive failure threshold of 5, as a single failed health check doesn't warrant a restart.
     """
     try:
-        response = requests.get(url=env.request_url + 'health', timeout=(3, 3))
+        response = requests.get(url=env.server_url + "health", timeout=(3, 3))
     except requests.RequestException as error:
         logger.error(error)
     else:
         if response.ok:
-            if FAILED_HEALTH_CHECK['count']:
+            if FAILED_HEALTH_CHECK["count"]:
                 logger.info("Resetting failure count")
-                FAILED_HEALTH_CHECK['count'] = 0
+                FAILED_HEALTH_CHECK["count"] = 0
             return
-    FAILED_HEALTH_CHECK['count'] += 1
-    if FAILED_HEALTH_CHECK['count'] >= 5:
+    FAILED_HEALTH_CHECK["count"] += 1
+    if FAILED_HEALTH_CHECK["count"] >= 5:
         while True:
             # Awaits any ongoing request/response to go through before restarting
             if not status_manager["LOCKED"]:
@@ -55,4 +55,4 @@ def heart_beat(status_manager: DictProxy = None) -> None:
         logger.critical("Heart beat failed for 5 times in row, restarting...")
         if settings.operating_system == "Linux":
             linux_restart()
-        status_manager['LOCKED'] = None
+        status_manager["LOCKED"] = None

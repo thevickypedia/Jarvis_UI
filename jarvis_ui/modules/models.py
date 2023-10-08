@@ -9,11 +9,18 @@ import sys
 from collections import ChainMap
 from datetime import datetime
 from enum import Enum
-from typing import List, Union
+from typing import Dict, List, Union
 
 from packaging.version import parse as parser
-from pydantic import (BaseSettings, Field, FilePath, HttpUrl, PositiveFloat,
-                      PositiveInt, validator)
+from pydantic import (
+    Field,
+    FilePath,
+    HttpUrl,
+    PositiveFloat,
+    PositiveInt,
+    field_validator,
+)
+from pydantic_settings import BaseSettings
 
 from jarvis_ui import indicators
 from jarvis_ui.modules.exceptions import UnsupportedOS
@@ -22,7 +29,11 @@ from jarvis_ui.modules.peripherals import channel_type, get_audio_devices
 if os.getcwd().endswith("doc_generator"):
     os.chdir(os.path.dirname(os.getcwd()))
 
-UNICODE_PREFIX = base64.b64decode(b'XA==').decode(encoding="ascii") + string.ascii_letters[20] + string.digits[:1] * 2
+UNICODE_PREFIX = (
+    base64.b64decode(b"XA==").decode(encoding="ascii")
+    + string.ascii_letters[20]
+    + string.digits[:1] * 2
+)
 
 
 class Settings(BaseSettings):
@@ -44,16 +55,20 @@ class Settings(BaseSettings):
             "To reach out: https://vigneshrao.com/contact\n"
             f"\n{''.join('*' for _ in range(80))}\n"
         )
-    legacy: bool = True if os == "Darwin" and parser(platform.mac_ver()[0]) < parser('10.14') else False
+    legacy: bool = (
+        True
+        if os == "Darwin" and parser(platform.mac_ver()[0]) < parser("10.14")
+        else False
+    )
     if sys.stdin.isatty():
-        interactive = True
+        interactive: bool = True
     else:
-        interactive = False
+        interactive: bool = False
 
 
 settings = Settings()
 # Intermittently changes to Windows_NT because of pydantic
-if settings.operating_system.startswith('Windows'):
+if settings.operating_system.startswith("Windows"):
     settings.operating_system = "Windows"
 
 
@@ -89,33 +104,35 @@ class EnvConfig(BaseSettings):
     """
 
     # Required env vars
-    request_url: HttpUrl = Field(default=...)
-    token: str = Field(default=...)
+    server_url: HttpUrl
+    token: str
 
     # Heart beat
-    heart_beat: int = Field(default=None, le=3_600, ge=5)
+    heart_beat: Union[int, None] = Field(None, le=3_600, ge=5)
 
     # Speech recognition settings
-    recognizer_settings: RecognizerSettings = Field(default=RecognizerSettings())
+    recognizer_settings: RecognizerSettings = RecognizerSettings()
 
-    debug: bool = Field(default=False)
-    microphone_index: Union[int, PositiveInt] = Field(default=None, ge=0)
+    debug: bool = False
+    microphone_index: Union[int, PositiveInt, None] = Field(None, ge=0)
 
-    speech_timeout: Union[float, PositiveInt] = Field(default=0)
-    sensitivity: Union[Sensitivity, List[Sensitivity]] = Field(default=0.5, le=1, ge=0)
+    speech_timeout: Union[int, PositiveFloat, PositiveInt] = 0
+    sensitivity: Union[
+        PositiveInt, PositiveFloat, List[PositiveInt], List[PositiveFloat]
+    ] = Field(0.5, le=1, ge=0)
 
     # Built-in speaker config (Unused if speech synthesis is used)
-    voice_name: str = Field(default=None)
-    voice_rate: Union[PositiveInt, PositiveFloat] = Field(default=None)
-    voice_pitch: Union[PositiveInt, PositiveFloat] = Field(default=None)
+    voice_name: Union[str, None] = None
+    voice_rate: Union[PositiveInt, PositiveFloat, None] = None
+    voice_pitch: Union[PositiveInt, PositiveFloat, None] = None
 
-    listener_timeout: Union[float, PositiveInt] = Field(default=2)
-    listener_phrase_limit: Union[float, PositiveInt] = Field(default=5)
+    listener_timeout: Union[float, PositiveInt] = 2
+    listener_phrase_limit: Union[float, PositiveInt] = 5
     if settings.legacy:
-        wake_words: list = Field(default=['alexa'])
+        wake_words: List[str] = ["alexa"]
     else:
-        wake_words: list = Field(default=['jarvis'])
-    native_audio: bool = Field(default=False)
+        wake_words: List[str] = ["jarvis"]
+    native_audio: bool = False
 
     class Config:
         """Environment variables configuration."""
@@ -124,16 +141,31 @@ class EnvConfig(BaseSettings):
         env_file = os.environ.get("env_file", os.environ.get("ENV_FILE", ".env"))
 
     # noinspection PyMethodParameters
-    @validator("microphone_index", pre=True, allow_reuse=True)
-    def parse_microphone_index(cls, v: Union[int, PositiveInt]) -> Union[int, PositiveInt, None]:
+    @field_validator("microphone_index", mode="before")
+    def parse_microphone_index(
+        cls, v: Union[int, PositiveInt]
+    ) -> Union[int, PositiveInt, None]:
         """Validates microphone index."""
         if not v:
             return
-        if int(v) in list(map(lambda tag: tag['index'], get_audio_devices(channels=channel_type.input_channels))):
+        if int(v) in list(
+            map(
+                lambda tag: tag["index"],
+                get_audio_devices(channels=channel_type.input_channels),
+            )
+        ):
             return v
         else:
-            complicated = dict(ChainMap(*list(map(lambda tag: {tag['index']: tag['name']},
-                                                  get_audio_devices(channels=channel_type.input_channels)))))
+            complicated = dict(
+                ChainMap(
+                    *list(
+                        map(
+                            lambda tag: {tag["index"]: tag["name"]},
+                            get_audio_devices(channels=channel_type.input_channels),
+                        )
+                    )
+                )
+            )
             raise ValueError(f"value should be one of {complicated}")
 
 
@@ -147,30 +179,48 @@ class FileIO(BaseSettings):
 
     """
 
-    path = indicators.__path__[0]
-    extn_ = {"Darwin": "mac", "Windows": "win", "Linux": "ss"}  # Mapping for OS specific pre-recorded audio files
+    path: str = indicators.__path__[0]
+    # Mapping for OS specific pre-recorded audio files
+    extn_: Dict[str, str] = {"Darwin": "mac", "Windows": "win", "Linux": "ss"}
 
-    acknowledgement: FilePath = os.path.join(path, 'acknowledgement.wav')
+    acknowledgement: FilePath = os.path.join(path, "acknowledgement.wav")
 
     if env.speech_timeout and not env.native_audio:
-        extn_[settings.operating_system] = "ss"  # Set mapping to use speech synthesis' audio file
+        extn_[
+            settings.operating_system
+        ] = "ss"  # Set mapping to use speech synthesis' audio file
 
-    failed: FilePath = os.path.join(path, f'failed_{extn_[settings.operating_system]}.wav')
-    restart: FilePath = os.path.join(path, f'restart_{extn_[settings.operating_system]}.wav')
-    shutdown: FilePath = os.path.join(path, f'shutdown_{extn_[settings.operating_system]}.wav')
-    connection_restart: FilePath = os.path.join(path, f'connection_restart_{extn_[settings.operating_system]}.wav')
+    failed: FilePath = os.path.join(
+        path, f"failed_{extn_[settings.operating_system]}.wav"
+    )
+    restart: FilePath = os.path.join(
+        path, f"restart_{extn_[settings.operating_system]}.wav"
+    )
+    shutdown: FilePath = os.path.join(
+        path, f"shutdown_{extn_[settings.operating_system]}.wav"
+    )
+    connection_restart: FilePath = os.path.join(
+        path, f"connection_restart_{extn_[settings.operating_system]}.wav"
+    )
 
-    speech_wav_file: Union[FilePath, str] = os.path.join(path, 'speech-synthesis.wav')
-    base_log_file: Union[FilePath, str] = datetime.now().strftime(os.path.join('logs', 'jarvis_%d-%m-%Y.log'))
+    speech_wav_file: Union[FilePath, str] = os.path.join(path, "speech-synthesis.wav")
+    base_log_file: Union[FilePath, str] = datetime.now().strftime(
+        os.path.join("logs", "jarvis_%d-%m-%Y.log")
+    )
 
 
 fileio = FileIO()
 # because playaudio in Windows uses string concatenation assuming input sound is going to be a string
 if settings.operating_system == "Windows":
     for key, value in fileio.__dict__.items():
-        if not key.endswith('_'):
+        if not key.endswith("_"):
             setattr(fileio, key, value.__str__())
 raw_token = env.token
-env.token = UNICODE_PREFIX + UNICODE_PREFIX.join(binascii.hexlify(data=env.token.encode(encoding="utf-8"),
-                                                                  sep="-").decode(encoding="utf-8").split(sep="-"))
-assert raw_token == bytes(env.token, "utf-8").decode(encoding="unicode_escape")  # Check decoded value before startup
+env.token = UNICODE_PREFIX + UNICODE_PREFIX.join(
+    binascii.hexlify(data=env.token.encode(encoding="utf-8"), sep="-")
+    .decode(encoding="utf-8")
+    .split(sep="-")
+)
+assert raw_token == bytes(env.token, "utf-8").decode(
+    encoding="unicode_escape"
+)  # Check decoded value before startup

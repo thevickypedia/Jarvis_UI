@@ -12,9 +12,14 @@ def initiator(status_manager: DictProxy = None) -> None:
     from jarvis_ui.executables.starter import Activator
     from jarvis_ui.modules.models import env
     from jarvis_ui.modules.timer import RepeatedTimer
+
     if env.heart_beat:
-        logger.info("Initiating heart beat with an interval of %d seconds", env.heart_beat)
-        timer = RepeatedTimer(function=heart_beat, interval=env.heart_beat, args=(status_manager,))
+        logger.info(
+            "Initiating heart beat with an interval of %d seconds", env.heart_beat
+        )
+        timer = RepeatedTimer(
+            function=heart_beat, interval=env.heart_beat, args=(status_manager,)
+        )
         timer.start()
     else:
         timer = None
@@ -39,7 +44,9 @@ def terminator(process: Process) -> None:
     logger.info("Terminating %s [%d]", process.name, process.pid)
     process.terminate()
     if process.is_alive():
-        logger.warning("Process %s [%d] is still alive. Killing it.", process.name, process.pid)
+        logger.warning(
+            "Process %s [%d] is still alive. Killing it.", process.name, process.pid
+        )
         process.kill()
         process.join(timeout=1e-01)
         try:
@@ -54,6 +61,7 @@ def start() -> None:
     """Initiates Jarvis as a child process."""
     # Import within a function to be called repeatedly
     from jarvis_ui.modules.models import env, settings  # noqa: F401
+
     if settings.operating_system == "Linux":
         initiator()
         return

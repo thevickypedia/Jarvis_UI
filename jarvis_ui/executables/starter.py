@@ -24,7 +24,9 @@ from jarvis_ui.modules.config import config
 from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env, fileio, settings
 
-assert speaker.driver or env.speech_timeout, "Cannot proceed without both audio drivers and speech timeout."
+assert (
+    speaker.driver or env.speech_timeout
+), "Cannot proceed without both audio drivers and speech timeout."
 
 
 def process_request(phrase: str) -> Union[str, None]:
@@ -57,15 +59,21 @@ def process_request(phrase: str) -> Union[str, None]:
         else:
             with open("failed_command", "w") as file:
                 file.write(phrase)
+                file.flush()
             playsound(sound=fileio.connection_restart)
         display.write_screen("Trying to re-establish connection with Server...")
         return "RESTART"
     if os.path.isfile("failed_command"):
         logger.info("Recovered after a recent failure, deleting placeholder file.")
         os.remove("failed_command")
-    if response := make_request(path='offline-communicator',
-                                data={'command': phrase, 'native_audio': env.native_audio,
-                                      'speech_timeout': env.speech_timeout}):
+    if response := make_request(
+        path="offline-communicator",
+        data={
+            "command": phrase,
+            "native_audio": env.native_audio,
+            "speech_timeout": env.speech_timeout,
+        },
+    ):
         process_response(response)
     else:
         playsound(sound=fileio.failed)
@@ -83,18 +91,20 @@ def process_response(response: Union[dict, bool]) -> None:
         display.write_screen("Response received as audio.")
         # Because Windows runs into PermissionError if audio file is open when file is removed
         if settings.operating_system == "Windows":
-            player = Process(target=playsound, kwargs={'sound': fileio.speech_wav_file})
+            player = Process(target=playsound, kwargs={"sound": fileio.speech_wav_file})
             player.start()
             player.join()
             if player.is_alive():
                 player.terminate()
                 player.kill()
-            Timer(interval=3, function=os.remove, args=(fileio.speech_wav_file,)).start()
+            Timer(
+                interval=3, function=os.remove, args=(fileio.speech_wav_file,)
+            ).start()
         else:
             playsound(sound=fileio.speech_wav_file)
             os.remove(fileio.speech_wav_file)
         return
-    response = response.get('detail', '')
+    response = response.get("detail", "")
     logger.info("Response: %s", response)
     display.write_screen(f"Response: {response}")
     speaker.speak(text=response)
@@ -144,7 +154,7 @@ class Activator:
         self.py_audio = PyAudio()
         arguments = {
             "library_path": pvporcupine.LIBRARY_PATH,
-            "sensitivities": env.sensitivity
+            "sensitivities": env.sensitivity,
         }
         if settings.legacy:
             arguments["keywords"] = env.wake_words
@@ -156,8 +166,12 @@ class Activator:
 
         self.detector = pvporcupine.create(**arguments)
         self.audio_stream = self.open_stream()
-        label = ', '.join([f'{string.capwords(wake)!r}: {sens}' for wake, sens in
-                           zip(env.wake_words, env.sensitivity)])
+        label = ", ".join(
+            [
+                f"{string.capwords(wake)!r}: {sens}"
+                for wake, sens in zip(env.wake_words, env.sensitivity)
+            ]
+        )
         self.label = f"Awaiting: [{label}]"
 
     def at_exit(self) -> None:
@@ -187,7 +201,7 @@ class Activator:
             format=paInt16,
             input=True,
             frames_per_buffer=self.detector.frame_length,
-            input_device_index=env.microphone_index
+            input_device_index=env.microphone_index,
         )
 
     def executor(self, status_manager: DictProxy = None):
@@ -218,9 +232,13 @@ class Activator:
         display.write_screen(self.label)
         while True:
             result = self.detector.process(
-                pcm=struct.unpack_from("h" * self.detector.frame_length,
-                                       self.audio_stream.read(num_frames=self.detector.frame_length,
-                                                              exception_on_overflow=False))
+                pcm=struct.unpack_from(
+                    "h" * self.detector.frame_length,
+                    self.audio_stream.read(
+                        num_frames=self.detector.frame_length,
+                        exception_on_overflow=False,
+                    ),
+                )
             )
             if result is False or result < 0:
                 continue

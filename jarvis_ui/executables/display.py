@@ -30,6 +30,8 @@ def flush_screen() -> None:
         - Writes recursive empty text in IDE to flush screen.
     """
     if models.settings.interactive:
-        sys.stdout.write(f"\r{' '.join(['' for _ in range(os.get_terminal_size().columns)])}")
+        sys.stdout.write(
+            f"\r{' '.join(['' for _ in range(os.get_terminal_size().columns)])}"
+        )
     else:
         sys.stdout.write("\r")

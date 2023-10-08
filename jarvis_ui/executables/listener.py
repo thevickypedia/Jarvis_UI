@@ -9,8 +9,13 @@ from typing import Union
 
 import requests
 from pydantic import PositiveFloat, PositiveInt
-from speech_recognition import (Microphone, Recognizer, RequestError,
-                                UnknownValueError, WaitTimeoutError)
+from speech_recognition import (
+    Microphone,
+    Recognizer,
+    RequestError,
+    UnknownValueError,
+    WaitTimeoutError,
+)
 
 from jarvis_ui.executables import display
 from jarvis_ui.modules.logger import logger
@@ -26,8 +31,10 @@ recognizer.dynamic_energy_threshold = env.recognizer_settings.dynamic_energy_thr
 recognizer.non_speaking_duration = env.recognizer_settings.non_speaking_duration
 
 
-def listen(timeout: Union[PositiveInt, PositiveFloat] = env.listener_timeout,
-           phrase_time_limit: Union[PositiveInt, PositiveFloat] = env.listener_phrase_limit) -> Union[str, None]:
+def listen(
+    timeout: Union[PositiveInt, PositiveFloat] = env.listener_timeout,
+    phrase_time_limit: Union[PositiveInt, PositiveFloat] = env.listener_phrase_limit,
+) -> Union[str, None]:
     """Function to activate listener and get the user input.
 
     Args:
@@ -42,7 +49,9 @@ def listen(timeout: Union[PositiveInt, PositiveFloat] = env.listener_timeout,
     with microphone as source:
         display.write_screen(f"Listener activated [{timeout}: {phrase_time_limit}]")
         try:
-            listened = recognizer.listen(source=source, timeout=timeout, phrase_time_limit=phrase_time_limit)
+            listened = recognizer.listen(
+                source=source, timeout=timeout, phrase_time_limit=phrase_time_limit
+            )
             return_val = recognizer.recognize_google(audio_data=listened)
         except (UnknownValueError, WaitTimeoutError, RequestError) as error:
             logger.debug(error)

@@ -2,16 +2,15 @@ import ctypes
 from contextlib import contextmanager
 from typing import ByteString, Iterable
 
-ALSA_ERROR_HANDLER = ctypes.CFUNCTYPE(None,
-                                      ctypes.c_char_p,
-                                      ctypes.c_int,
-                                      ctypes.c_char_p,
-                                      ctypes.c_int,
-                                      ctypes.c_char_p)
+ALSA_ERROR_HANDLER = ctypes.CFUNCTYPE(
+    None, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p
+)
 
 
 # noinspection PyUnusedLocal
-def py_error_handler(filename: ByteString, line: int, function: ByteString, err: int, fmt: ByteString) -> None:
+def py_error_handler(
+    filename: ByteString, line: int, function: ByteString, err: int, fmt: ByteString
+) -> None:
     """Handles errors from pyaudio module especially for Linux based operating systems."""
     pass
 
@@ -40,7 +39,7 @@ def no_alsa_err() -> Iterable:
         - https://github.com/Uberi/speech_recognition/issues/191
         - https://forums.raspberrypi.com/viewtopic.php?t=136974
     """
-    sound = ctypes.cdll.LoadLibrary('libasound.so')
+    sound = ctypes.cdll.LoadLibrary("libasound.so")
     sound.snd_lib_error_set_handler(c_error_handler)
     yield
     sound.snd_lib_error_set_handler(None)
@@ -58,13 +57,5 @@ class InvalidEnvVars(ValueError):
     """Custom ``InvalidEnvVars`` raised when invalid env vars are passed.
 
     >>> InvalidEnvVars
-
-    """
-
-
-class SegmentationError(EnvironmentError):
-    """Custom ``SegmentationError`` raised when the code exits with SIGSEGV.
-
-    >>> SegmentationError
 
     """
