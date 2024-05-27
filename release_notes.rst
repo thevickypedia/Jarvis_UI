@@ -1,6 +1,13 @@
 Release Notes
 =============
 
+v2.3.1 (05/26/2024)
+-------------------
+- Reduces complexity in loading audio driver for Linux
+- Upgrades dependencies and improves linting
+- Improved stability with installation process
+- Removes wheel file dependency for Windows
+
 v2.3 (09/10/2023)
 -----------------
 - Includes a new feature to use custom ``.env`` files

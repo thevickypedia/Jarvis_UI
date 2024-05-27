@@ -36,15 +36,20 @@ classifiers = [
 ]
 keywords = ["python", "natural-language-processing", "text-to-speech", "speech-recognition", "jarvis",
             "hotword-detection", "virtual-assistant", "multiprocessing", "threadpool"]
-requires-python = ">=3.8"
+requires-python = ">=3.10,<3.12"  # Only 3.10 and 3.11 are supported
 
 [tool.setuptools]
 packages     = ["jarvis_ui", "jarvis_ui.executables", "jarvis_ui.modules"]
-script-files = ["jarvis_ui/lib/install.sh"]
+script-files = [
+    "jarvis_ui/lib/install.sh",
+    "jarvis_ui/lib/squire/detector.sh"
+]
 
 [tool.setuptools.dynamic]
 version      = {attr = "jarvis_ui.version"}
-dependencies = {file = ["jarvis_ui/lib/requirements.txt"]}
+dependencies = {file = [
+    "jarvis_ui/lib/requirements.txt"
+]}
 
 [build-system]
 requires      = ["setuptools", "wheel"]
