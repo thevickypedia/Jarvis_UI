@@ -1,5 +1,5 @@
 fail_fast: true
-exclude: ^docs/
+exclude: ^(notebooks/|scripts/|.github/|docs/)
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
@@ -48,22 +48,12 @@ repos:
       - id: black
 
   - repo: https://github.com/PyCQA/isort
-    rev: '5.12.0'
+    rev: 5.12.0
     hooks:
       - id: isort
         name: isort (python)
         args: [ --profile, black ]
 
-  #  - repo: local
-  #    hooks:
-  #      -
-  #        id: pytest
-  #        name: pytest
-  #        entry: cd tests pytest
-  #        language: system
-  #        pass_filenames: false
-  #        always_run: true
-  #
   - repo: local
     hooks:
       - id: docs

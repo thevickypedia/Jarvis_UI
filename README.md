@@ -3,6 +3,7 @@
 **Deployments**
 
 [![pages-build-deployment](https://github.com/thevickypedia/Jarvis_UI/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/thevickypedia/Jarvis_UI/actions/workflows/pages/pages-build-deployment)
+
 [![pypi](https://github.com/thevickypedia/Jarvis_UI/actions/workflows/python-publish.yml/badge.svg)](https://github.com/thevickypedia/Jarvis_UI/actions/workflows/python-publish.yml)
 
 # Jarvis UI
@@ -112,7 +113,7 @@ gitverse-release reverse -f release_notes.rst -t 'Release Notes'
 **Requirement**
 <br>
 ```bash
-pip install --no-cache sphinx==5.1.1 pre-commit recommonmark
+python -m pip install sphinx==5.1.1 pre-commit recommonmark
 ```
 
 **Usage**
