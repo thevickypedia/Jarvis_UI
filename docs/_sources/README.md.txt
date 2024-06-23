@@ -62,6 +62,7 @@ if __name__ == '__main__':
 - **VOICE_NAME**: Defaults to the author's favorite per the OS. _Name of the voice supported by the OperatingSystem_
 - **VOICE_RATE**: Defaults to the value in `py3-tts` module - _Speed/rate at which the text should be spoken_
 - **VOICE_PITCH**: Defaults to the value in `py3-tts` module - _Currently available only for Linux OS_
+- **VOLUME**: Default volume for the UI.
 <br><br>
 - **LISTENER_TIMEOUT**: Defaults to `2` - _Timeout for listener once wake word is detected - Awaits for a speech to begin until this limit_
 - **LISTENER_PHRASE_LIMIT**: Defaults to `5` - _Timeout for phrase once listener is activated - Listener will be deactivated after this limit_

@@ -14,12 +14,11 @@ from threading import Timer
 from typing import Union
 
 import pvporcupine
+import pyvolume
 from playsound import playsound
 from pyaudio import PyAudio, Stream, paInt16
 
-from jarvis_ui.executables import display, listener, speaker
-from jarvis_ui.executables.api_handler import make_request
-from jarvis_ui.executables.helper import linux_restart
+from jarvis_ui.executables import api_handler, display, helper, listener, speaker
 from jarvis_ui.modules.config import config
 from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env, fileio, settings
@@ -41,16 +40,29 @@ def process_request(phrase: str) -> Union[str, None]:
     """
     logger.info("Request: %s", phrase)
     display.write_screen(f"Request: {phrase}")
-    if "restart" in phrase.lower():
+    phrase_lower = phrase.lower()
+    if "restart" in phrase_lower:
         logger.info("User requested to restart.")
         playsound(sound=fileio.restart)
         display.write_screen("Restarting...")
         return "RESTART"
-    if "stop running" in phrase.lower():
+    if "stop running" in phrase_lower:
         logger.info("User requested to stop.")
         playsound(sound=fileio.shutdown)
         display.write_screen("Shutting down")
         return "STOP"
+    if (
+        "volume" in phrase_lower or "mute" in phrase_lower
+    ) and "server" not in phrase_lower:
+        if "unmute" in phrase_lower:
+            level = env.volume
+        elif "mute" in phrase_lower:
+            level = 0
+        elif "max" in phrase_lower or "full" in phrase_lower:
+            level = 100
+        else:
+            level = helper.extract_nos(input_=phrase, method=int)
+        pyvolume.custom(level, logger)
     if not config.keywords:
         logger.warning("keywords are not loaded yet, restarting")
         if os.path.isfile("failed_command"):
@@ -66,7 +78,7 @@ def process_request(phrase: str) -> Union[str, None]:
     if os.path.isfile("failed_command"):
         logger.info("Recovered after a recent failure, deleting placeholder file.")
         os.remove("failed_command")
-    if response := make_request(
+    if response := api_handler.make_request(
         path="offline-communicator",
         data={
             "command": phrase,
@@ -123,7 +135,7 @@ def processor(phrase: str = None, status_manager: DictProxy = None) -> None:
             raise KeyboardInterrupt
         if processed == "RESTART":
             if settings.operating_system == "Linux":
-                linux_restart()
+                helper.linux_restart()
             status_manager["LOCKED"] = None
             while True:
                 pass  # To ensure the listener doesn't end so that, the main process can kill and restart

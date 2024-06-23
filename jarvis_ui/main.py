@@ -3,6 +3,8 @@ import time
 from multiprocessing import Manager, Process
 from multiprocessing.managers import DictProxy  # noqa
 
+import pyvolume
+
 from jarvis_ui.modules.logger import logger
 
 
@@ -70,6 +72,7 @@ def start() -> None:
     process = Process(target=initiator, args=(status_manager,))
     process.name = pathlib.Path(__file__).stem
     process.start()
+    pyvolume.custom(env.volume, logger)
     logger.info("Initiating as %s [%d]", process.name, process.pid)
     while True:
         if not process.is_alive():  # Terminated

@@ -125,6 +125,7 @@ class EnvConfig(BaseSettings):
     voice_name: Union[str, None] = None
     voice_rate: Union[PositiveInt, PositiveFloat, None] = None
     voice_pitch: Union[PositiveInt, PositiveFloat, None] = None
+    volume: PositiveInt = 70
 
     listener_timeout: Union[float, PositiveInt] = 2
     listener_phrase_limit: Union[float, PositiveInt] = 5

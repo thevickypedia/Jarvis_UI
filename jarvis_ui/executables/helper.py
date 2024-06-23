@@ -1,7 +1,8 @@
 import os
+import re
 import sys
 from multiprocessing.managers import DictProxy  # noqa
-from typing import NoReturn
+from typing import NoReturn, Union
 
 import requests
 
@@ -56,3 +57,24 @@ def heart_beat(status_manager: DictProxy = None) -> None:
         if settings.operating_system == "Linux":
             linux_restart()
         status_manager["LOCKED"] = None
+
+
+def extract_nos(input_: str, method: type = float) -> Union[int, float]:
+    """Extracts number part from a string.
+
+    Args:
+        input_: Takes string as an argument.
+        method: Takes a type to return a float or int value.
+
+    Returns:
+        Union[int, float]:
+        Integer/float values from the phrase.
+    """
+    if value := re.findall(r"\d+", input_):
+        if method == float:
+            try:
+                return method(".".join(value))
+            except ValueError:
+                method = int
+        if method == int:
+            return method("".join(value))
