@@ -1,10 +1,10 @@
 packaging==23.2
 py3-tts
 PyAudio==0.2.14
-pydantic[email]==2.4.*
-pydantic_settings==2.0.*
+pydantic-settings==2.3.*
+pydantic[email]==2.7.*
 pynotification
 PyYAML
 requests
-SpeechRecognition==3.10.0
-volume-control>=0.9.2
+SpeechRecognition==3.10.4
+volume-control

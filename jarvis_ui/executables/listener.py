@@ -18,7 +18,7 @@ from speech_recognition import (
 )
 
 from jarvis_ui.executables import display
-from jarvis_ui.modules.logger import logger
+from jarvis_ui.logger import logger
 from jarvis_ui.modules.models import env
 
 recognizer = Recognizer()  # initiates recognizer object

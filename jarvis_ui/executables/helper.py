@@ -6,7 +6,7 @@ from typing import NoReturn, Union
 
 import requests
 
-from jarvis_ui.modules.logger import logger
+from jarvis_ui.logger import logger
 from jarvis_ui.modules.models import env, settings
 
 FAILED_HEALTH_CHECK = {"count": 0}

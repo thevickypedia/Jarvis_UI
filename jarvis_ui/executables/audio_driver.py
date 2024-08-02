@@ -2,8 +2,8 @@ import pathlib
 
 import pyttsx3
 
+from jarvis_ui.logger import logger
 from jarvis_ui.modules.exceptions import InvalidEnvVars
-from jarvis_ui.modules.logger import logger
 from jarvis_ui.modules.models import env, fileio, settings
 
 

@@ -59,3 +59,11 @@ class InvalidEnvVars(ValueError):
     >>> InvalidEnvVars
 
     """
+
+
+class DependencyError(Exception):
+    """Custom base exception for dependency errors.
+
+    >>> DependencyError
+
+    """

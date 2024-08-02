@@ -10,10 +10,10 @@ from multiprocessing import current_process
 from typing import Callable
 
 import pvporcupine
-from pydantic import BaseConfig, PositiveInt
+from pydantic import PositiveInt
 
 from jarvis_ui.executables.api_handler import make_request
-from jarvis_ui.modules.logger import logger
+from jarvis_ui.logger import logger
 from jarvis_ui.modules.models import env, settings
 
 add_ss_extn: Callable = (
@@ -23,26 +23,7 @@ add_ss_extn: Callable = (
 )
 
 
-def swapper() -> None:
-    """Swaps any request URL with the public URL if returned by Jarvis.
-
-    Notes:
-        Avoid making calls via load balancers or reverse proxy (if one is in place) such as CloudFront or Nginx.
-    """
-    if (
-        public_url := make_request(
-            path="offline-communicator", data={"command": "ngrok public url"}
-        )
-    ) and public_url.get("detail"):
-        if public_url["detail"][-1] != "/":
-            public_url["detail"] += "/"
-        if public_url["detail"] == env.server_url:
-            return
-        logger.info("Switching %s to %s", env.server_url, public_url["detail"])
-        env.server_url = public_url["detail"]
-
-
-class Config(BaseConfig):
+class Config:
     """Gets keywords during start up. Runs custom validations on env-vars.
 
     >>> Config
@@ -58,8 +39,6 @@ class Config(BaseConfig):
         )
         env.voice_pitch = None
     env.server_url = str(env.server_url)
-
-    swapper()
 
     if isinstance(env.sensitivity, float) or isinstance(env.sensitivity, PositiveInt):
         env.sensitivity = [env.sensitivity] * len(env.wake_words)

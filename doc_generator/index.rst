@@ -19,6 +19,13 @@ Jarvis
    :members:
    :undoc-members:
 
+Logger
+======
+
+.. automodule:: jarvis_ui.logger
+   :members:
+   :undoc-members:
+
 Executables
 ===========
 
@@ -51,6 +58,13 @@ Listener
    :members:
    :undoc-members:
 
+Processor
+=========
+
+.. automodule:: jarvis_ui.executables.processor
+   :members:
+   :undoc-members:
+
 Speaker
 =======
 
@@ -79,13 +93,6 @@ Exceptions
 ==========
 
 .. automodule:: jarvis_ui.modules.exceptions
-   :members:
-   :undoc-members:
-
-Logger
-======
-
-.. automodule:: jarvis_ui.modules.logger
    :members:
    :undoc-members:
 

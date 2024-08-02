@@ -8,137 +8,55 @@
 import os
 import string
 import struct
-from multiprocessing import Process
+from importlib import metadata
 from multiprocessing.managers import DictProxy  # noqa
-from threading import Timer
-from typing import Union
+from typing import Dict, List, Union
 
 import pvporcupine
-import pyvolume
+from packaging.version import Version
 from playsound import playsound
 from pyaudio import PyAudio, Stream, paInt16
 
-from jarvis_ui.executables import api_handler, display, helper, listener, speaker
-from jarvis_ui.modules.config import config
-from jarvis_ui.modules.logger import logger
-from jarvis_ui.modules.models import env, fileio, settings
+from jarvis_ui.executables import display, processor, speaker
+from jarvis_ui.logger import logger
+from jarvis_ui.modules import exceptions, models
 
 assert (
-    speaker.driver or env.speech_timeout
+    speaker.driver or models.env.speech_timeout
 ), "Cannot proceed without both audio drivers and speech timeout."
 
+WAKE_WORD_DETECTOR = metadata.version(pvporcupine.__name__)
 
-def process_request(phrase: str) -> Union[str, None]:
-    """Process request from the user.
 
-    Args:
-        phrase: Takes the phrase spoken as an argument.
+def constructor() -> Dict[str, Union[str, List[float], List[str]]]:
+    """Construct arguments for wake word detector.
 
     Returns:
-        str:
-        Returns the appropriate action to be taken.
+        Dict[str, Union[str, List[float], List[str]]]:
+        Arguments for wake word detector constructed as a dictionary based on the system and dependency version.
     """
-    logger.info("Request: %s", phrase)
-    display.write_screen(f"Request: {phrase}")
-    phrase_lower = phrase.lower()
-    if "restart" in phrase_lower:
-        logger.info("User requested to restart.")
-        playsound(sound=fileio.restart)
-        display.write_screen("Restarting...")
-        return "RESTART"
-    if "stop running" in phrase_lower:
-        logger.info("User requested to stop.")
-        playsound(sound=fileio.shutdown)
-        display.write_screen("Shutting down")
-        return "STOP"
-    if (
-        "volume" in phrase_lower or "mute" in phrase_lower
-    ) and "server" not in phrase_lower:
-        if "unmute" in phrase_lower:
-            level = env.volume
-        elif "mute" in phrase_lower:
-            level = 0
-        elif "max" in phrase_lower or "full" in phrase_lower:
-            level = 100
+    arguments = {
+        "sensitivities": models.env.sensitivity,
+        "keywords": models.env.wake_words,
+    }
+    if WAKE_WORD_DETECTOR in ("1.9.5", "1.6.0"):
+        arguments["library_path"] = pvporcupine.LIBRARY_PATH
+        keyword_paths = [pvporcupine.KEYWORD_PATHS[x] for x in models.env.wake_words]
+        if models.settings.legacy:
+            arguments["model_file_path"] = pvporcupine.MODEL_PATH
+            arguments["keyword_file_paths"] = keyword_paths
         else:
-            level = helper.extract_nos(input_=phrase, method=int)
-        pyvolume.custom(level, logger)
-    if not config.keywords:
-        logger.warning("keywords are not loaded yet, restarting")
-        if os.path.isfile("failed_command"):
-            logger.critical("Consecutive failure")
-            os.remove("failed_command")
-        else:
-            with open("failed_command", "w") as file:
-                file.write(phrase)
-                file.flush()
-            playsound(sound=fileio.connection_restart)
-        display.write_screen("Trying to re-establish connection with Server...")
-        return "RESTART"
-    if os.path.isfile("failed_command"):
-        logger.info("Recovered after a recent failure, deleting placeholder file.")
-        os.remove("failed_command")
-    if response := api_handler.make_request(
-        path="offline-communicator",
-        data={
-            "command": phrase,
-            "native_audio": env.native_audio,
-            "speech_timeout": env.speech_timeout,
-        },
-    ):
-        process_response(response)
+            arguments["model_path"] = pvporcupine.MODEL_PATH
+            arguments["keyword_paths"] = keyword_paths
+    elif Version(WAKE_WORD_DETECTOR) >= Version("3.0.2"):
+        arguments["access_key"] = models.env.porcupine_key
     else:
-        playsound(sound=fileio.failed)
-        return "RESTART"
-
-
-def process_response(response: Union[dict, bool]) -> None:
-    """Processes response from the server.
-
-    Args:
-        response: Takes either a boolean flag or a dictionary from the server as an argument.
-    """
-    if response is True:
-        logger.info("Response received as audio.")
-        display.write_screen("Response received as audio.")
-        # Because Windows runs into PermissionError if audio file is open when file is removed
-        if settings.operating_system == "Windows":
-            player = Process(target=playsound, kwargs={"sound": fileio.speech_wav_file})
-            player.start()
-            player.join()
-            if player.is_alive():
-                player.terminate()
-                player.kill()
-            Timer(
-                interval=3, function=os.remove, args=(fileio.speech_wav_file,)
-            ).start()
-        else:
-            playsound(sound=fileio.speech_wav_file)
-            os.remove(fileio.speech_wav_file)
-        return
-    response = response.get("detail", "")
-    logger.info("Response: %s", response)
-    display.write_screen(f"Response: {response}")
-    speaker.speak(text=response)
-
-
-def processor(phrase: str = None, status_manager: DictProxy = None) -> None:
-    """Handles request and response.
-
-    Args:
-        phrase: Takes existing phrase as an argument in case a previous failure is pending tobe addressed.
-        status_manager: Multiprocessing dictionary to set restarts.
-    """
-    if phrase := (phrase or listener.listen()):
-        processed = process_request(phrase)
-        if processed == "STOP":
-            raise KeyboardInterrupt
-        if processed == "RESTART":
-            if settings.operating_system == "Linux":
-                helper.linux_restart()
-            status_manager["LOCKED"] = None
-            while True:
-                pass  # To ensure the listener doesn't end so that, the main process can kill and restart
+        # this shouldn't happen by itself
+        raise exceptions.DependencyError(
+            f"{pvporcupine.__name__} {WAKE_WORD_DETECTOR}\n\tInvalid version\n"
+            f"{models.settings.os} is only supported with porcupine versions 1.9.5 or 3.0.2 and above (requires key)"
+        )
+    return arguments
 
 
 class Activator:
@@ -162,26 +80,13 @@ class Activator:
         References:
             - `Audio Overflow <https://people.csail.mit.edu/hubert/pyaudio/docs/#pyaudio.Stream.read>`__ handling.
         """
-        keyword_paths = [pvporcupine.KEYWORD_PATHS[x] for x in env.wake_words]
         self.py_audio = PyAudio()
-        arguments = {
-            "library_path": pvporcupine.LIBRARY_PATH,
-            "sensitivities": env.sensitivity,
-        }
-        if settings.legacy:
-            arguments["keywords"] = env.wake_words
-            arguments["model_file_path"] = pvporcupine.MODEL_PATH
-            arguments["keyword_file_paths"] = keyword_paths
-        else:
-            arguments["model_path"] = pvporcupine.MODEL_PATH
-            arguments["keyword_paths"] = keyword_paths
-
-        self.detector = pvporcupine.create(**arguments)
+        self.detector = pvporcupine.create(**constructor())
         self.audio_stream = self.open_stream()
         label = ", ".join(
             [
                 f"{string.capwords(wake)!r}: {sens}"
-                for wake, sens in zip(env.wake_words, env.sensitivity)
+                for wake, sens in zip(models.env.wake_words, models.env.sensitivity)
             ]
         )
         self.label = f"Awaiting: [{label}]"
@@ -213,7 +118,7 @@ class Activator:
             format=paInt16,
             input=True,
             frames_per_buffer=self.detector.frame_length,
-            input_device_index=env.microphone_index,
+            input_device_index=models.env.microphone_index,
         )
 
     def executor(self, status_manager: DictProxy = None):
@@ -221,10 +126,10 @@ class Activator:
         if status_manager:
             status_manager["LOCKED"] = True
             logger.debug("Restart locked")
-        playsound(sound=fileio.acknowledgement, block=False)
+        playsound(sound=models.fileio.acknowledgement, block=False)
         self.py_audio.close(stream=self.audio_stream)
         try:
-            processor(status_manager=status_manager)
+            processor.process(status_manager=status_manager)
         except KeyboardInterrupt:
             self.audio_stream = None
             raise KeyboardInterrupt
@@ -236,11 +141,13 @@ class Activator:
 
     def start(self, status_manager: DictProxy = None) -> None:
         """Runs ``audio_stream`` in a forever loop and calls ``initiator`` when the phrase ``Jarvis`` is heard."""
-        logger.info("Starting wake word detector with sensitivity: %s", env.sensitivity)
+        logger.info(
+            "Starting wake word detector with sensitivity: %s", models.env.sensitivity
+        )
         if os.path.isfile("failed_command"):
             with open("failed_command") as file:
                 existing = file.read().strip()
-            processor(phrase=existing, status_manager=status_manager)
+            processor.process(phrase=existing, status_manager=status_manager)
         display.write_screen(self.label)
         while True:
             result = self.detector.process(

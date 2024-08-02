@@ -105,7 +105,9 @@
 </li>
       <li><a href="index.html#jarvis_ui.modules.models.FileIO.connection_restart">connection_restart (jarvis_ui.modules.models.FileIO attribute)</a>
 </li>
-      <li><a href="index.html#jarvis_ui.modules.logger.console_logger">console_logger() (in module jarvis_ui.modules.logger)</a>
+      <li><a href="index.html#jarvis_ui.logger.console_logger">console_logger() (in module jarvis_ui.logger)</a>
+</li>
+      <li><a href="index.html#jarvis_ui.executables.starter.constructor">constructor() (in module jarvis_ui.executables.starter)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -114,6 +116,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#jarvis_ui.modules.models.EnvConfig.debug">debug (jarvis_ui.modules.models.EnvConfig attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#jarvis_ui.modules.exceptions.DependencyError">DependencyError</a>
 </li>
   </ul></td>
 </tr></table>
@@ -145,7 +151,7 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#jarvis_ui.modules.models.FileIO.failed">failed (jarvis_ui.modules.models.FileIO attribute)</a>
 </li>
-      <li><a href="index.html#jarvis_ui.modules.logger.file_logger">file_logger() (in module jarvis_ui.modules.logger)</a>
+      <li><a href="index.html#jarvis_ui.logger.file_logger">file_logger() (in module jarvis_ui.logger)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -224,12 +230,21 @@
 </li>
       </ul></li>
       <li>
+    jarvis_ui.executables.processor
+
+      <ul>
+        <li><a href="index.html#module-jarvis_ui.executables.processor">module</a>
+</li>
+      </ul></li>
+      <li>
     jarvis_ui.executables.speaker
 
       <ul>
         <li><a href="index.html#module-jarvis_ui.executables.speaker">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     jarvis_ui.executables.starter
 
@@ -237,8 +252,13 @@
         <li><a href="index.html#module-jarvis_ui.executables.starter">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    jarvis_ui.logger
+
+      <ul>
+        <li><a href="index.html#module-jarvis_ui.logger">module</a>
+</li>
+      </ul></li>
       <li>
     jarvis_ui.main
 
@@ -251,13 +271,6 @@
 
       <ul>
         <li><a href="index.html#module-jarvis_ui.modules.exceptions">module</a>
-</li>
-      </ul></li>
-      <li>
-    jarvis_ui.modules.logger
-
-      <ul>
-        <li><a href="index.html#module-jarvis_ui.modules.logger">module</a>
 </li>
       </ul></li>
       <li>
@@ -302,6 +315,14 @@
 </li>
       <li><a href="index.html#jarvis_ui.modules.models.EnvConfig.microphone_index">microphone_index (jarvis_ui.modules.models.EnvConfig attribute)</a>
 </li>
+      <li><a href="index.html#jarvis_ui.modules.models.EnvConfig.model_computed_fields">model_computed_fields (jarvis_ui.modules.models.EnvConfig attribute)</a>
+
+      <ul>
+        <li><a href="index.html#jarvis_ui.modules.models.FileIO.model_computed_fields">(jarvis_ui.modules.models.FileIO attribute)</a>
+</li>
+        <li><a href="index.html#jarvis_ui.modules.models.Settings.model_computed_fields">(jarvis_ui.modules.models.Settings attribute)</a>
+</li>
+      </ul></li>
       <li><a href="index.html#jarvis_ui.modules.models.EnvConfig.model_config">model_config (jarvis_ui.modules.models.EnvConfig attribute)</a>
 
       <ul>
@@ -330,15 +351,17 @@
 </li>
         <li><a href="index.html#module-jarvis_ui.executables.listener">jarvis_ui.executables.listener</a>
 </li>
+        <li><a href="index.html#module-jarvis_ui.executables.processor">jarvis_ui.executables.processor</a>
+</li>
         <li><a href="index.html#module-jarvis_ui.executables.speaker">jarvis_ui.executables.speaker</a>
 </li>
         <li><a href="index.html#module-jarvis_ui.executables.starter">jarvis_ui.executables.starter</a>
 </li>
+        <li><a href="index.html#module-jarvis_ui.logger">jarvis_ui.logger</a>
+</li>
         <li><a href="index.html#module-jarvis_ui.main">jarvis_ui.main</a>
 </li>
         <li><a href="index.html#module-jarvis_ui.modules.exceptions">jarvis_ui.modules.exceptions</a>
-</li>
-        <li><a href="index.html#module-jarvis_ui.modules.logger">jarvis_ui.modules.logger</a>
 </li>
         <li><a href="index.html#module-jarvis_ui.modules.peripherals">jarvis_ui.modules.peripherals</a>
 </li>
@@ -381,13 +404,15 @@
 </li>
       <li><a href="index.html#jarvis_ui.modules.models.FileIO.path">path (jarvis_ui.modules.models.FileIO attribute)</a>
 </li>
-      <li><a href="index.html#jarvis_ui.executables.starter.process_request">process_request() (in module jarvis_ui.executables.starter)</a>
+      <li><a href="index.html#jarvis_ui.modules.models.EnvConfig.porcupine_key">porcupine_key (jarvis_ui.modules.models.EnvConfig attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#jarvis_ui.executables.starter.process_response">process_response() (in module jarvis_ui.executables.starter)</a>
+      <li><a href="index.html#jarvis_ui.executables.processor.process">process() (in module jarvis_ui.executables.processor)</a>
 </li>
-      <li><a href="index.html#jarvis_ui.executables.starter.processor">processor() (in module jarvis_ui.executables.starter)</a>
+      <li><a href="index.html#jarvis_ui.executables.processor.process_request">process_request() (in module jarvis_ui.executables.processor)</a>
+</li>
+      <li><a href="index.html#jarvis_ui.executables.processor.process_response">process_response() (in module jarvis_ui.executables.processor)</a>
 </li>
       <li><a href="index.html#jarvis_ui.modules.exceptions.py_error_handler">py_error_handler() (in module jarvis_ui.modules.exceptions)</a>
 </li>

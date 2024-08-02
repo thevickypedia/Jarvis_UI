@@ -67,6 +67,11 @@
 <dt class="sig sig-object py" id="jarvis_ui.main.initiator">
 <span class="sig-prename descclassname"><span class="pre">jarvis_ui.main.</span></span><span class="sig-name descname"><span class="pre">initiator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DictProxy</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#jarvis_ui.main.initiator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts main process to activate Jarvis and process requests via API calls.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>status_manager</strong> – Shared multiprocessing dict to update in case of failed health check.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -82,6 +87,42 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>process</strong> – Takes the process object as an argument.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-jarvis_ui.logger">
+<span id="logger"></span><h1>Logger<a class="headerlink" href="#module-jarvis_ui.logger" title="Permalink to this heading">¶</a></h1>
+<p>Initiates a custom logger to be accessed across modules.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Logger</span>
+</pre></div>
+</div>
+<p>Disables loggers from imported modules, while using the root logger without having to load an external file.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.logger.console_logger">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.logger.</span></span><span class="sig-name descname"><span class="pre">console_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="headerlink" href="#jarvis_ui.logger.console_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create custom stream logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns the logger object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Logger</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.logger.file_logger">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.logger.</span></span><span class="sig-name descname"><span class="pre">file_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="headerlink" href="#jarvis_ui.logger.file_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create custom file logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Returns the logger object.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Logger</p>
 </dd>
 </dl>
 </dd></dl>
@@ -253,6 +294,51 @@
 </dd></dl>
 
 </section>
+<section id="module-jarvis_ui.executables.processor">
+<span id="processor"></span><h1>Processor<a class="headerlink" href="#module-jarvis_ui.executables.processor" title="Permalink to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.processor.process">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.processor.</span></span><span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DictProxy</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#jarvis_ui.executables.processor.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles request and response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>phrase</strong> – Takes existing phrase as an argument in case a previous failure is pending tobe addressed.</p></li>
+<li><p><strong>status_manager</strong> – Multiprocessing dictionary to set restarts.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.processor.process_request">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.processor.</span></span><span class="sig-name descname"><span class="pre">process_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.processor.process_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process request from the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>phrase</strong> – Takes the phrase spoken as an argument.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Returns the appropriate action to be taken.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jarvis_ui.executables.processor.process_response">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.processor.</span></span><span class="sig-name descname"><span class="pre">process_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#jarvis_ui.executables.processor.process_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Processes response from the server.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>response</strong> – Takes either a boolean flag or a dictionary from the server as an argument.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 <section id="module-jarvis_ui.executables.speaker">
 <span id="speaker"></span><h1>Speaker<a class="headerlink" href="#module-jarvis_ui.executables.speaker" title="Permalink to this heading">¶</a></h1>
 <p>Module for speaker and voice options.</p>
@@ -347,43 +433,15 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.executables.starter.process_request">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">process_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.process_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Process request from the user.</p>
+<dt class="sig sig-object py" id="jarvis_ui.executables.starter.constructor">
+<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">constructor</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.constructor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct arguments for wake word detector.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>phrase</strong> – Takes the phrase spoken as an argument.</p>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Arguments for wake word detector constructed as a dictionary based on the system and dependency version.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Returns the appropriate action to be taken.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.executables.starter.process_response">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">process_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.process_response" title="Permalink to this definition">¶</a></dt>
-<dd><p>Processes response from the server.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>response</strong> – Takes either a boolean flag or a dictionary from the server as an argument.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.executables.starter.processor">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.executables.starter.</span></span><span class="sig-name descname"><span class="pre">processor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phrase</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status_manager</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DictProxy</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#jarvis_ui.executables.starter.processor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Handles request and response.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>phrase</strong> – Takes existing phrase as an argument in case a previous failure is pending tobe addressed.</p></li>
-<li><p><strong>status_manager</strong> – Multiprocessing dictionary to set restarts.</p></li>
-</ul>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict[str, Union[str, List[float], List[str]]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -414,6 +472,15 @@
 </section>
 <section id="module-jarvis_ui.modules.exceptions">
 <span id="exceptions"></span><h1>Exceptions<a class="headerlink" href="#module-jarvis_ui.modules.exceptions" title="Permalink to this heading">¶</a></h1>
+<dl class="py exception">
+<dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.DependencyError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">DependencyError</span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.DependencyError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom base exception for dependency errors.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">DependencyError</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="py exception">
 <dt class="sig sig-object py" id="jarvis_ui.modules.exceptions.InvalidEnvVars">
 <em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.exceptions.</span></span><span class="sig-name descname"><span class="pre">InvalidEnvVars</span></span><a class="headerlink" href="#jarvis_ui.modules.exceptions.InvalidEnvVars" title="Permalink to this definition">¶</a></dt>
@@ -467,42 +534,6 @@
 </dd></dl>
 
 </section>
-<section id="module-jarvis_ui.modules.logger">
-<span id="logger"></span><h1>Logger<a class="headerlink" href="#module-jarvis_ui.modules.logger" title="Permalink to this heading">¶</a></h1>
-<p>Initiates a custom logger to be accessed across modules.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Logger</span>
-</pre></div>
-</div>
-<p>Disables loggers from imported modules, while using the root logger without having to load an external file.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.modules.logger.console_logger">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.logger.</span></span><span class="sig-name descname"><span class="pre">console_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="headerlink" href="#jarvis_ui.modules.logger.console_logger" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create custom stream logger.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Returns the logger object.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Logger</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="jarvis_ui.modules.logger.file_logger">
-<span class="sig-prename descclassname"><span class="pre">jarvis_ui.modules.logger.</span></span><span class="sig-name descname"><span class="pre">file_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="headerlink" href="#jarvis_ui.modules.logger.file_logger" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create custom file logger.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Returns the logger object.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>Logger</p>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
 <section id="models">
 <h1>Models<a class="headerlink" href="#models" title="Permalink to this heading">¶</a></h1>
 <dl class="py class">
@@ -515,8 +546,7 @@
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
 validated to form a valid model.</p>
-<p><cite>__init__</cite> uses <cite>__pydantic_self__</cite> instead of the more common <cite>self</cite> for the first arg to
-allow <cite>self</cite> as a field name.</p>
+<p><cite>self</cite> is explicitly positional-only to allow <cite>self</cite> as a field name.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.Config">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.Config" title="Permalink to this definition">¶</a></dt>
@@ -559,14 +589,20 @@ allow <cite>self</cite> as a field name.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ComputedFieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.model_computed_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.model_config">
-<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">SettingsConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'case_sensitive':</span> <span class="pre">False,</span> <span class="pre">'env_file':</span> <span class="pre">'.env',</span> <span class="pre">'env_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'env_nested_delimiter':</span> <span class="pre">None,</span> <span class="pre">'env_prefix':</span> <span class="pre">'',</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">('model_',</span> <span class="pre">'settings_'),</span> <span class="pre">'secrets_dir':</span> <span class="pre">None,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.model_config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">SettingsConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'case_sensitive':</span> <span class="pre">False,</span> <span class="pre">'cli_avoid_json':</span> <span class="pre">False,</span> <span class="pre">'cli_enforce_required':</span> <span class="pre">False,</span> <span class="pre">'cli_hide_none_type':</span> <span class="pre">False,</span> <span class="pre">'cli_parse_args':</span> <span class="pre">None,</span> <span class="pre">'cli_parse_none_str':</span> <span class="pre">None,</span> <span class="pre">'cli_prefix':</span> <span class="pre">'',</span> <span class="pre">'cli_prog_name':</span> <span class="pre">None,</span> <span class="pre">'cli_settings_source':</span> <span class="pre">None,</span> <span class="pre">'cli_use_class_docs_for_groups':</span> <span class="pre">False,</span> <span class="pre">'env_file':</span> <span class="pre">'.env',</span> <span class="pre">'env_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'env_ignore_empty':</span> <span class="pre">False,</span> <span class="pre">'env_nested_delimiter':</span> <span class="pre">None,</span> <span class="pre">'env_parse_enums':</span> <span class="pre">None,</span> <span class="pre">'env_parse_none_str':</span> <span class="pre">None,</span> <span class="pre">'env_prefix':</span> <span class="pre">'',</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'json_file':</span> <span class="pre">None,</span> <span class="pre">'json_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'protected_namespaces':</span> <span class="pre">('model_',</span> <span class="pre">'settings_'),</span> <span class="pre">'secrets_dir':</span> <span class="pre">None,</span> <span class="pre">'toml_file':</span> <span class="pre">None,</span> <span class="pre">'validate_default':</span> <span class="pre">True,</span> <span class="pre">'yaml_file':</span> <span class="pre">None,</span> <span class="pre">'yaml_file_encoding':</span> <span class="pre">None}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.model_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.model_fields">
-<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'debug':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'heart_beat':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">metadata=[Ge(ge=5),</span> <span class="pre">Le(le=3600)]),</span> <span class="pre">'listener_phrase_limit':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt(gt=0)]],</span> <span class="pre">required=False,</span> <span class="pre">default=5),</span> <span class="pre">'listener_timeout':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt(gt=0)]],</span> <span class="pre">required=False,</span> <span class="pre">default=2),</span> <span class="pre">'microphone_index':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">metadata=[Ge(ge=0)]),</span> <span class="pre">'native_audio':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'recognizer_settings':</span> <span class="pre">FieldInfo(annotation=RecognizerSettings,</span> <span class="pre">required=False,</span> <span class="pre">default=RecognizerSettings(energy_threshold=1100,</span> <span class="pre">pause_threshold=1,</span> <span class="pre">phrase_threshold=0.1,</span> <span class="pre">dynamic_energy_threshold=False,</span> <span class="pre">non_speaking_duration=1)),</span> <span class="pre">'sensitivity':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[int,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">List[Annotated[int,</span> <span class="pre">Gt(gt=0)]],</span> <span class="pre">List[Annotated[float,</span> <span class="pre">Gt(gt=0)]]],</span> <span class="pre">required=False,</span> <span class="pre">default=0.5,</span> <span class="pre">metadata=[Ge(ge=0),</span> <span class="pre">Le(le=1)]),</span> <span class="pre">'server_url':</span> <span class="pre">FieldInfo(annotation=Url,</span> <span class="pre">required=True,</span> <span class="pre">metadata=[UrlConstraints(max_length=2083,</span> <span class="pre">allowed_schemes=['http',</span> <span class="pre">'https'],</span> <span class="pre">host_required=None,</span> <span class="pre">default_host=None,</span> <span class="pre">default_port=None,</span> <span class="pre">default_path=None)]),</span> <span class="pre">'speech_timeout':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt(gt=0)]],</span> <span class="pre">required=False,</span> <span class="pre">default=0),</span> <span class="pre">'token':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=True),</span> <span class="pre">'voice_name':</span> <span class="pre">FieldInfo(annotation=Union[str,</span> <span class="pre">NoneType],</span> <span class="pre">required=False),</span> <span class="pre">'voice_pitch':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[int,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">NoneType],</span> <span class="pre">required=False),</span> <span class="pre">'voice_rate':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[int,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">NoneType],</span> <span class="pre">required=False),</span> <span class="pre">'volume':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=70,</span> <span class="pre">metadata=[Gt(gt=0)]),</span> <span class="pre">'wake_words':</span> <span class="pre">FieldInfo(annotation=List[str],</span> <span class="pre">required=False,</span> <span class="pre">default=['jarvis'])}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.model_fields" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'debug':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'heart_beat':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None,</span> <span class="pre">metadata=[Ge(ge=5),</span> <span class="pre">Le(le=3600)]),</span> <span class="pre">'listener_phrase_limit':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt(gt=0)]],</span> <span class="pre">required=False,</span> <span class="pre">default=5),</span> <span class="pre">'listener_timeout':</span> <span class="pre">FieldInfo(annotation=Union[float,</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt(gt=0)]],</span> <span class="pre">required=False,</span> <span class="pre">default=2),</span> <span class="pre">'microphone_index':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None,</span> <span class="pre">metadata=[Ge(ge=0)]),</span> <span class="pre">'native_audio':</span> <span class="pre">FieldInfo(annotation=bool,</span> <span class="pre">required=False,</span> <span class="pre">default=False),</span> <span class="pre">'porcupine_key':</span> <span class="pre">FieldInfo(annotation=Union[str,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'recognizer_settings':</span> <span class="pre">FieldInfo(annotation=RecognizerSettings,</span> <span class="pre">required=False,</span> <span class="pre">default=RecognizerSettings(energy_threshold=1100,</span> <span class="pre">pause_threshold=1,</span> <span class="pre">phrase_threshold=0.1,</span> <span class="pre">dynamic_energy_threshold=False,</span> <span class="pre">non_speaking_duration=1)),</span> <span class="pre">'sensitivity':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[int,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">List[Annotated[int,</span> <span class="pre">Gt(gt=0)]],</span> <span class="pre">List[Annotated[float,</span> <span class="pre">Gt(gt=0)]]],</span> <span class="pre">required=False,</span> <span class="pre">default=0.5,</span> <span class="pre">metadata=[Ge(ge=0),</span> <span class="pre">Le(le=1)]),</span> <span class="pre">'server_url':</span> <span class="pre">FieldInfo(annotation=Url,</span> <span class="pre">required=True,</span> <span class="pre">metadata=[UrlConstraints(max_length=2083,</span> <span class="pre">allowed_schemes=['http',</span> <span class="pre">'https'],</span> <span class="pre">host_required=None,</span> <span class="pre">default_host=None,</span> <span class="pre">default_port=None,</span> <span class="pre">default_path=None)]),</span> <span class="pre">'speech_timeout':</span> <span class="pre">FieldInfo(annotation=Union[int,</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">Annotated[int,</span> <span class="pre">Gt(gt=0)]],</span> <span class="pre">required=False,</span> <span class="pre">default=0),</span> <span class="pre">'token':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=True),</span> <span class="pre">'voice_name':</span> <span class="pre">FieldInfo(annotation=Union[str,</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'voice_pitch':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[int,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'voice_rate':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[int,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">Annotated[float,</span> <span class="pre">Gt(gt=0)],</span> <span class="pre">NoneType],</span> <span class="pre">required=False,</span> <span class="pre">default=None),</span> <span class="pre">'volume':</span> <span class="pre">FieldInfo(annotation=int,</span> <span class="pre">required=False,</span> <span class="pre">default=70,</span> <span class="pre">metadata=[Gt(gt=0)]),</span> <span class="pre">'wake_words':</span> <span class="pre">FieldInfo(annotation=List[str],</span> <span class="pre">required=False,</span> <span class="pre">default=['jarvis'])}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.model_fields" title="Permalink to this definition">¶</a></dt>
 <dd><p>Metadata about the fields defined on the model,
 mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
 <p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
@@ -582,6 +618,11 @@ mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_microphone_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.parse_microphone_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validates microphone index.</p>
 </dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.porcupine_key">
+<span class="sig-name descname"><span class="pre">porcupine_key</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jarvis_ui.modules.models.EnvConfig.porcupine_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.EnvConfig.recognizer_settings">
@@ -645,8 +686,7 @@ mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
 validated to form a valid model.</p>
-<p><cite>__init__</cite> uses <cite>__pydantic_self__</cite> instead of the more common <cite>self</cite> for the first arg to
-allow <cite>self</cite> as a field name.</p>
+<p><cite>self</cite> is explicitly positional-only to allow <cite>self</cite> as a field name.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.acknowledgement">
 <span class="sig-name descname"><span class="pre">acknowledgement</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.acknowledgement" title="Permalink to this definition">¶</a></dt>
@@ -673,14 +713,20 @@ allow <cite>self</cite> as a field name.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ComputedFieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.model_computed_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.model_config">
-<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">SettingsConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'case_sensitive':</span> <span class="pre">False,</span> <span class="pre">'env_file':</span> <span class="pre">None,</span> <span class="pre">'env_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'env_nested_delimiter':</span> <span class="pre">None,</span> <span class="pre">'env_prefix':</span> <span class="pre">'',</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">('model_',</span> <span class="pre">'settings_'),</span> <span class="pre">'secrets_dir':</span> <span class="pre">None,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.model_config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">SettingsConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'case_sensitive':</span> <span class="pre">False,</span> <span class="pre">'cli_avoid_json':</span> <span class="pre">False,</span> <span class="pre">'cli_enforce_required':</span> <span class="pre">False,</span> <span class="pre">'cli_hide_none_type':</span> <span class="pre">False,</span> <span class="pre">'cli_parse_args':</span> <span class="pre">None,</span> <span class="pre">'cli_parse_none_str':</span> <span class="pre">None,</span> <span class="pre">'cli_prefix':</span> <span class="pre">'',</span> <span class="pre">'cli_prog_name':</span> <span class="pre">None,</span> <span class="pre">'cli_settings_source':</span> <span class="pre">None,</span> <span class="pre">'cli_use_class_docs_for_groups':</span> <span class="pre">False,</span> <span class="pre">'env_file':</span> <span class="pre">None,</span> <span class="pre">'env_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'env_ignore_empty':</span> <span class="pre">False,</span> <span class="pre">'env_nested_delimiter':</span> <span class="pre">None,</span> <span class="pre">'env_parse_enums':</span> <span class="pre">None,</span> <span class="pre">'env_parse_none_str':</span> <span class="pre">None,</span> <span class="pre">'env_prefix':</span> <span class="pre">'',</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'json_file':</span> <span class="pre">None,</span> <span class="pre">'json_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'protected_namespaces':</span> <span class="pre">('model_',</span> <span class="pre">'settings_'),</span> <span class="pre">'secrets_dir':</span> <span class="pre">None,</span> <span class="pre">'toml_file':</span> <span class="pre">None,</span> <span class="pre">'validate_default':</span> <span class="pre">True,</span> <span class="pre">'yaml_file':</span> <span class="pre">None,</span> <span class="pre">'yaml_file_encoding':</span> <span class="pre">None}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.model_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.FileIO.model_fields">
-<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'acknowledgement':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/acknowledgement.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'base_log_file':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[pathlib.Path,</span> <span class="pre">PathType(path_type='file')],</span> <span class="pre">str],</span> <span class="pre">required=False,</span> <span class="pre">default='logs/jarvis_22-06-2024.log'),</span> <span class="pre">'connection_restart':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/connection_restart_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'extn_':</span> <span class="pre">FieldInfo(annotation=Dict[str,</span> <span class="pre">str],</span> <span class="pre">required=False,</span> <span class="pre">default={'Darwin':</span> <span class="pre">'mac',</span> <span class="pre">'Windows':</span> <span class="pre">'win',</span> <span class="pre">'Linux':</span> <span class="pre">'ss'}),</span> <span class="pre">'failed':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/failed_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'path':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators'),</span> <span class="pre">'restart':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/restart_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'shutdown':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/shutdown_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'speech_wav_file':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[pathlib.Path,</span> <span class="pre">PathType(path_type='file')],</span> <span class="pre">str],</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/speech-synthesis.wav')}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.model_fields" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">FieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'acknowledgement':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/acknowledgement.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'base_log_file':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[pathlib.Path,</span> <span class="pre">PathType(path_type='file')],</span> <span class="pre">str],</span> <span class="pre">required=False,</span> <span class="pre">default='logs/jarvis_02-08-2024.log'),</span> <span class="pre">'connection_restart':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/connection_restart_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'extn_':</span> <span class="pre">FieldInfo(annotation=Dict[str,</span> <span class="pre">str],</span> <span class="pre">required=False,</span> <span class="pre">default={'Darwin':</span> <span class="pre">'mac',</span> <span class="pre">'Windows':</span> <span class="pre">'win',</span> <span class="pre">'Linux':</span> <span class="pre">'ss'}),</span> <span class="pre">'failed':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/failed_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'path':</span> <span class="pre">FieldInfo(annotation=str,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators'),</span> <span class="pre">'restart':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/restart_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'shutdown':</span> <span class="pre">FieldInfo(annotation=Path,</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/shutdown_mac.wav',</span> <span class="pre">metadata=[PathType(path_type='file')]),</span> <span class="pre">'speech_wav_file':</span> <span class="pre">FieldInfo(annotation=Union[Annotated[pathlib.Path,</span> <span class="pre">PathType(path_type='file')],</span> <span class="pre">str],</span> <span class="pre">required=False,</span> <span class="pre">default='/Users/vicky/Desktop/git/Jarvis_UI/jarvis_ui/indicators/speech-synthesis.wav')}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.FileIO.model_fields" title="Permalink to this definition">¶</a></dt>
 <dd><p>Metadata about the fields defined on the model,
 mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
 <p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
@@ -726,8 +772,7 @@ mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</
 <p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises [<cite>ValidationError</cite>][pydantic_core.ValidationError] if the input data cannot be
 validated to form a valid model.</p>
-<p><cite>__init__</cite> uses <cite>__pydantic_self__</cite> instead of the more common <cite>self</cite> for the first arg to
-allow <cite>self</cite> as a field name.</p>
+<p><cite>self</cite> is explicitly positional-only to allow <cite>self</cite> as a field name.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.Settings.interactive">
 <span class="sig-name descname"><span class="pre">interactive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#jarvis_ui.modules.models.Settings.interactive" title="Permalink to this definition">¶</a></dt>
@@ -739,8 +784,14 @@ allow <cite>self</cite> as a field name.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="jarvis_ui.modules.models.Settings.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ComputedFieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.Settings.model_computed_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="jarvis_ui.modules.models.Settings.model_config">
-<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">SettingsConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'case_sensitive':</span> <span class="pre">False,</span> <span class="pre">'env_file':</span> <span class="pre">None,</span> <span class="pre">'env_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'env_nested_delimiter':</span> <span class="pre">None,</span> <span class="pre">'env_prefix':</span> <span class="pre">'',</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'protected_namespaces':</span> <span class="pre">('model_',</span> <span class="pre">'settings_'),</span> <span class="pre">'secrets_dir':</span> <span class="pre">None,</span> <span class="pre">'validate_default':</span> <span class="pre">True}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.Settings.model_config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">SettingsConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'arbitrary_types_allowed':</span> <span class="pre">True,</span> <span class="pre">'case_sensitive':</span> <span class="pre">False,</span> <span class="pre">'cli_avoid_json':</span> <span class="pre">False,</span> <span class="pre">'cli_enforce_required':</span> <span class="pre">False,</span> <span class="pre">'cli_hide_none_type':</span> <span class="pre">False,</span> <span class="pre">'cli_parse_args':</span> <span class="pre">None,</span> <span class="pre">'cli_parse_none_str':</span> <span class="pre">None,</span> <span class="pre">'cli_prefix':</span> <span class="pre">'',</span> <span class="pre">'cli_prog_name':</span> <span class="pre">None,</span> <span class="pre">'cli_settings_source':</span> <span class="pre">None,</span> <span class="pre">'cli_use_class_docs_for_groups':</span> <span class="pre">False,</span> <span class="pre">'env_file':</span> <span class="pre">None,</span> <span class="pre">'env_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'env_ignore_empty':</span> <span class="pre">False,</span> <span class="pre">'env_nested_delimiter':</span> <span class="pre">None,</span> <span class="pre">'env_parse_enums':</span> <span class="pre">None,</span> <span class="pre">'env_parse_none_str':</span> <span class="pre">None,</span> <span class="pre">'env_prefix':</span> <span class="pre">'',</span> <span class="pre">'extra':</span> <span class="pre">'forbid',</span> <span class="pre">'json_file':</span> <span class="pre">None,</span> <span class="pre">'json_file_encoding':</span> <span class="pre">None,</span> <span class="pre">'protected_namespaces':</span> <span class="pre">('model_',</span> <span class="pre">'settings_'),</span> <span class="pre">'secrets_dir':</span> <span class="pre">None,</span> <span class="pre">'toml_file':</span> <span class="pre">None,</span> <span class="pre">'validate_default':</span> <span class="pre">True,</span> <span class="pre">'yaml_file':</span> <span class="pre">None,</span> <span class="pre">'yaml_file_encoding':</span> <span class="pre">None}</span></em><a class="headerlink" href="#jarvis_ui.modules.models.Settings.model_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
 </dd></dl>
 
@@ -878,17 +929,18 @@ mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</
     <ul>
 <li><a class="reference internal" href="#">Welcome to Jarvis UI’s documentation!</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.main">Jarvis</a></li>
+<li><a class="reference internal" href="#module-jarvis_ui.logger">Logger</a></li>
 <li><a class="reference internal" href="#executables">Executables</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.api_handler">API Handler</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.display">Display</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.helper">Helper</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.listener">Listener</a></li>
+<li><a class="reference internal" href="#module-jarvis_ui.executables.processor">Processor</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.speaker">Speaker</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.executables.starter">Starter</a></li>
 <li><a class="reference internal" href="#modules">Modules</a></li>
 <li><a class="reference internal" href="#config">Config</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.modules.exceptions">Exceptions</a></li>
-<li><a class="reference internal" href="#module-jarvis_ui.modules.logger">Logger</a></li>
 <li><a class="reference internal" href="#models">Models</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.modules.peripherals">Peripherals</a></li>
 <li><a class="reference internal" href="#module-jarvis_ui.modules.timer">Repeated Timer</a></li>

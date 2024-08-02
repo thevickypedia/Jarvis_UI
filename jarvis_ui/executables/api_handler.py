@@ -11,7 +11,7 @@ import requests
 from requests.auth import AuthBase
 from requests.models import PreparedRequest
 
-from jarvis_ui.modules.logger import logger
+from jarvis_ui.logger import logger
 from jarvis_ui.modules.models import env, fileio
 
 

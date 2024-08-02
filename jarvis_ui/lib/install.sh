@@ -79,9 +79,13 @@ if [[ "$osname" == "darwin" ]]; then
     base_ver="10.14"
     os_ver=$(sw_vers | grep ProductVersion | cut -d':' -f2 | tr -d ' ')
     if awk "BEGIN {exit !($base_ver > $os_ver)}"; then
-      pip install 'pvporcupine==1.6.0'
+      python -m pip install pvporcupine==1.6.0
     else
-      pip install 'pvporcupine==1.9.5'
+      if [[ "$architecture" == "arm64" ]]; then
+        python -m pip install pvporcupine==3.0.2
+      else
+        python -m pip install pvporcupine==1.9.5
+      fi
     fi
     os_independent_packages
 elif [[ "$osname" == "windows" ]]; then

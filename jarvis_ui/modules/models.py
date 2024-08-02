@@ -120,6 +120,7 @@ class EnvConfig(BaseSettings):
     sensitivity: Union[
         PositiveInt, PositiveFloat, List[PositiveInt], List[PositiveFloat]
     ] = Field(0.5, le=1, ge=0)
+    porcupine_key: Union[str, None] = None
 
     # Built-in speaker config (Unused if speech synthesis is used)
     voice_name: Union[str, None] = None

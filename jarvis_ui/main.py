@@ -5,11 +5,15 @@ from multiprocessing.managers import DictProxy  # noqa
 
 import pyvolume
 
-from jarvis_ui.modules.logger import logger
+from jarvis_ui.logger import logger
 
 
 def initiator(status_manager: DictProxy = None) -> None:
-    """Starts main process to activate Jarvis and process requests via API calls."""
+    """Starts main process to activate Jarvis and process requests via API calls.
+
+    Args:
+        status_manager: Shared multiprocessing dict to update in case of failed health check.
+    """
     from jarvis_ui.executables.helper import heart_beat
     from jarvis_ui.executables.starter import Activator
     from jarvis_ui.modules.models import env

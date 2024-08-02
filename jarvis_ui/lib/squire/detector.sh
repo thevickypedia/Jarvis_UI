@@ -52,16 +52,10 @@ fi
 case "$osname" in
 darwin | linux | windows)
   export osname=$osname
+  export architecture=$architecture
   ;;
 *)
   echo "Unsupported Operating System"
   exit 1
   ;;
 esac
-
-if [[ $architecture == "amd64" ]]; then
-  export architecture=$architecture
-else
-  echo "Unsupported architecture"
-  exit 1
-fi
