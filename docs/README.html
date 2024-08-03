@@ -81,9 +81,20 @@
 </details><section id="mandatory">
 <h3>Mandatory<a class="headerlink" href="#mandatory" title="Permalink to this heading">¶</a></h3>
 <ul class="simple">
-<li><p><strong>SERVER_URL</strong>: Endpoint URL to which the API call has to be made. Can be <code class="docutils literal notranslate"><span class="pre">localhost</span></code> or a <code class="docutils literal notranslate"><span class="pre">tunneled</span></code> URL behind a reverse proxy/CDN.</p></li>
 <li><p><strong>TOKEN</strong>: Authentication token.</p></li>
 </ul>
+</section>
+<section id="constructed">
+<h3>Constructed<a class="headerlink" href="#constructed" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>SERVER_URL</strong>: URL for the API server.</p></li>
+<li><p><strong>SERVER_HOST</strong>: Hostname of the API server.</p></li>
+<li><p><strong>SERVER_IP</strong>: IP address of the API server.</p></li>
+<li><p><strong>SERVER_PORT</strong>: Port numbmer of the API server.</p></li>
+</ul>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">server_url</span></code> is mandatory, however it can be skipped and constructed during run-time with a combination of <code class="docutils literal notranslate"><span class="pre">server_host</span></code> [OR] <code class="docutils literal notranslate"><span class="pre">server_ip</span></code> [AND] <code class="docutils literal notranslate"><span class="pre">server_port</span></code></p>
+</div></blockquote>
 </section>
 <section id="optional">
 <h3>Optional<a class="headerlink" href="#optional" title="Permalink to this heading">¶</a></h3>
@@ -187,6 +198,7 @@ Clean code with pre-commit hooks: <a class="reference external" href="https://fl
 <li><a class="reference internal" href="#kick-off">Kick off</a></li>
 <li><a class="reference internal" href="#environment-variables">Environment Variables</a><ul>
 <li><a class="reference internal" href="#mandatory">Mandatory</a></li>
+<li><a class="reference internal" href="#constructed">Constructed</a></li>
 <li><a class="reference internal" href="#optional">Optional</a></li>
 </ul>
 </li>

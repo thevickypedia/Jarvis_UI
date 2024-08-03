@@ -38,7 +38,6 @@ class Config:
             "Voice pitch adjustment is currently supported only in Linux operating system."
         )
         env.voice_pitch = None
-    env.server_url = str(env.server_url)
 
     if isinstance(env.sensitivity, float) or isinstance(env.sensitivity, PositiveInt):
         env.sensitivity = [env.sensitivity] * len(env.wake_words)

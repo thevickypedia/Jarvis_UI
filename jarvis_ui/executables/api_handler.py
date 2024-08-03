@@ -12,7 +12,7 @@ from requests.auth import AuthBase
 from requests.models import PreparedRequest
 
 from jarvis_ui.logger import logger
-from jarvis_ui.modules.models import env, fileio
+from jarvis_ui.modules.models import env, fileio, get_server_url
 
 
 class BearerAuth(AuthBase):
@@ -68,7 +68,7 @@ def make_request(
     """
     try:
         response = session.request(
-            method, env.server_url + path, json=data, timeout=(3, 30)
+            method, get_server_url() + path, json=data, timeout=(3, 30)
         )
     except requests.RequestException as error:
         logger.error(error)

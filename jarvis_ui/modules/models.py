@@ -4,11 +4,14 @@ import base64
 import binascii
 import os
 import platform
+import socket
 import string
 import sys
+import warnings
 from collections import ChainMap
 from datetime import datetime
 from enum import Enum
+from ipaddress import IPv4Address
 from typing import Dict, List, Union
 
 from packaging.version import parse as parser
@@ -18,8 +21,10 @@ from pydantic import (
     HttpUrl,
     PositiveFloat,
     PositiveInt,
+    ValidationError,
     field_validator,
 )
+from pydantic_core import InitErrorDetails
 from pydantic_settings import BaseSettings
 
 from jarvis_ui import indicators
@@ -103,9 +108,14 @@ class EnvConfig(BaseSettings):
 
     """
 
-    # Required env vars
-    server_url: HttpUrl
+    # Required env var
     token: str
+
+    # Server URL fabricator
+    server_url: Union[HttpUrl, None] = None
+    server_ip: Union[IPv4Address, None] = None
+    server_host: Union[str, None] = None
+    server_port: Union[PositiveInt, None] = None
 
     # Heart beat
     heart_beat: Union[int, None] = Field(None, le=3_600, ge=5)
@@ -172,6 +182,40 @@ class EnvConfig(BaseSettings):
 
 
 env = EnvConfig()
+
+
+def get_server_url() -> str:
+    """Constructs the 'server_url' from 'server_host' or 'server_ip' and 'server_port' if provided.
+
+    Raises:
+        ValidationError:
+        If unable to construct the 'server_url'
+
+    Returns:
+        str:
+        Returns the constructed 'server_url' as a string.
+    """
+    if env.server_url:
+        return str(env.server_url)
+    if env.server_host and env.server_port:
+        server_ip = socket.gethostbyname(env.server_host)
+        return f"http://{server_ip}:{env.server_port}/"
+    if env.server_ip and env.server_port:
+        return f"http://{env.server_ip}:{env.server_port}/"
+    warnings.warn(
+        "Please use 'server_host' or 'server_ip' with 'server_port' to construct the 'server_url'",
+        UserWarning,
+    )
+    raise ValidationError.from_exception_data(
+        title="JarvisUI",
+        line_errors=[
+            InitErrorDetails(
+                type="url_type",
+                loc=("server_url",),
+                input="missing",
+            )
+        ],
+    )
 
 
 class FileIO(BaseSettings):

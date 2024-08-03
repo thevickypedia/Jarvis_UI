@@ -45,8 +45,15 @@ if __name__ == '__main__':
 </details>
 
 #### Mandatory
-- **SERVER_URL**: Endpoint URL to which the API call has to be made. Can be `localhost` or a `tunneled` URL behind a reverse proxy/CDN.
 - **TOKEN**: Authentication token.
+
+#### Constructed
+- **SERVER_URL**: URL for the API server.
+- **SERVER_HOST**: Hostname of the API server.
+- **SERVER_IP**: IP address of the API server.
+- **SERVER_PORT**: Port numbmer of the API server.
+
+> `server_url` is mandatory, however it can be skipped and constructed during run-time with a combination of `server_host` [OR] `server_ip` [AND] `server_port`
 
 #### Optional
 - **HEART_BEAT**: Defaults to `None` - _Interval in seconds to trigger background healthcheck on the server with automatic restart_

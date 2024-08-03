@@ -7,7 +7,7 @@ from typing import NoReturn, Union
 import requests
 
 from jarvis_ui.logger import logger
-from jarvis_ui.modules.models import env, settings
+from jarvis_ui.modules.models import get_server_url, settings
 
 FAILED_HEALTH_CHECK = {"count": 0}
 
@@ -38,7 +38,7 @@ def heart_beat(status_manager: DictProxy = None) -> None:
         - Maintains a consecutive failure threshold of 5, as a single failed health check doesn't warrant a restart.
     """
     try:
-        response = requests.get(url=env.server_url + "health", timeout=(3, 3))
+        response = requests.get(url=get_server_url() + "health", timeout=(3, 3))
     except requests.RequestException as error:
         logger.error(error)
     else:
