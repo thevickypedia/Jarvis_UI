@@ -8,6 +8,7 @@ import json
 from typing import Union
 
 import requests
+from pydantic import ValidationError
 from requests.auth import AuthBase
 from requests.models import PreparedRequest
 
@@ -67,14 +68,21 @@ def make_request(
         Returns the JSON response if request was successful.
     """
     try:
-        response = session.request(
-            method, get_server_url() + path, json=data, timeout=(3, 30)
-        )
-    except requests.RequestException as error:
-        logger.error(error)
+        endpoint = get_server_url()
+    except ValidationError as error:
+        logger.critical(error)
         return False
-    if not response.ok:
-        logger.error("%d - %s", response.status_code, response.reason)
+    try:
+        response = session.request(
+            method=method,
+            url=endpoint + path,
+            json=data,
+            timeout=(3, 30),
+            verify=endpoint.startswith("https"),
+        )
+        assert response.ok, f"{response.status_code} - {response.reason}"
+    except (requests.RequestException, AssertionError) as error:
+        logger.error(error)
         return False
     if response.headers.get("Content-Type", "NO MATCH") == "application/octet-stream":
         with open(file=fileio.speech_wav_file, mode="wb") as file:

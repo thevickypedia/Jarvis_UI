@@ -153,20 +153,30 @@ class EnvConfig(BaseSettings):
         env_file = os.environ.get("env_file", os.environ.get("ENV_FILE", ".env"))
 
     # noinspection PyMethodParameters
+    @field_validator("server_url", mode="after")
+    def parse_server_url(cls, url: Union[HttpUrl, None]) -> Union[str, None]:
+        """Validate server_url and return as string."""
+        if url:
+            url = str(url)
+            if not url.endswith("/"):
+                url = f"{url}/"
+            return url
+
+    # noinspection PyMethodParameters
     @field_validator("microphone_index", mode="before")
     def parse_microphone_index(
-        cls, v: Union[int, PositiveInt]
+        cls, idx: Union[int, PositiveInt]
     ) -> Union[int, PositiveInt, None]:
-        """Validates microphone index."""
-        if not v:
+        """Validate microphone index."""
+        if not idx:
             return
-        if int(v) in list(
+        if int(idx) in list(
             map(
                 lambda tag: tag["index"],
                 get_audio_devices(channels=channel_type.input_channels),
             )
         ):
-            return v
+            return idx
         else:
             complicated = dict(
                 ChainMap(
@@ -216,6 +226,10 @@ def get_server_url() -> str:
             )
         ],
     )
+
+
+# Startup validation
+_ = get_server_url()
 
 
 class FileIO(BaseSettings):
